@@ -18,10 +18,10 @@ try {
     .forEach(commandModule => argvBuilder.command(commandModule));
 
   argvBuilder
-    .completion('completion')
+    .completion()
     .alias('help', 'h')
     .alias('version', 'v')
-    .strict(true)
+    .strict()
     .wrap(argvBuilder.terminalWidth())
     .demandCommand(1, '')
     .parse();

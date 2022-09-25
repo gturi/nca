@@ -22,9 +22,10 @@ export class ModelMapper {
   private static functionRunner(args: yargs.ArgumentsCamelCase<{}>, code: string) {
     const fun = new Function(`
       "use strict;"
-      const args = arguments[0]; 
+      const args = arguments[0];
+      const shelljs = arguments[1];
       ${code}
     `);
-    fun(args);
+    fun(args, shelljs);
   }
 }

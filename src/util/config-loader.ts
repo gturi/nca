@@ -12,7 +12,11 @@ export class ConfigLoader {
   static loadAliases(): Alias[] {
     const configPath = path.join(os.homedir(), '.nca', 'config.yml');
 
-    return ConfigLoader.loadConfigs(configPath, new Set(configPath)).flatMap(config => config.aliases);
+    const aliases = ConfigLoader.loadConfigs(configPath, new Set(configPath)).flatMap(config => config.aliases);
+
+    ConfigValidator.validateAliases(aliases);
+
+    return aliases;
   }
 
   private static loadConfigs(configPath: string, loadedConfigs: Set<string>): Config[] {
@@ -26,7 +30,6 @@ export class ConfigLoader {
         [...new Set(mainConfig.includePaths)]
           .filter(path => !loadedConfigs.has(path))
           .map(path => {
-            console.log('loading config ' + path);
             loadedConfigs.add(path);
             return path;
           })

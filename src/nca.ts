@@ -13,7 +13,7 @@ try {
 
   const argvBuilder = yargs(hideBin(process.argv));
 
-  config.aliases
+  config.aliases.sort((a, b) => a.name.localeCompare(b.name))
     .map(alias => ModelMapper.map(alias))
     .forEach(commandModule => argvBuilder.command(commandModule));
 

@@ -2,14 +2,14 @@ import { Config } from "../model/config";
 
 export class ConfigValidator {
 
-  static validate(config: Config) {
-    ConfigValidator.throwErrorIfAliasIsDefined(config, 'completion');
-    ConfigValidator.throwErrorIfAliasIsDefined(config, 'config');
+  static validate(configPath: string, config: Config) {
+    ConfigValidator.throwErrorIfAliasIsDefined(configPath, config, 'completion');
+    ConfigValidator.throwErrorIfAliasIsDefined(configPath, config, 'config');
   }
   
-  private static throwErrorIfAliasIsDefined(config: Config, aliasName:string) {
+  private static throwErrorIfAliasIsDefined(configPath: string, config: Config, aliasName:string) {
     if (config.aliases.some(alias => alias.name === aliasName)) {
-      throw new Error(`You can not define an alias called '${aliasName}' since it is a special keyword`);
+      throw new Error(`${configPath}: You can not define an alias called '${aliasName}' since it is a special keyword`);
     }
   }
 }

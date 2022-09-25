@@ -12,10 +12,10 @@ export class ConfigLoader {
   static loadAliases(): Alias[] {
     const configPath = path.join(os.homedir(), '.nca', 'config.yml');
 
-    return ConfigLoader.loadConfigs(configPath).flatMap(config => config.aliases);
+    return ConfigLoader.loadConfigs(configPath, new Set(configPath)).flatMap(config => config.aliases);
   }
 
-  private static loadConfigs(configPath: string): Config[] {
+  private static loadConfigs(configPath: string, loadedConfigs: Set<string>): Config[] {
     const result: Config[] = [];
 
     const mainConfig = ConfigLoader.loadConfig(configPath);
@@ -23,8 +23,14 @@ export class ConfigLoader {
       result.push(mainConfig);
 
       if (mainConfig.includePaths) {
-        mainConfig.includePaths
-          .flatMap(path => ConfigLoader.loadConfigs(path))
+        [...new Set(mainConfig.includePaths)]
+          .filter(path => !loadedConfigs.has(path))
+          .map(path => {
+            console.log('loading config ' + path);
+            loadedConfigs.add(path);
+            return path;
+          })
+          .flatMap(path => ConfigLoader.loadConfigs(path, loadedConfigs))
           .forEach(path => result.push(path));
       }
     }
@@ -40,7 +46,7 @@ export class ConfigLoader {
     const data = fs.readFileSync(configPath, 'utf8');
     const config = yaml.load(data) as Config;
 
-    ConfigValidator.validate(config);
+    ConfigValidator.validate(configPath, config);
 
     return config;
   }

@@ -19,6 +19,11 @@ try {
 
   argvBuilder
     .completion('completion')
+    .alias('help', 'h')
+    .alias('version', 'v')
+    .strict(true)
+    .wrap(argvBuilder.terminalWidth())
+    .demandCommand(1, '')
     .parse();
 
 } catch (e) {

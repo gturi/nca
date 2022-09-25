@@ -1,6 +1,7 @@
 import yargs, { CommandModule, describe } from 'yargs';
 import { Alias } from '../model/alias';
 import shelljs from 'shelljs';
+import { CommandType } from '../model/command-type';
 
 export class ModelMapper {
 
@@ -9,8 +10,21 @@ export class ModelMapper {
       command: alias.name,
       describe: alias.description,
       handler: args => {
-        shelljs.exec(alias.command);
+        if (CommandType.Function === alias.commandType) {
+          ModelMapper.functionRunner(args, alias.command);
+        } else {
+          shelljs.exec(alias.command);
+        }
       }
     }
+  }
+
+  private static functionRunner(args: yargs.ArgumentsCamelCase<{}>, code: string) {
+    const fun = new Function(`
+      "use strict;"
+      const args = arguments[0]; 
+      ${code}
+    `);
+    fun(args);
   }
 }

@@ -12,7 +12,7 @@ export class ConfigLoader {
   static loadAliases(): Alias[] {
     const configPath = path.join(os.homedir(), '.nca', 'config.yml');
 
-    const aliases = ConfigLoader.loadConfigs(configPath, new Set(configPath)).flatMap(config => config.aliases);
+    const aliases = ConfigLoader.loadConfigs(configPath, new Set(configPath)).flatMap(config => config.aliases ?? []);
 
     ConfigValidator.validateAliases(aliases);
 
@@ -47,7 +47,7 @@ export class ConfigLoader {
     }
 
     const data = fs.readFileSync(configPath, 'utf8');
-    const config = yaml.load(data) as Config;
+    const config: Config = yaml.load(data) ?? {};
 
     ConfigValidator.validate(configPath, config);
 

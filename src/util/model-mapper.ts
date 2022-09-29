@@ -1,13 +1,15 @@
-import yargs, { CommandModule, describe, InferredOptionType, Options } from 'yargs';
+import yargs, { CommandModule, InferredOptionType, Options } from 'yargs';
 import { Alias } from '../model/alias';
 import shelljs from 'shelljs';
 import { CommandType } from '../model/command-type';
 import { AliasOption } from '../model/alias-option';
 import { AliasPositionalArgument } from '../model/alias-positional-argument';
 
+type ArgvBuilder<T> = yargs.Argv<T & { [key in string]: InferredOptionType<Options> }>;
+
 export class ModelMapper {
 
-  static map<T = {}>(alias: Alias): CommandModule<T, {}> {
+  static mapAlias<T = {}>(alias: Alias): CommandModule<T, {}> {
     return {
       command: alias.name,
       describe: alias.description,
@@ -28,23 +30,29 @@ export class ModelMapper {
 
         if (alias.subAliases) {
           alias.subAliases.forEach(subAlias => {
-            yargs.command(ModelMapper.map(subAlias));
+            yargs.command(ModelMapper.mapAlias(subAlias));
           });
         }
 
         return builder;
       },
       handler: args => {
-        if (CommandType.Function === alias.commandType) {
-          ModelMapper.functionRunner(args, alias.command);
-        } else {
-          shelljs.exec(alias.command);
+        if (alias.command !== '') {
+          if (CommandType.Function === alias.commandType) {
+            ModelMapper.functionRunner(args, alias.command);
+          } else {
+            shelljs.exec(alias.command);
+          }
         }
       }
     }
   }
 
-  private static mapOptions<T = {}>(yargs: yargs.Argv<T>, aliasOption: AliasOption): yargs.Argv<T & { [key in string]: InferredOptionType<Options> }> {
+  private static emptyBuilder<T = {}>(): ArgvBuilder<T> {
+    return {} as ArgvBuilder<T>;
+  }
+
+  private static mapOptions<T = {}>(yargs: yargs.Argv<T>, aliasOption: AliasOption): ArgvBuilder<T> {
     const opt: Options = {
       alias: aliasOption.alternativeName,
       type: aliasOption.optionType,
@@ -53,11 +61,7 @@ export class ModelMapper {
     return yargs.option(aliasOption.name, opt);
   }
 
-  private static emptyBuilder<T = {}>(): yargs.Argv<T & { [key in string]: InferredOptionType<Options> }> {
-    return {} as yargs.Argv<T & { [key in string]: InferredOptionType<Options> }>
-  }
-
-  private static mapPositional<T = {}>(yargs: yargs.Argv<T>, positionalArgument: AliasPositionalArgument): yargs.Argv<T & { [key in string]: InferredOptionType<Options> }> {
+  private static mapPositional<T = {}>(yargs: yargs.Argv<T>, positionalArgument: AliasPositionalArgument): ArgvBuilder<T> {
     return yargs.positional(positionalArgument.name, {
       describe: positionalArgument.description,
       type: positionalArgument.type,

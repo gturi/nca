@@ -9,7 +9,7 @@ try {
   const aliases = ConfigLoader.loadAliases();
 
   aliases.sort((a, b) => a.name.localeCompare(b.name))
-    .map(alias => ModelMapper.map(alias))
+    .map(alias => ModelMapper.mapAlias(alias))
     .forEach(commandModule => argvBuilder.command(commandModule));
 
   argvBuilder

@@ -19,15 +19,13 @@ export class ModelMapper {
   }
 
   private static getBuilder<T = {}>(yargs: yargs.Argv<T>, alias: Alias): ArgvBuilder<T> {
-    var builder = ModelMapper.emptyBuilder<T>();
-
     ModelMapper.buildOptions<T>(yargs, alias.options);
 
     ModelMapper.buildPositionalArguments<T>(yargs, alias.positionalArguments);
 
     ModelMapper.buildSubAliases<T>(yargs, alias.subAliases);
 
-    return builder;
+    return ModelMapper.emptyBuilder<T>();
   }
 
   private static emptyBuilder<T = {}>(): ArgvBuilder<T> {

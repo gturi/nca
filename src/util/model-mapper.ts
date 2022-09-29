@@ -13,19 +13,23 @@ export class ModelMapper {
       describe: alias.description,
       builder: yargs => {
         var builder = ModelMapper.emptyBuilder();
-        
+
         if (alias.options) {
-          builder = alias.options.reduce(
-            (_prev, aliasOption) => ModelMapper.mapOptions(yargs, aliasOption),
-            builder
-          )
+          alias.options.forEach(aliasOption => {
+            ModelMapper.mapOptions(yargs, aliasOption);
+          });
         }
 
         if (alias.positionalArguments) {
-          builder = alias.positionalArguments.reduce(
-            (_prev, positionalArgument) => ModelMapper.mapPositional(yargs, positionalArgument),
-            builder
-          )
+          alias.positionalArguments.forEach(positionalArgument => {
+            ModelMapper.mapPositional(yargs, positionalArgument);
+          });
+        }
+
+        if (alias.subAliases) {
+          alias.subAliases.forEach(subAlias => {
+            yargs.command(ModelMapper.map(subAlias));
+          });
         }
 
         return builder;

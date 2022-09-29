@@ -9,4 +9,5 @@ export interface Alias {
   commandType?: CommandType;
   options?: AliasOption[];
   positionalArguments?: AliasPositionalArgument[];
+  subAliases?: Alias[];
 }

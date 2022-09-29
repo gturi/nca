@@ -13,7 +13,7 @@ export class ModelMapper {
     return {
       command: alias.name,
       describe: alias.description,
-      builder: yargs => ModelMapper.getBuilder(yargs, alias),
+      builder: yargs => ModelMapper.getBuilder<T>(yargs, alias),
       handler: args => ModelMapper.getHandler(args, alias)
     }
   }
@@ -21,11 +21,11 @@ export class ModelMapper {
   private static getBuilder<T = {}>(yargs: yargs.Argv<T>, alias: Alias): ArgvBuilder<T> {
     var builder = ModelMapper.emptyBuilder<T>();
 
-    ModelMapper.buildOptions(yargs, alias.options);
+    ModelMapper.buildOptions<T>(yargs, alias.options);
 
-    ModelMapper.buildPositionalArguments(yargs, alias.positionalArguments);
+    ModelMapper.buildPositionalArguments<T>(yargs, alias.positionalArguments);
 
-    ModelMapper.buildSubAliases(yargs, alias.subAliases);
+    ModelMapper.buildSubAliases<T>(yargs, alias.subAliases);
 
     return builder;
   }
@@ -37,7 +37,7 @@ export class ModelMapper {
   private static buildOptions<T = {}>(yargs: yargs.Argv<T>, aliasOptions?: AliasOption[]) {
     if (aliasOptions) {
       aliasOptions.forEach(aliasOption => {
-        ModelMapper.buildOption(yargs, aliasOption);
+        ModelMapper.buildOption<T>(yargs, aliasOption);
       });
     }
   }
@@ -54,7 +54,7 @@ export class ModelMapper {
   private static buildPositionalArguments<T = {}>(yargs: yargs.Argv<T>, positionalArguments?: AliasPositionalArgument[]) {
     if (positionalArguments) {
       positionalArguments.forEach(positionalArgument => {
-        ModelMapper.buildPositional(yargs, positionalArgument);
+        ModelMapper.buildPositional<T>(yargs, positionalArgument);
       });
     }
   }
@@ -71,12 +71,12 @@ export class ModelMapper {
   private static buildSubAliases<T = {}>(yargs: yargs.Argv<T>, subAliases?: Alias[]) {
     if (subAliases) {
       subAliases.forEach(subAlias => {
-        yargs.command(ModelMapper.mapAlias(subAlias));
+        yargs.command(ModelMapper.mapAlias<T>(subAlias));
       });
     }
   }
 
-  private static getHandler(args: yargs.ArgumentsCamelCase<{}>, alias: Alias) {
+  private static getHandler<T = {}>(args: yargs.ArgumentsCamelCase<T>, alias: Alias) {
     if (alias.command !== '') {
       if (CommandType.Function === alias.commandType) {
         ModelMapper.functionRunner(args, alias.command);
@@ -86,7 +86,7 @@ export class ModelMapper {
     }
   }
 
-  private static functionRunner(args: yargs.ArgumentsCamelCase<{}>, code: string) {
+  private static functionRunner<T = {}>(args: yargs.ArgumentsCamelCase<T>, code: string) {
     const fun = new Function(`
       "use strict;"
       const args = arguments[0];

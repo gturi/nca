@@ -3,6 +3,7 @@ import { Alias } from '../model/alias';
 import shelljs from 'shelljs';
 import { CommandType } from '../model/command-type';
 import { AliasOption } from '../model/alias-option';
+import { AliasPositionalArgument } from '../model/alias-positional-argument';
 
 export class ModelMapper {
 
@@ -11,13 +12,23 @@ export class ModelMapper {
       command: alias.name,
       describe: alias.description,
       builder: yargs => {
+        var builder = ModelMapper.emptyBuilder();
+        
         if (alias.options) {
-          return alias.options.reduce(
+          builder = alias.options.reduce(
             (_prev, aliasOption) => ModelMapper.mapOptions(yargs, aliasOption),
-            ModelMapper.emptyBuilder()
+            builder
           )
         }
-        return ModelMapper.emptyBuilder();
+
+        if (alias.positionalArguments) {
+          builder = alias.positionalArguments.reduce(
+            (_prev, positionalArgument) => ModelMapper.mapPositional(yargs, positionalArgument),
+            builder
+          )
+        }
+
+        return builder;
       },
       handler: args => {
         if (CommandType.Function === alias.commandType) {
@@ -40,6 +51,15 @@ export class ModelMapper {
 
   private static emptyBuilder<T = {}>(): yargs.Argv<T & { [key in string]: InferredOptionType<Options> }> {
     return {} as yargs.Argv<T & { [key in string]: InferredOptionType<Options> }>
+  }
+
+  private static mapPositional<T = {}>(yargs: yargs.Argv<T>, positionalArgument: AliasPositionalArgument): yargs.Argv<T & { [key in string]: InferredOptionType<Options> }> {
+    return yargs.positional(positionalArgument.name, {
+      describe: positionalArgument.description,
+      type: positionalArgument.type,
+      default: positionalArgument.defaultValue,
+      required: positionalArgument.required,
+    });
   }
 
   private static functionRunner(args: yargs.ArgumentsCamelCase<{}>, code: string) {

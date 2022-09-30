@@ -1,9 +1,9 @@
-import { AliasOptionType } from "./alias-option-type";
+import { AliasPositionalArgumentType } from "./alias-positional-argument-type";
 
 export interface AliasPositionalArgument {
   name: string;
   description: string;
-  type: AliasOptionType;
+  type: AliasPositionalArgumentType;
   defaultValue: string;
   required: boolean;
 }

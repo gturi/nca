@@ -1,4 +1,3 @@
-import { alias } from "yargs";
 import { Alias } from "../model/alias";
 import { Config } from "../model/config";
 

@@ -4,6 +4,7 @@ import shelljs from 'shelljs';
 import { CommandType } from '../model/command-type';
 import { AliasOption } from '../model/alias-option';
 import { AliasPositionalArgument } from '../model/alias-positional-argument';
+import { AliasPositionalArgumentType } from '../model/alias-positional-argument-type';
 
 type ArgvBuilder<T> = yargs.Argv<T & { [key in string]: InferredOptionType<Options> }>;
 
@@ -11,11 +12,40 @@ export class ModelMapper {
 
   static mapAlias<T = {}>(alias: Alias): CommandModule<T, {}> {
     return {
-      command: alias.name,
+      command: ModelMapper.getCommand(alias),
       describe: alias.description,
       builder: yargs => ModelMapper.getBuilder<T>(yargs, alias),
       handler: args => ModelMapper.getHandler(args, alias)
     }
+  }
+
+  private static getCommand(alias: Alias) {
+    var command: string;
+
+    if (alias.positionalArguments) {
+      const positionalCommands = alias.positionalArguments?.map(positionalArgument => {
+        const listType = ModelMapper.isList(positionalArgument.type) ? '..' : '';
+        console.log(positionalArgument.type)
+        console.log(listType)
+        if (positionalArgument.required && (positionalArgument.defaultValue === null || positionalArgument.defaultValue === undefined)) {
+          return `<${positionalArgument.name}${listType}>`
+        } else {
+          return `[${positionalArgument.name}${listType}]`
+        }
+      }).join(' ');
+
+      command = `${alias.name} ${positionalCommands}`;
+    } else {
+      command = alias.name;
+    }
+
+    return command;
+  }
+
+  private static isList(type: AliasPositionalArgumentType) {
+    return AliasPositionalArgumentType.BooleanList == type ||
+      AliasPositionalArgumentType.NumberList == type ||
+      AliasPositionalArgumentType.StringList == type;
   }
 
   private static getBuilder<T = {}>(yargs: yargs.Argv<T>, alias: Alias): ArgvBuilder<T> {
@@ -60,10 +90,26 @@ export class ModelMapper {
   private static buildPositional<T = {}>(yargs: yargs.Argv<T>, positionalArgument: AliasPositionalArgument) {
     yargs.positional(positionalArgument.name, {
       describe: positionalArgument.description,
-      type: positionalArgument.type,
+      type: ModelMapper.toYargsType(positionalArgument.type),
       default: positionalArgument.defaultValue,
-      required: positionalArgument.required,
+      required: positionalArgument.defaultValue !== null && (positionalArgument.defaultValue === null || positionalArgument.defaultValue === undefined)
     });
+  }
+
+  private static toYargsType(type: AliasPositionalArgumentType): yargs.PositionalOptionsType | undefined {
+    switch (type) {
+      case AliasPositionalArgumentType.Boolean:
+      case AliasPositionalArgumentType.BooleanList:
+        return 'boolean';
+      case AliasPositionalArgumentType.Number:
+      case AliasPositionalArgumentType.NumberList:
+        return 'number';
+      case AliasPositionalArgumentType.String:
+      case AliasPositionalArgumentType.StringList:
+        return 'string';
+      default:
+        return undefined;
+    }
   }
 
   private static buildSubAliases<T = {}>(yargs: yargs.Argv<T>, subAliases?: Alias[]) {

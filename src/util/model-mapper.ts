@@ -28,7 +28,7 @@ export class ModelMapper {
     const positionalArguments = ModelMapper.getPositionalArguments(alias, parentPositionalArguments);
 
     const positionalCommands = positionalArguments.map(positionalArgument => {
-      const listType = ModelMapper.isList(positionalArgument.type) ? '..' : '';
+      const listType = AliasPositionalArgumentType.isListType(positionalArgument.type) ? '..' : '';
       if (positionalArgument.required && (positionalArgument.defaultValue === null || positionalArgument.defaultValue === undefined)) {
         return `<${positionalArgument.name}${listType}>`
       } else {
@@ -37,12 +37,6 @@ export class ModelMapper {
     }).join(' ');
 
     return `${alias.name} ${positionalCommands}`.trimEnd();
-  }
-
-  private static isList(type: AliasPositionalArgumentType) {
-    return AliasPositionalArgumentType.BooleanList == type ||
-      AliasPositionalArgumentType.NumberList == type ||
-      AliasPositionalArgumentType.StringList == type;
   }
 
   private static getBuilder<T = {}>(yargs: yargs.Argv<T>, alias: Alias, parentPositionalArguments: AliasPositionalArgument[]): ArgvBuilder<T> {
@@ -93,26 +87,10 @@ export class ModelMapper {
   private static buildPositional<T = {}>(yargs: yargs.Argv<T>, positionalArgument: AliasPositionalArgument) {
     yargs.positional(positionalArgument.name, {
       describe: positionalArgument.description,
-      type: ModelMapper.toYargsType(positionalArgument.type),
+      type: AliasPositionalArgumentType.toYargsType(positionalArgument.type),
       default: positionalArgument.defaultValue,
       required: positionalArgument.defaultValue !== null && (positionalArgument.defaultValue === null || positionalArgument.defaultValue === undefined)
     });
-  }
-
-  private static toYargsType(type: AliasPositionalArgumentType): yargs.PositionalOptionsType | undefined {
-    switch (type) {
-      case AliasPositionalArgumentType.Boolean:
-      case AliasPositionalArgumentType.BooleanList:
-        return 'boolean';
-      case AliasPositionalArgumentType.Number:
-      case AliasPositionalArgumentType.NumberList:
-        return 'number';
-      case AliasPositionalArgumentType.String:
-      case AliasPositionalArgumentType.StringList:
-        return 'string';
-      default:
-        return undefined;
-    }
   }
 
   private static buildSubAliases<T = {}>(yargs: yargs.Argv<T>, parentPositionalArguments: AliasPositionalArgument[], subAliases?: Alias[]) {

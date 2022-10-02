@@ -2,6 +2,7 @@ import { Alias } from "../model/alias";
 import { AliasOption } from "../model/alias-option";
 import { AliasPositionalArgument } from "../model/alias-positional-argument";
 import { ArrayUtils } from "./array-utils";
+import { DuplicatesValidator } from "./duplicates-validator";
 import { OptionValidator } from "./option-validator";
 import { PositionalArgumentValidator } from "./positional-argument-validator";
 
@@ -22,12 +23,11 @@ export class AliasValidator {
 
   private static checkForDuplicateNames(aliases: Alias[]) {
     const aliasNames = aliases.map(alias => alias.name);
+    const getErrorMessage = (duplicates: string[]) => {
+      return `Multiple aliases has been defined with the same name: [${duplicates}]`;
+    };
 
-    const duplicates = ArrayUtils.getDuplicates(aliasNames);
-
-    if (duplicates.length > 0) {
-      throw new Error(`Multiple aliases has been defined with the same name: [${duplicates}]`);
-    }
+    DuplicatesValidator.validate(aliasNames, getErrorMessage);
   }
 
   private static validateAlias(alias: Alias, parentOptions: AliasOption[],

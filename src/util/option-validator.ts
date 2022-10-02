@@ -1,17 +1,16 @@
 import { AliasOption } from "../model/alias-option";
-import { ArrayUtils } from "./array-utils";
+import { DuplicatesValidator } from "./duplicates-validator";
 
 export class OptionValidator {
 
   static validate(aliasName: string, options?: AliasOption[]) {
     if (options) {
       const optionNames = options.map(option => option.name);
+      const getErrorMessage = (duplicates: string[]) => {
+        return `${aliasName}: multiple option has been defined with the same name: [${duplicates}]`;
+      };
 
-      const duplicates = ArrayUtils.getDuplicates(optionNames);;
-
-      if (duplicates.length > 0) {
-        throw new Error(`${aliasName}: multiple option has been defined with the same name: [${duplicates}]`);
-      }
+      DuplicatesValidator.validate(optionNames, getErrorMessage);
     }
   }
 }

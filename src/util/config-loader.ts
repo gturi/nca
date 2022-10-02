@@ -5,6 +5,7 @@ import yaml from 'js-yaml';
 import { Alias } from '../model/alias';
 import { Config } from '../model/config';
 import { ConfigValidator } from './config-validator';
+import { AliasValidator } from './alias-validator';
 
 
 export class ConfigLoader {
@@ -14,7 +15,7 @@ export class ConfigLoader {
 
     const aliases = ConfigLoader.loadConfigs(configPath, new Set(configPath)).flatMap(config => config.aliases ?? []);
 
-    ConfigValidator.validateAliases(aliases);
+    AliasValidator.validate(aliases);
 
     return aliases;
   }

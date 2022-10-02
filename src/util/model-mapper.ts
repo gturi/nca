@@ -11,33 +11,31 @@ type ArgvBuilder<T> = yargs.Argv<T & { [key in string]: InferredOptionType<Optio
 export class ModelMapper {
 
   static mapAlias<T = {}>(alias: Alias): CommandModule<T, {}> {
+    return ModelMapper.mapAliasWithPositional<T>(alias, []);
+  }
+
+  private static mapAliasWithPositional<T = {}>(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]): CommandModule<T, {}> {
     return {
-      command: ModelMapper.getCommand(alias),
+      command: ModelMapper.getCommand(alias, parentPositionalArguments),
       describe: alias.description,
-      builder: yargs => ModelMapper.getBuilder<T>(yargs, alias),
+      builder: yargs => ModelMapper.getBuilder<T>(yargs, alias, parentPositionalArguments),
       handler: args => ModelMapper.getHandler(args, alias)
     }
   }
 
-  private static getCommand(alias: Alias) {
-    var command: string;
+  private static getCommand(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]) {
+    const positionalArguments = ModelMapper.getPositionalArguments(alias, parentPositionalArguments);
 
-    if (alias.positionalArguments) {
-      const positionalCommands = alias.positionalArguments?.map(positionalArgument => {
-        const listType = ModelMapper.isList(positionalArgument.type) ? '..' : '';
-        if (positionalArgument.required && (positionalArgument.defaultValue === null || positionalArgument.defaultValue === undefined)) {
-          return `<${positionalArgument.name}${listType}>`
-        } else {
-          return `[${positionalArgument.name}${listType}]`
-        }
-      }).join(' ');
+    const positionalCommands = positionalArguments.map(positionalArgument => {
+      const listType = ModelMapper.isList(positionalArgument.type) ? '..' : '';
+      if (positionalArgument.required && (positionalArgument.defaultValue === null || positionalArgument.defaultValue === undefined)) {
+        return `<${positionalArgument.name}${listType}>`
+      } else {
+        return `[${positionalArgument.name}${listType}]`
+      }
+    }).join(' ');
 
-      command = `${alias.name} ${positionalCommands}`;
-    } else {
-      command = alias.name;
-    }
-
-    return command.trimEnd();
+    return `${alias.name} ${positionalCommands}`.trimEnd();
   }
 
   private static isList(type: AliasPositionalArgumentType) {
@@ -46,14 +44,20 @@ export class ModelMapper {
       AliasPositionalArgumentType.StringList == type;
   }
 
-  private static getBuilder<T = {}>(yargs: yargs.Argv<T>, alias: Alias): ArgvBuilder<T> {
+  private static getBuilder<T = {}>(yargs: yargs.Argv<T>, alias: Alias, parentPositionalArguments: AliasPositionalArgument[]): ArgvBuilder<T> {
     ModelMapper.buildOptions<T>(yargs, alias.options);
 
-    ModelMapper.buildPositionalArguments<T>(yargs, alias.positionalArguments);
+    const positionalArguments = ModelMapper.getPositionalArguments(alias, parentPositionalArguments);
 
-    ModelMapper.buildSubAliases<T>(yargs, alias.subAliases);
+    ModelMapper.buildPositionalArguments<T>(yargs, positionalArguments);
+
+    ModelMapper.buildSubAliases<T>(yargs, positionalArguments, alias.subAliases);
 
     return ModelMapper.emptyBuilder<T>();
+  }
+
+  private static getPositionalArguments(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]) {
+    return parentPositionalArguments.concat(alias.positionalArguments ?? [])
   }
 
   private static emptyBuilder<T = {}>(): ArgvBuilder<T> {
@@ -110,10 +114,10 @@ export class ModelMapper {
     }
   }
 
-  private static buildSubAliases<T = {}>(yargs: yargs.Argv<T>, subAliases?: Alias[]) {
+  private static buildSubAliases<T = {}>(yargs: yargs.Argv<T>, parentPositionalArguments: AliasPositionalArgument[], subAliases?: Alias[]) {
     if (subAliases) {
       subAliases.forEach(subAlias => {
-        yargs.command(ModelMapper.mapAlias<T>(subAlias));
+        yargs.command(ModelMapper.mapAliasWithPositional<T>(subAlias, parentPositionalArguments));
       });
     }
   }

@@ -33,7 +33,7 @@ export class AliasValidator {
   private static validateAlias(alias: Alias, parentOptions: AliasOption[],
                                parentPositionalArguments: AliasPositionalArgument[]) {
     const options = ArrayUtils.concat(parentOptions, alias.options);
-    OptionValidator.validate(alias.name, ArrayUtils.concat(parentOptions, options));
+    OptionValidator.validate(alias.name, options);
 
     const positionalArguments = ArrayUtils.concat(parentPositionalArguments, alias.positionalArguments);
     PositionalArgumentValidator.validate(alias.name, positionalArguments);

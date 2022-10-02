@@ -5,6 +5,7 @@ import { CommandType } from '../model/command-type';
 import { AliasOption } from '../model/alias-option';
 import { AliasPositionalArgument } from '../model/alias-positional-argument';
 import { AliasPositionalArgumentType } from '../model/alias-positional-argument-type';
+import { ArrayUtils } from './array-utils';
 
 type ArgvBuilder<T> = yargs.Argv<T & { [key in string]: InferredOptionType<Options> }>;
 
@@ -57,7 +58,7 @@ export class ModelMapper {
   }
 
   private static getPositionalArguments(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]) {
-    return parentPositionalArguments.concat(alias.positionalArguments ?? [])
+    return ArrayUtils.concat(parentPositionalArguments, alias.positionalArguments);
   }
 
   private static emptyBuilder<T = {}>(): ArgvBuilder<T> {

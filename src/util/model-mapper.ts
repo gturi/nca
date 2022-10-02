@@ -25,8 +25,6 @@ export class ModelMapper {
     if (alias.positionalArguments) {
       const positionalCommands = alias.positionalArguments?.map(positionalArgument => {
         const listType = ModelMapper.isList(positionalArgument.type) ? '..' : '';
-        console.log(positionalArgument.type)
-        console.log(listType)
         if (positionalArgument.required && (positionalArgument.defaultValue === null || positionalArgument.defaultValue === undefined)) {
           return `<${positionalArgument.name}${listType}>`
         } else {
@@ -39,7 +37,7 @@ export class ModelMapper {
       command = alias.name;
     }
 
-    return command;
+    return command.trimEnd();
   }
 
   private static isList(type: AliasPositionalArgumentType) {

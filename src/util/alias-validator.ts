@@ -39,7 +39,22 @@ export class AliasValidator {
     PositionalArgumentValidator.validate(alias.name, positionalArguments);
 
     if (alias.subAliases) {
+      AliasValidator.checkSubAliasesAndPositionalArgumentNames(alias, positionalArguments);
+
       AliasValidator.privateValidator(alias.subAliases, options, positionalArguments);
+    }
+  }
+
+  private static checkSubAliasesAndPositionalArgumentNames(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]) {
+    if (alias.subAliases && alias.positionalArguments) {
+      const aliasMatch = alias.subAliases.find(subAlias => {
+        return parentPositionalArguments.some(positionalArgument => {
+          return positionalArgument.name === subAlias.name
+        });
+      });
+      if (aliasMatch) {
+        throw new Error(`Alias name '${aliasMatch.name}' can not be used since a positional argument with the same name already exists`);
+      }
     }
   }
 }

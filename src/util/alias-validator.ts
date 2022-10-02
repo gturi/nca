@@ -5,6 +5,7 @@ import { ArrayUtils } from "./array-utils";
 import { DuplicatesValidator } from "./duplicates-validator";
 import { OptionValidator } from "./option-validator";
 import { PositionalArgumentValidator } from "./positional-argument-validator";
+import { WhiteSpaceValidator } from "./white-space-validator";
 
 export class AliasValidator {
 
@@ -14,10 +15,18 @@ export class AliasValidator {
 
   private static privateValidator(aliases: Alias[], parentOptions: AliasOption[] = [],
                                   parentPositionalArguments: AliasPositionalArgument[] = []) {
+    AliasValidator.checkNamesFormat(aliases);
     AliasValidator.checkForDuplicateNames(aliases);
 
     aliases.forEach(alias => {
       AliasValidator.validateAlias(alias, parentOptions, parentPositionalArguments);
+    });
+  }
+
+  private static checkNamesFormat(aliases: Alias[]) {
+    const aliasesNames = aliases.map(alias => alias.name)
+    WhiteSpaceValidator.validate(aliasesNames, elementsWithWhitespaces => {
+      return `Alias names cannot contain whitespaces [${elementsWithWhitespaces}]`;
     });
   }
 

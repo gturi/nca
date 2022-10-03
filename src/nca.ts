@@ -1,6 +1,6 @@
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
-import { ModelMapper } from './util/model-mapper';
+import { AliasMapper } from './mapper/alias-mapper';
 import { ConfigLoader } from './util/config-loader';
 
 try {
@@ -9,7 +9,7 @@ try {
   const aliases = ConfigLoader.loadAliases();
 
   aliases.sort((a, b) => a.name.localeCompare(b.name))
-    .map(alias => ModelMapper.mapAlias(alias))
+    .map(alias => AliasMapper.map(alias))
     .forEach(commandModule => argvBuilder.command(commandModule));
 
   argvBuilder

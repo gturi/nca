@@ -1,7 +1,7 @@
 import { Alias } from "../model/alias";
 import { AliasOption } from "../model/alias-option";
 import { AliasPositionalArgument } from "../model/alias-positional-argument";
-import { ArrayUtils } from "./array-utils";
+import { ArrayUtils } from "../util/array-utils";
 import { DuplicatesValidator } from "./duplicates-validator";
 import { OptionValidator } from "./option-validator";
 import { PositionalArgumentValidator } from "./positional-argument-validator";

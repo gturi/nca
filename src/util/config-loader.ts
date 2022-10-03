@@ -4,8 +4,8 @@ import path from 'path';
 import yaml from 'js-yaml';
 import { Alias } from '../model/alias';
 import { Config } from '../model/config';
-import { ConfigValidator } from './config-validator';
-import { AliasValidator } from './alias-validator';
+import { ConfigValidator } from '../validator/config-validator';
+import { AliasValidator } from '../validator/alias-validator';
 
 
 export class ConfigLoader {

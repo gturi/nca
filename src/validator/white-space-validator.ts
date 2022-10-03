@@ -1,4 +1,4 @@
-import { StringUtils } from "./string-utils";
+import { StringUtils } from "../util/string-utils";
 
 export class WhiteSpaceValidator {
 

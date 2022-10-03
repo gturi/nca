@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Node cross platform command alias",
   "main": "./dist/nca.js",
+  "bin": {
+    "nca": "./dist/nca.js"
+  },
   "scripts": {
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"

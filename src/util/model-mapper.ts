@@ -16,17 +16,16 @@ export class ModelMapper {
   }
 
   private static mapAliasWithPositional<T = {}>(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]): CommandModule<T, {}> {
+    const positionalArguments = ModelMapper.getPositionalArguments(alias, parentPositionalArguments);
     return {
-      command: ModelMapper.getCommand(alias, parentPositionalArguments),
+      command: ModelMapper.getCommand(alias, positionalArguments),
       describe: alias.description,
-      builder: yargs => ModelMapper.getBuilder<T>(yargs, alias, parentPositionalArguments),
+      builder: yargs => ModelMapper.getBuilder<T>(yargs, alias, positionalArguments),
       handler: args => ModelMapper.getHandler(args, alias)
     }
   }
 
-  private static getCommand(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]) {
-    const positionalArguments = ModelMapper.getPositionalArguments(alias, parentPositionalArguments);
-
+  private static getCommand(alias: Alias, positionalArguments: AliasPositionalArgument[]) {
     const positionalCommands = positionalArguments.map(positionalArgument => {
       const listType = AliasPositionalArgumentType.isListType(positionalArgument.type) ? '..' : '';
       if (positionalArgument.required && (positionalArgument.defaultValue === null || positionalArgument.defaultValue === undefined)) {
@@ -39,10 +38,8 @@ export class ModelMapper {
     return `${alias.name} ${positionalCommands}`.trimEnd();
   }
 
-  private static getBuilder<T = {}>(yargs: yargs.Argv<T>, alias: Alias, parentPositionalArguments: AliasPositionalArgument[]): ArgvBuilder<T> {
+  private static getBuilder<T = {}>(yargs: yargs.Argv<T>, alias: Alias, positionalArguments: AliasPositionalArgument[]): ArgvBuilder<T> {
     ModelMapper.buildOptions<T>(yargs, alias.options);
-
-    const positionalArguments = ModelMapper.getPositionalArguments(alias, parentPositionalArguments);
 
     ModelMapper.buildPositionalArguments<T>(yargs, positionalArguments);
 
@@ -51,8 +48,10 @@ export class ModelMapper {
     return ModelMapper.emptyBuilder<T>();
   }
 
-  private static getPositionalArguments(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]) {
-    return ArrayUtils.concat(parentPositionalArguments, alias.positionalArguments);
+  private static getPositionalArguments(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]): AliasPositionalArgument[] {
+    return [parentPositionalArguments, alias.positionalArguments ?? []].flat().sort((a, b) => {
+      return AliasPositionalArgumentType.compare(a.type, b.type);
+    });
   }
 
   private static emptyBuilder<T = {}>(): ArgvBuilder<T> {

@@ -2,15 +2,16 @@ import yargs from "yargs";
 import { Alias } from "../model/alias";
 import { CommandType } from "../model/command-type";
 import shelljs from 'shelljs';
+import { StringUtils } from "../util/string-utils";
 
 export class YargsHandlerBuilder {
 
   static getHandler<T = {}>(args: yargs.ArgumentsCamelCase<T>, alias: Alias) {
-    if (alias.command !== undefined && alias.command !== null && alias.command !== '') {
+    if (!StringUtils.isEmpty(alias.command)) {
       if (CommandType.Function === alias.commandType) {
-        YargsHandlerBuilder.functionRunner(args, alias.command);
+        YargsHandlerBuilder.functionRunner(args, alias.command ?? '');
       } else {
-        shelljs.exec(alias.command);
+        shelljs.exec(alias.command ?? '');
       }
     }
   }

@@ -6,7 +6,7 @@ import shelljs from 'shelljs';
 export class YargsHandlerBuilder {
 
   static getHandler<T = {}>(args: yargs.ArgumentsCamelCase<T>, alias: Alias) {
-    if (alias.command !== '') {
+    if (alias.command !== undefined && alias.command !== null && alias.command !== '') {
       if (CommandType.Function === alias.commandType) {
         YargsHandlerBuilder.functionRunner(args, alias.command);
       } else {

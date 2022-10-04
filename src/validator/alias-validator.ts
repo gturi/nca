@@ -7,19 +7,26 @@ import { OptionValidator } from "./option-validator";
 import { PositionalArgumentValidator } from "./positional-argument-validator";
 import { WhiteSpaceValidator } from "./white-space-validator";
 
+type Parent = {
+  options: AliasOption[],
+  positionalArguments: AliasPositionalArgument[]
+}
+
 export class AliasValidator {
 
   static validate(aliases: Alias[]) {
-    AliasValidator.privateValidator(aliases);
+    AliasValidator.privateValidator(aliases, {
+      options: [],
+      positionalArguments: []
+    });
   }
 
-  private static privateValidator(aliases: Alias[], parentOptions: AliasOption[] = [],
-                                  parentPositionalArguments: AliasPositionalArgument[] = []) {
+  private static privateValidator(aliases: Alias[], parent: Parent) {
     AliasValidator.checkNamesFormat(aliases);
     AliasValidator.checkForDuplicateNames(aliases);
 
     aliases.forEach(alias => {
-      AliasValidator.validateAlias(alias, parentOptions, parentPositionalArguments);
+      AliasValidator.validateAlias(alias, parent);
     });
   }
 
@@ -39,18 +46,28 @@ export class AliasValidator {
     DuplicatesValidator.validate(aliasNames, getErrorMessage);
   }
 
-  private static validateAlias(alias: Alias, parentOptions: AliasOption[],
-                               parentPositionalArguments: AliasPositionalArgument[]) {
-    const options = ArrayUtils.concat(parentOptions, alias.options);
+  private static validateAlias(alias: Alias, parent: Parent) {
+    AliasValidator.validateCommand(alias);
+
+    const options = ArrayUtils.concat(parent.options, alias.options);
     OptionValidator.validate(alias.name, options);
 
-    const positionalArguments = ArrayUtils.concat(parentPositionalArguments, alias.positionalArguments);
+    const positionalArguments = ArrayUtils.concat(parent.positionalArguments, alias.positionalArguments);
     PositionalArgumentValidator.validate(alias.name, positionalArguments);
 
     if (alias.subAliases) {
       AliasValidator.checkSubAliasesAndPositionalArgumentNames(alias, positionalArguments);
 
-      AliasValidator.privateValidator(alias.subAliases, options, positionalArguments);
+      AliasValidator.privateValidator(alias.subAliases, {
+        options: options,
+        positionalArguments: positionalArguments
+      });
+    }
+  }
+
+  private static validateCommand(alias: Alias) {
+    if (!alias.command && (alias.subAliases ?? []).length == 0) {
+      throw new Error(`Alias '${alias.name}' must define sub aliases when its command is not defined`);
     }
   }
 

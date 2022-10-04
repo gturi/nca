@@ -37,6 +37,7 @@ Running `nca hello` in your terminal will print hello in the terminal.
 ### Config notes
 
 - An alias name must be unique across all configs.
+- An alias name cannot contain spaces.
 - An alias command cannot be optional if it does not define sub aliases.
 - Options and positional arguments defined for an alias are also shared to its sub aliases.
 - Positional arguments order declaration matters. List type positional arguments are automatically ordered as the last possible positional argument.
@@ -45,7 +46,7 @@ Running `nca hello` in your terminal will print hello in the terminal.
 
 ### Config API
 
-To know more on how to aliases can be configured you can check the API documentation at TODO.
+To know more on how aliases can be configured you can check the API documentation at TODO.
 
 
 ## Examples

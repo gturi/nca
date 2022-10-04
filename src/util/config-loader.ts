@@ -44,6 +44,7 @@ export class ConfigLoader {
 
   private static loadConfig(configPath: string): Config | null {
     if (!fs.existsSync(configPath)) {
+      console.warn(`Config file not found: ${configPath}`);
       return null;
     }
 

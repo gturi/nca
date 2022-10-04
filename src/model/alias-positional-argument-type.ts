@@ -1,11 +1,17 @@
 import yargs from "yargs";
 
 export enum AliasPositionalArgumentType {
+  /** Boolean positional argument. */
   Boolean = 'Boolean',
+  /** Numeric positional argument. */
   Number = 'Number',
+  /** String positional argument. */
   String = 'String',
+  /** Boolean list positional argument. Only one list type positional argument can be defined for each alias. */
   BooleanList = 'BooleanList',
+  /** Numeric list positional argument. Only one list type positional argument can be defined for each alias. */
   NumberList = 'NumberList',
+  /** String list positional argument. Only one list type positional argument can be defined for each alias. */
   StringList = 'StringList'
 }
 

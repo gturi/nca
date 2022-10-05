@@ -1,6 +1,7 @@
 import yargs from "yargs";
 import { AliasPositionalArgument } from "../model/alias-positional-argument";
 import { AliasPositionalArgumentType } from "../model/alias-positional-argument-type";
+import { AliasPositionalArgumentUtils } from "../util/alias-positional-argument-utils";
 
 export class PositionalArgumentBuilder {
   
@@ -17,11 +18,7 @@ export class PositionalArgumentBuilder {
       describe: positionalArgument.description,
       type: AliasPositionalArgumentType.toYargsType(positionalArgument.type),
       default: positionalArgument.defaultValue,
-      required: PositionalArgumentBuilder.isRequired(positionalArgument)
+      required: AliasPositionalArgumentUtils.isRequired(positionalArgument)
     });
-  }
-
-  private static isRequired(positionalArgument: AliasPositionalArgument): boolean {
-    return positionalArgument.defaultValue !== null && (positionalArgument.defaultValue === null || positionalArgument.defaultValue === undefined)
   }
 }

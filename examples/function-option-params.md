@@ -29,7 +29,7 @@ aliases:
 
   Output:
 
-  ```bash
+  ```js
   false
   undefined
   foo
@@ -41,7 +41,7 @@ aliases:
 
   Output:
 
-  ```bash
+  ```js
   true
   1
   bar
@@ -53,7 +53,7 @@ aliases:
 
   Output:
 
-  ```bash
+  ```js
   false
   100
   foo

@@ -13,4 +13,4 @@ aliases:
 nca hello
 ```
 
-Should print `hello world`.
+Prints `hello world`.

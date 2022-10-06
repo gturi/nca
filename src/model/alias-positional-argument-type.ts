@@ -43,14 +43,14 @@ export namespace AliasPositionalArgumentType {
    * Sort last list type AliasPositionalArgumentType
    */
   export function compare(a: AliasPositionalArgumentType, b: AliasPositionalArgumentType) {
-      if (a === b) {
-        return 0;
-      } else if (AliasPositionalArgumentType.isListType(a)) {
-        return 1;
-      } else if (AliasPositionalArgumentType.isListType(b)) {
-        return -1;
-      } else {
-        return 0;
-      }
+    if (a === b) {
+      return 0;
+    } else if (AliasPositionalArgumentType.isListType(a)) {
+      return 1;
+    } else if (AliasPositionalArgumentType.isListType(b)) {
+      return -1;
+    } else {
+      return 0;
+    }
   }
 }

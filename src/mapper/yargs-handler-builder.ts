@@ -3,10 +3,11 @@ import { Alias } from "../model/alias";
 import { CommandType } from "../model/command-type";
 import shelljs from 'shelljs';
 import { StringUtils } from "../util/string-utils";
+import { AnyObj } from "../util/custom-types";
 
 export class YargsHandlerBuilder {
 
-  static getHandler<T = {}>(args: yargs.ArgumentsCamelCase<T>, alias: Alias) {
+  static getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>, alias: Alias) {
     if (!StringUtils.isEmpty(alias.command)) {
       if (CommandType.Function === alias.commandType) {
         YargsHandlerBuilder.functionRunner(args, alias.command ?? '');
@@ -16,7 +17,7 @@ export class YargsHandlerBuilder {
     }
   }
 
-  private static functionRunner<T = {}>(args: yargs.ArgumentsCamelCase<T>, code: string) {
+  private static functionRunner<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>, code: string) {
     const fun = new Function(`
       "use strict;"
       const args = arguments[0];

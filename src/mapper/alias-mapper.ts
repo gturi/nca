@@ -1,21 +1,20 @@
-import yargs, { CommandModule, InferredOptionType, Options } from "yargs";
+import yargs, { CommandModule } from "yargs";
 import { Alias } from "../model/alias";
 import { AliasPositionalArgument } from "../model/alias-positional-argument";
 import { AliasPositionalArgumentType } from "../model/alias-positional-argument-type";
 import { AliasPositionalArgumentUtils } from "../util/alias-positional-argument-utils";
 import { OptionBuilder as OptionBuilder } from "./option-builder";
-import { PositionalArgumentBuilder as PositionalArgumentBuilder } from "./positional-argument-builder";
+import { PositionalArgumentBuilder } from "./positional-argument-builder";
 import { YargsHandlerBuilder } from "./yargs-handler-builder";
-
-type ArgvBuilder<T> = yargs.Argv<T & { [key in string]: InferredOptionType<Options> }>;
+import { AnyObj, ArgvBuilder } from "../util/custom-types";
 
 export class AliasMapper {
 
-  static map<T = {}>(alias: Alias): CommandModule<T, {}> {
+  static map<T = AnyObj>(alias: Alias): CommandModule<T, AnyObj> {
     return AliasMapper.buildAlias<T>(alias, []);
   }
 
-  private static buildAlias<T = {}>(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]): CommandModule<T, {}> {
+  private static buildAlias<T = AnyObj>(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]): CommandModule<T, AnyObj> {
     const positionalArguments = AliasMapper.getPositionalArguments(alias, parentPositionalArguments);
     return {
       command: AliasMapper.getCommand(alias, positionalArguments),
@@ -44,7 +43,7 @@ export class AliasMapper {
     return `${alias.name} ${positionalCommands}`.trimEnd();
   }
 
-  private static getBuilder<T = {}>(yargs: yargs.Argv<T>, alias: Alias, positionalArguments: AliasPositionalArgument[]): ArgvBuilder<T> {
+  private static getBuilder<T = AnyObj>(yargs: yargs.Argv<T>, alias: Alias, positionalArguments: AliasPositionalArgument[]): ArgvBuilder<T> {
     OptionBuilder.build<T>(yargs, alias.options);
 
     PositionalArgumentBuilder.build<T>(yargs, positionalArguments);
@@ -54,7 +53,7 @@ export class AliasMapper {
     return AliasMapper.emptyBuilder<T>();
   }
 
-  private static buildSubAliases<T = {}>(yargs: yargs.Argv<T>, parentPositionalArguments: AliasPositionalArgument[], subAliases?: Alias[]) {
+  private static buildSubAliases<T = AnyObj>(yargs: yargs.Argv<T>, parentPositionalArguments: AliasPositionalArgument[], subAliases?: Alias[]) {
     if (subAliases) {
       subAliases.forEach(subAlias => {
         yargs.command(AliasMapper.buildAlias<T>(subAlias, parentPositionalArguments));
@@ -62,7 +61,7 @@ export class AliasMapper {
     }
   }
 
-  private static emptyBuilder<T = {}>(): ArgvBuilder<T> {
+  private static emptyBuilder<T = AnyObj>(): ArgvBuilder<T> {
     return {} as ArgvBuilder<T>;
   }
 }

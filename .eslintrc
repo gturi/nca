@@ -48,7 +48,8 @@
       {
         "SwitchCase": 1
       }
-    ]
+    ],
+    "@typescript-eslint/no-namespace": "off"
   },
   "settings": {
     "import/resolver": {

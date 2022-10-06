@@ -1,6 +1,6 @@
 import { Alias } from "../model/alias";
-import { AliasOption } from "../model/alias-option";
-import { AliasPositionalArgument } from "../model/alias-positional-argument";
+import { OptionParam } from "../model/option-param";
+import { PositionalArgument } from "../model/positional-argument";
 import { ArrayUtils } from "../util/array-utils";
 import { StringUtils } from "../util/string-utils";
 import { DuplicatesValidator } from "./duplicates-validator";
@@ -9,8 +9,8 @@ import { PositionalArgumentValidator } from "./positional-argument-validator";
 import { WhiteSpaceValidator } from "./white-space-validator";
 
 type Parent = {
-  options: AliasOption[],
-  positionalArguments: AliasPositionalArgument[]
+  options: OptionParam[],
+  positionalArguments: PositionalArgument[]
 }
 
 export class AliasValidator {
@@ -72,7 +72,7 @@ export class AliasValidator {
     }
   }
 
-  private static checkSubAliasesAndPositionalArgumentNames(alias: Alias, parentPositionalArguments: AliasPositionalArgument[]) {
+  private static checkSubAliasesAndPositionalArgumentNames(alias: Alias, parentPositionalArguments: PositionalArgument[]) {
     if (alias.subAliases && alias.positionalArguments) {
       const aliasMatch = alias.subAliases.find(subAlias => {
         return parentPositionalArguments.some(positionalArgument => {

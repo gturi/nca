@@ -1,6 +1,6 @@
 import yargs from "yargs";
 
-export enum AliasPositionalArgumentType {
+export enum PositionalArgumentType {
   /** Boolean positional argument. */
   Boolean = 'Boolean',
   /** Numeric positional argument. */
@@ -21,24 +21,24 @@ export enum AliasPositionalArgumentType {
   StringList = 'StringList'
 }
 
-export namespace AliasPositionalArgumentType {
+export namespace PositionalArgumentType {
   export function isListType(val: string): boolean {
-    const key = val as keyof typeof AliasPositionalArgumentType
-    return AliasPositionalArgumentType.BooleanList === key ||
-      AliasPositionalArgumentType.NumberList === key ||
-      AliasPositionalArgumentType.StringList === key;
+    const key = val as keyof typeof PositionalArgumentType
+    return PositionalArgumentType.BooleanList === key ||
+      PositionalArgumentType.NumberList === key ||
+      PositionalArgumentType.StringList === key;
   }
 
-  export function toYargsType(type: AliasPositionalArgumentType): yargs.PositionalOptionsType | undefined {
+  export function toYargsType(type: PositionalArgumentType): yargs.PositionalOptionsType | undefined {
     switch (type) {
-      case AliasPositionalArgumentType.Boolean:
-      case AliasPositionalArgumentType.BooleanList:
+      case PositionalArgumentType.Boolean:
+      case PositionalArgumentType.BooleanList:
         return 'boolean';
-      case AliasPositionalArgumentType.Number:
-      case AliasPositionalArgumentType.NumberList:
+      case PositionalArgumentType.Number:
+      case PositionalArgumentType.NumberList:
         return 'number';
-      case AliasPositionalArgumentType.String:
-      case AliasPositionalArgumentType.StringList:
+      case PositionalArgumentType.String:
+      case PositionalArgumentType.StringList:
         return 'string';
       default:
         return undefined;
@@ -48,12 +48,12 @@ export namespace AliasPositionalArgumentType {
   /**
    * Sort last list type AliasPositionalArgumentType
    */
-  export function compare(a: AliasPositionalArgumentType, b: AliasPositionalArgumentType) {
+  export function compare(a: PositionalArgumentType, b: PositionalArgumentType) {
     if (a === b) {
       return 0;
-    } else if (AliasPositionalArgumentType.isListType(a)) {
+    } else if (PositionalArgumentType.isListType(a)) {
       return 1;
-    } else if (AliasPositionalArgumentType.isListType(b)) {
+    } else if (PositionalArgumentType.isListType(b)) {
       return -1;
     } else {
       return 0;

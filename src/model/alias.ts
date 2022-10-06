@@ -1,6 +1,6 @@
 import { CommandType } from "./command-type"
-import { AliasOption } from "./alias-option";
-import { AliasPositionalArgument } from "./alias-positional-argument";
+import { OptionParam } from "./option-param";
+import { PositionalArgument } from "./positional-argument";
 
 export interface Alias {
   /** The name that will be used to recall the alias. */
@@ -14,9 +14,9 @@ export interface Alias {
   /** Determines how the command will be executed. When left empty defaults to {@link CommandType.Simple}. */
   commandType?: CommandType;
   /** Options passed down to this alias and its subaliases when commandType=Function*/
-  options?: AliasOption[];
+  options?: OptionParam[];
   /** Positional arguments passed down to this alias and its subaliases when commandType=Function */
-  positionalArguments?: AliasPositionalArgument[];
+  positionalArguments?: PositionalArgument[];
   /** Subaliases, to have more complex alias structures. */
   subAliases?: Alias[];
 }

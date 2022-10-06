@@ -1,11 +1,11 @@
-import { AliasPositionalArgument } from "../model/alias-positional-argument";
-import { AliasPositionalArgumentType } from "../model/alias-positional-argument-type";
+import { PositionalArgument } from "../model/positional-argument";
+import { PositionalArgumentType } from "../model/positional-argument-type";
 import { DuplicatesValidator } from "./duplicates-validator";
 import { WhiteSpaceValidator } from "./white-space-validator";
 
 export class PositionalArgumentValidator {
 
-  static validate(aliasName: string, positionalArguments?: AliasPositionalArgument[]) {
+  static validate(aliasName: string, positionalArguments?: PositionalArgument[]) {
     if (positionalArguments) {
       PositionalArgumentValidator.checkNamesFormat(aliasName, positionalArguments);
       PositionalArgumentValidator.checkDuplicateNames(aliasName, positionalArguments);
@@ -13,14 +13,14 @@ export class PositionalArgumentValidator {
     }
   }
 
-  private static checkNamesFormat(aliasName: string, positionalArguments: AliasPositionalArgument[]) {
+  private static checkNamesFormat(aliasName: string, positionalArguments: PositionalArgument[]) {
     const positionalArgumentNames = positionalArguments.map(positionalArgument => positionalArgument.name)
     WhiteSpaceValidator.validate(positionalArgumentNames, elementsWithWhitespaces => {
       return `${aliasName}: positional argument names cannot contain whitespaces [${elementsWithWhitespaces}]`;
     });
   }
 
-  private static checkDuplicateNames(aliasName: string, positionalArguments: AliasPositionalArgument[]) {
+  private static checkDuplicateNames(aliasName: string, positionalArguments: PositionalArgument[]) {
     const positionalArgumentNames = positionalArguments.map(positionalArgument => positionalArgument.name);
     const getErrorMessage = (duplicates: string[]) => {
       return `${aliasName}: multiple positional arguments has been defined with the same name: [${duplicates}]`;
@@ -29,9 +29,9 @@ export class PositionalArgumentValidator {
     DuplicatesValidator.validate(positionalArgumentNames, getErrorMessage);
   }
 
-  private static checkMultipleListPositionalArguments(aliasName: string, positionalArguments: AliasPositionalArgument[]) {
+  private static checkMultipleListPositionalArguments(aliasName: string, positionalArguments: PositionalArgument[]) {
     const listPositionalArgumentNames = positionalArguments
-      .filter(positionalArgument => AliasPositionalArgumentType.isListType(positionalArgument.type))
+      .filter(positionalArgument => PositionalArgumentType.isListType(positionalArgument.type))
       .map(positionalArgument => positionalArgument.name);
 
     if (listPositionalArgumentNames.length > 1) {

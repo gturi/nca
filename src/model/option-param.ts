@@ -1,12 +1,12 @@
-import { AliasOptionType } from "./alias-option-type";
+import { OptionParamType } from "./option-param-type";
 
-export interface AliasOption {
+export interface OptionParam {
   /** Option name. */
   name: string;
   /** Option alternative name. */
   alternativeName?: string;
   /** Option type. */
-  optionType: AliasOptionType;
+  optionType: OptionParamType;
   /** Default option value. */
   defaultValue: string;
 }

@@ -1,7 +1,7 @@
 import yargs, { CommandModule } from "yargs";
 import { Alias } from "../model/alias";
-import { AliasPositionalArgument } from "../model/alias-positional-argument";
-import { AliasPositionalArgumentType } from "../model/alias-positional-argument-type";
+import { PositionalArgument } from "../model/positional-argument";
+import { PositionalArgumentType } from "../model/positional-argument-type";
 import { AliasPositionalArgumentUtils } from "../util/alias-positional-argument-utils";
 import { OptionBuilder as OptionBuilder } from "./option-builder";
 import { PositionalArgumentBuilder } from "./positional-argument-builder";
@@ -15,7 +15,7 @@ export class AliasMapper {
   }
 
   private static buildAlias<T = AnyObj>(
-    alias: Alias, parentPositionalArguments: AliasPositionalArgument[]
+    alias: Alias, parentPositionalArguments: PositionalArgument[]
   ): CommandModule<T, AnyObj> {
     const positionalArguments = AliasMapper.getPositionalArguments(
       alias, parentPositionalArguments
@@ -29,16 +29,16 @@ export class AliasMapper {
   }
 
   private static getPositionalArguments(
-    alias: Alias, parentPositionalArguments: AliasPositionalArgument[]
-  ): AliasPositionalArgument[] {
+    alias: Alias, parentPositionalArguments: PositionalArgument[]
+  ): PositionalArgument[] {
     return [parentPositionalArguments, alias.positionalArguments ?? []].flat().sort((a, b) => {
-      return AliasPositionalArgumentType.compare(a.type, b.type);
+      return PositionalArgumentType.compare(a.type, b.type);
     });
   }
 
-  private static getCommand(alias: Alias, positionalArguments: AliasPositionalArgument[]) {
+  private static getCommand(alias: Alias, positionalArguments: PositionalArgument[]) {
     const positionalCommands = positionalArguments.map(positionalArgument => {
-      const listType = AliasPositionalArgumentType.isListType(positionalArgument.type) ? '..' : '';
+      const listType = PositionalArgumentType.isListType(positionalArgument.type) ? '..' : '';
       if (AliasPositionalArgumentUtils.isRequired(positionalArgument)) {
         return `<${positionalArgument.name}${listType}>`
       } else {
@@ -50,7 +50,7 @@ export class AliasMapper {
   }
 
   private static getBuilder<T = AnyObj>(
-    yargs: yargs.Argv<T>, alias: Alias, positionalArguments: AliasPositionalArgument[]
+    yargs: yargs.Argv<T>, alias: Alias, positionalArguments: PositionalArgument[]
   ): ArgvBuilder<T> {
     OptionBuilder.build<T>(yargs, alias.options);
 
@@ -62,7 +62,7 @@ export class AliasMapper {
   }
 
   private static buildSubAliases<T = AnyObj>(
-    yargs: yargs.Argv<T>, parentPositionalArguments: AliasPositionalArgument[], subAliases?: Alias[]
+    yargs: yargs.Argv<T>, parentPositionalArguments: PositionalArgument[], subAliases?: Alias[]
   ) {
     if (subAliases) {
       subAliases.forEach(subAlias => {

@@ -2,12 +2,25 @@
 
 A command line utility to manage cross platform command aliases.
 
+## Table of Contents
+
+- [Install](#Install)
+- [Usage](#Usage)
+    - [Config notes](#Config-notes)
+    - [Config API](#Config-API)
+    - [Mixing CompletablePromise and Promise](#Mixing-CompletablePromise-and-Promise)
+- [Examples](#Examples)
+- [Contributing](#Contributing)
+- [License](#License)
+
 
 ## Install
 
 ```
 npm install -g nca
 ```
+
+[Back to top](#nca---Node-Command-Alias)
 
 
 ## Usage
@@ -33,6 +46,8 @@ If you do not like to store all the aliases in this file you can declare alterna
 In this simple example an alias called hello will be created.
 Running `nca hello` in your terminal will print `hello` in the terminal.
 
+[Back to top](#nca---Node-Command-Alias)
+
 
 ### Config notes
 
@@ -44,9 +59,14 @@ Running `nca hello` in your terminal will print `hello` in the terminal.
 - At most one list type positional argument can be declared per alias hierarchy.
 - A positional argument can not have the same name as one of the sub aliases in its hierarchy.
 
+[Back to top](#nca---Node-Command-Alias)
+
+
 ### Config API
 
 To know more on how aliases can be configured you can check the API documentation at TODO.
+
+[Back to top](#nca---Node-Command-Alias)
 
 
 ## Examples
@@ -58,17 +78,18 @@ To know more on how aliases can be configured you can check the API documentatio
 - [function shell command execution](https://github.com/FlamingTuri/nca/blob/main/examples/shell-command-execution.md) - executing shell commands leveragin shelljs
 - [alias hierarchy](https://github.com/FlamingTuri/nca/blob/main/examples/alias-hierarchy.md) - creating alias hierarchies, to create complex command line interfaces 
 
+[Back to top](#nca---Node-Command-Alias)
+
 
 ## Contributing
 
 Contributions, suggestions, issues and feature requests are welcome!
 
-[Back to top](#CompletablePromise)
+[Back to top](#nca---Node-Command-Alias)
 
 
 ## License
 
 This library is distributed under the [MIT license](LICENSE).
 
-[Back to top](#CompletablePromise)
-
+[Back to top](#nca---Node-Command-Alias)

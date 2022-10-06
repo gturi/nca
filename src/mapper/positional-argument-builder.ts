@@ -5,7 +5,7 @@ import { AliasPositionalArgumentUtils } from "../util/alias-positional-argument-
 import { AnyObj } from "../util/custom-types";
 
 export class PositionalArgumentBuilder {
-  
+
   static build<T = AnyObj>(yargs: yargs.Argv<T>, positionalArguments?: AliasPositionalArgument[]) {
     if (positionalArguments) {
       positionalArguments.forEach(positionalArgument => {
@@ -14,7 +14,9 @@ export class PositionalArgumentBuilder {
     }
   }
 
-  private static buildPositional<T = AnyObj>(yargs: yargs.Argv<T>, positionalArgument: AliasPositionalArgument) {
+  private static buildPositional<T = AnyObj>(
+    yargs: yargs.Argv<T>, positionalArgument: AliasPositionalArgument
+  ) {
     yargs.positional(positionalArgument.name, {
       describe: positionalArgument.description,
       type: AliasPositionalArgumentType.toYargsType(positionalArgument.type),

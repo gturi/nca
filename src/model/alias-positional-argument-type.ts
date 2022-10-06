@@ -7,11 +7,17 @@ export enum AliasPositionalArgumentType {
   Number = 'Number',
   /** String positional argument. */
   String = 'String',
-  /** Boolean list positional argument. Only one list type positional argument can be defined for each alias. */
+  /** Boolean list positional argument.
+   *  Only one list type positional argument can be defined for each alias.
+   */
   BooleanList = 'BooleanList',
-  /** Numeric list positional argument. Only one list type positional argument can be defined for each alias. */
+  /** Numeric list positional argument.
+   *  Only one list type positional argument can be defined for each alias.
+   */
   NumberList = 'NumberList',
-  /** String list positional argument. Only one list type positional argument can be defined for each alias. */
+  /** String list positional argument.
+   *  Only one list type positional argument can be defined for each alias.
+   */
   StringList = 'StringList'
 }
 

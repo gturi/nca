@@ -31,7 +31,7 @@ aliases:
 If you do not like to store all the aliases in this file you can declare alternative yaml configurations under includePath variables.
 
 In this simple example an alias called hello will be created.
-Running `nca hello` in your terminal will print hello in the terminal.
+Running `nca hello` in your terminal will print `hello` in the terminal.
 
 
 ### Config notes
@@ -51,7 +51,12 @@ To know more on how aliases can be configured you can check the API documentatio
 
 ## Examples
 
-TODO
+- [hello world](https://github.com/FlamingTuri/nca/blob/main/examples/hello-world.md) - simple hello world
+- [function hello world](https://github.com/FlamingTuri/nca/blob/main/examples/function-hello-world.md) - hello world but leveraging javascript interpreter
+- [function option](https://github.com/FlamingTuri/nca/blob/main/examples/function-option-param.md) - passing option params to an alias
+- [function positional arguments](https://github.com/FlamingTuri/nca/blob/main/examples/function-positional-arguments.md) - passing positional arguments to an alias
+- [function shell command execution](https://github.com/FlamingTuri/nca/blob/main/examples/shell-command-execution.md) - executing shell commands leveragin shelljs
+- [alias hierarchy](https://github.com/FlamingTuri/nca/blob/main/examples/alias-hierarchy.md) - creating alias hierarchies, to create complex command line interfaces 
 
 
 ## Contributing

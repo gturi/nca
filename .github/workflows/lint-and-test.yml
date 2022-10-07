@@ -1,0 +1,26 @@
+name: lint-and-test
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+      - run: npm ci
+      - run: npm run lint
+  test:
+    strategy:
+      matrix:
+        os: [windows, macos, ubuntu]
+        node: ['14', 'lts/*']
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      #- run: npm test

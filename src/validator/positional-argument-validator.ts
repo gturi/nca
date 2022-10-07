@@ -7,11 +7,9 @@ export class PositionalArgumentValidator {
 
   static validate(aliasName: string, positionalArguments?: PositionalArgument[]) {
     if (positionalArguments) {
-      PositionalArgumentValidator.checkNamesFormat(aliasName, positionalArguments);
-      PositionalArgumentValidator.checkDuplicateNames(aliasName, positionalArguments);
-      PositionalArgumentValidator.checkMultipleListPositionalArguments(
-        aliasName, positionalArguments
-      );
+      this.checkNamesFormat(aliasName, positionalArguments);
+      this.checkDuplicateNames(aliasName, positionalArguments);
+      this.checkMultipleListPositionalArguments(aliasName, positionalArguments);
     }
   }
 

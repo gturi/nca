@@ -7,7 +7,7 @@ export class OptionBuilder {
   static build<T = AnyObj>(yargs: yargs.Argv<T>, aliasOptions?: OptionParam[]) {
     if (aliasOptions) {
       aliasOptions.forEach(aliasOption => {
-        OptionBuilder.mapOption<T>(yargs, aliasOption);
+        this.mapOption<T>(yargs, aliasOption);
       });
     }
   }

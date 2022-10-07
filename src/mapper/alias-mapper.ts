@@ -11,19 +11,17 @@ import { AnyObj, ArgvBuilder } from "../util/custom-types";
 export class AliasMapper {
 
   static map<T = AnyObj>(alias: Alias): CommandModule<T, AnyObj> {
-    return AliasMapper.buildAlias<T>(alias, []);
+    return this.buildAlias<T>(alias, []);
   }
 
   private static buildAlias<T = AnyObj>(
     alias: Alias, parentPositionalArguments: PositionalArgument[]
   ): CommandModule<T, AnyObj> {
-    const positionalArguments = AliasMapper.getPositionalArguments(
-      alias, parentPositionalArguments
-    );
+    const positionalArguments = this.getPositionalArguments(alias, parentPositionalArguments);
     return {
-      command: AliasMapper.getCommand(alias, positionalArguments),
+      command: this.getCommand(alias, positionalArguments),
       describe: alias.description,
-      builder: yargs => AliasMapper.getBuilder<T>(yargs, alias, positionalArguments),
+      builder: yargs => this.getBuilder<T>(yargs, alias, positionalArguments),
       handler: args => YargsHandlerBuilder.getHandler(args, alias)
     }
   }
@@ -56,9 +54,9 @@ export class AliasMapper {
 
     PositionalArgumentBuilder.build<T>(yargs, positionalArguments);
 
-    AliasMapper.buildSubAliases<T>(yargs, positionalArguments, alias.subAliases);
+    this.buildSubAliases<T>(yargs, positionalArguments, alias.subAliases);
 
-    return AliasMapper.emptyBuilder<T>();
+    return this.emptyBuilder<T>();
   }
 
   private static buildSubAliases<T = AnyObj>(
@@ -66,7 +64,7 @@ export class AliasMapper {
   ) {
     if (subAliases) {
       subAliases.forEach(subAlias => {
-        yargs.command(AliasMapper.buildAlias<T>(subAlias, parentPositionalArguments));
+        yargs.command(this.buildAlias<T>(subAlias, parentPositionalArguments));
       });
     }
   }

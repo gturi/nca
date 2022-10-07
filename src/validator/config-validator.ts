@@ -3,8 +3,8 @@ import { Config } from "../model/config";
 export class ConfigValidator {
 
   static validate(configPath: string, config: Config) {
-    ConfigValidator.throwErrorIfAliasIsDefined(configPath, config, 'completion');
-    ConfigValidator.throwErrorIfAliasIsDefined(configPath, config, 'config');
+    this.throwErrorIfAliasIsDefined(configPath, config, 'completion');
+    this.throwErrorIfAliasIsDefined(configPath, config, 'config');
   }
 
   private static throwErrorIfAliasIsDefined(configPath: string, config: Config, aliasName: string) {

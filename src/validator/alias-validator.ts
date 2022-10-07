@@ -16,19 +16,17 @@ type Parent = {
 export class AliasValidator {
 
   static validate(aliases: Alias[]) {
-    AliasValidator.privateValidator(aliases, {
+    this.privateValidator(aliases, {
       options: [],
       positionalArguments: []
     });
   }
 
   private static privateValidator(aliases: Alias[], parent: Parent) {
-    AliasValidator.checkNamesFormat(aliases);
-    AliasValidator.checkForDuplicateNames(aliases);
+    this.checkNamesFormat(aliases);
+    this.checkForDuplicateNames(aliases);
 
-    aliases.forEach(alias => {
-      AliasValidator.validateAlias(alias, parent);
-    });
+    aliases.forEach(alias => this.validateAlias(alias, parent));
   }
 
   private static checkNamesFormat(aliases: Alias[]) {
@@ -48,7 +46,7 @@ export class AliasValidator {
   }
 
   private static validateAlias(alias: Alias, parent: Parent) {
-    AliasValidator.validateCommand(alias);
+    this.validateCommand(alias);
 
     const options = ArrayUtils.concat(parent.options, alias.options);
     OptionParamValidator.validate(alias.name, options);
@@ -59,9 +57,9 @@ export class AliasValidator {
     PositionalArgumentValidator.validate(alias.name, positionalArguments);
 
     if (alias.subAliases) {
-      AliasValidator.checkSubAliasesAndPositionalArgumentNames(alias, positionalArguments);
+      this.checkSubAliasesAndPositionalArgumentNames(alias, positionalArguments);
 
-      AliasValidator.privateValidator(alias.subAliases, {
+      this.privateValidator(alias.subAliases, {
         options: options,
         positionalArguments: positionalArguments
       });

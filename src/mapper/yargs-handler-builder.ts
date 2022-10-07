@@ -10,7 +10,7 @@ export class YargsHandlerBuilder {
   static getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>, alias: Alias) {
     if (!StringUtils.isEmpty(alias.command)) {
       if (CommandType.Function === alias.commandType) {
-        YargsHandlerBuilder.functionRunner(args, alias.command ?? '');
+        this.functionRunner(args, alias.command ?? '');
       } else {
         shelljs.exec(alias.command ?? '');
       }

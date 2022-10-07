@@ -6,9 +6,9 @@ export class OptionParamValidator {
 
   static validate(aliasName: string, options?: OptionParam[]) {
     if (options) {
-      OptionParamValidator.checkNamesFormat(aliasName, options);
-      OptionParamValidator.checkAlternativeNamesFormat(aliasName, options);
-      OptionParamValidator.checkDuplicateNames(aliasName, options);
+      this.checkNamesFormat(aliasName, options);
+      this.checkAlternativeNamesFormat(aliasName, options);
+      this.checkDuplicateNames(aliasName, options);
     }
   }
 

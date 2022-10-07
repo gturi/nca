@@ -9,7 +9,7 @@ export class PositionalArgumentBuilder {
   static build<T = AnyObj>(yargs: yargs.Argv<T>, positionalArguments?: PositionalArgument[]) {
     if (positionalArguments) {
       positionalArguments.forEach(positionalArgument => {
-        PositionalArgumentBuilder.buildPositional<T>(yargs, positionalArgument);
+        this.buildPositional<T>(yargs, positionalArgument);
       });
     }
   }

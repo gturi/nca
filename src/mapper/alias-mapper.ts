@@ -2,7 +2,7 @@ import yargs, { CommandModule } from "yargs";
 import { Alias } from "../model/alias";
 import { PositionalArgument } from "../model/positional-argument";
 import { PositionalArgumentType } from "../model/positional-argument-type";
-import { AliasPositionalArgumentUtils } from "../util/alias-positional-argument-utils";
+import { PositionalArgumentUtils } from "../util/positional-argument-utils";
 import { OptionBuilder as OptionBuilder } from "./option-builder";
 import { PositionalArgumentBuilder } from "./positional-argument-builder";
 import { YargsHandlerBuilder } from "./yargs-handler-builder";
@@ -39,7 +39,7 @@ export class AliasMapper {
   private static getCommand(alias: Alias, positionalArguments: PositionalArgument[]) {
     const positionalCommands = positionalArguments.map(positionalArgument => {
       const listType = PositionalArgumentType.isListType(positionalArgument.type) ? '..' : '';
-      if (AliasPositionalArgumentUtils.isRequired(positionalArgument)) {
+      if (PositionalArgumentUtils.isRequired(positionalArgument)) {
         return `<${positionalArgument.name}${listType}>`
       } else {
         return `[${positionalArgument.name}${listType}]`

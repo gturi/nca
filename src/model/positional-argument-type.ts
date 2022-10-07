@@ -29,7 +29,9 @@ export namespace PositionalArgumentType {
       PositionalArgumentType.StringList === key;
   }
 
-  export function toYargsType(type: PositionalArgumentType): yargs.PositionalOptionsType | undefined {
+  type yargsType = yargs.PositionalOptionsType | undefined
+
+  export function toYargsType(type: PositionalArgumentType): yargsType {
     switch (type) {
       case PositionalArgumentType.Boolean:
       case PositionalArgumentType.BooleanList:

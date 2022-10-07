@@ -9,6 +9,7 @@ export interface PositionalArgument {
   type: PositionalArgumentType;
   /** Positional argument default value. */
   defaultValue?: string;
-  /** Whether the positional argument is required. Defaults to true when {@link PositionalArgument.defaultValue} is not defined. */
+  /** Whether the positional argument is required.
+   * Defaults to true when {@link PositionalArgument.defaultValue} is not defined. */
   required: boolean;
 }

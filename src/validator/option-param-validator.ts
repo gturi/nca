@@ -2,13 +2,13 @@ import { OptionParam } from "../model/option-param";
 import { DuplicatesValidator } from "./duplicates-validator";
 import { WhiteSpaceValidator } from "./white-space-validator";
 
-export class OptionValidator {
+export class OptionParamValidator {
 
   static validate(aliasName: string, options?: OptionParam[]) {
     if (options) {
-      OptionValidator.checkNamesFormat(aliasName, options);
-      OptionValidator.checkAlternativeNamesFormat(aliasName, options);
-      OptionValidator.checkDuplicateNames(aliasName, options);
+      OptionParamValidator.checkNamesFormat(aliasName, options);
+      OptionParamValidator.checkAlternativeNamesFormat(aliasName, options);
+      OptionParamValidator.checkDuplicateNames(aliasName, options);
     }
   }
 

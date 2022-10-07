@@ -13,7 +13,8 @@ export class ConfigLoader {
   static loadAliases(): Alias[] {
     const configPath = path.join(os.homedir(), '.nca', 'config.yml');
 
-    const aliases = ConfigLoader.loadConfigs(configPath, new Set(configPath)).flatMap(config => config.aliases ?? []);
+    const configs = ConfigLoader.loadConfigs(configPath, new Set(configPath));
+    const aliases = configs.flatMap(config => config.aliases ?? []);
 
     AliasValidator.validate(aliases);
 

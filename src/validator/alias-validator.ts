@@ -4,7 +4,7 @@ import { PositionalArgument } from "../model/positional-argument";
 import { ArrayUtils } from "../util/array-utils";
 import { StringUtils } from "../util/string-utils";
 import { DuplicatesValidator } from "./duplicates-validator";
-import { OptionValidator } from "./option-validator";
+import { OptionParamValidator } from "./option-param-validator";
 import { PositionalArgumentValidator } from "./positional-argument-validator";
 import { WhiteSpaceValidator } from "./white-space-validator";
 
@@ -51,9 +51,11 @@ export class AliasValidator {
     AliasValidator.validateCommand(alias);
 
     const options = ArrayUtils.concat(parent.options, alias.options);
-    OptionValidator.validate(alias.name, options);
+    OptionParamValidator.validate(alias.name, options);
 
-    const positionalArguments = ArrayUtils.concat(parent.positionalArguments, alias.positionalArguments);
+    const positionalArguments = ArrayUtils.concat(
+      parent.positionalArguments, alias.positionalArguments
+    );
     PositionalArgumentValidator.validate(alias.name, positionalArguments);
 
     if (alias.subAliases) {
@@ -68,11 +70,15 @@ export class AliasValidator {
 
   private static validateCommand(alias: Alias) {
     if (StringUtils.isEmpty(alias.command) && (alias.subAliases ?? []).length == 0) {
-      throw new Error(`Alias '${alias.name}' must define sub aliases when its command is not defined`);
+      throw new Error(
+        `Alias '${alias.name}' must define sub aliases when its command is not defined`
+      );
     }
   }
 
-  private static checkSubAliasesAndPositionalArgumentNames(alias: Alias, parentPositionalArguments: PositionalArgument[]) {
+  private static checkSubAliasesAndPositionalArgumentNames(
+    alias: Alias, parentPositionalArguments: PositionalArgument[]
+  ) {
     if (alias.subAliases && alias.positionalArguments) {
       const aliasMatch = alias.subAliases.find(subAlias => {
         return parentPositionalArguments.some(positionalArgument => {
@@ -80,7 +86,10 @@ export class AliasValidator {
         });
       });
       if (aliasMatch) {
-        throw new Error(`Alias name '${aliasMatch.name}' can not be used since a positional argument with the same name already exists`);
+        throw new Error(
+          `Alias name '${aliasMatch.name}' cannot be used: ` +
+          'a positional argument with the same name already exists'
+        );
       }
     }
   }

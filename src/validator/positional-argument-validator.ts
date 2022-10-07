@@ -9,34 +9,46 @@ export class PositionalArgumentValidator {
     if (positionalArguments) {
       PositionalArgumentValidator.checkNamesFormat(aliasName, positionalArguments);
       PositionalArgumentValidator.checkDuplicateNames(aliasName, positionalArguments);
-      PositionalArgumentValidator.checkMultipleListPositionalArguments(aliasName, positionalArguments);
+      PositionalArgumentValidator.checkMultipleListPositionalArguments(
+        aliasName, positionalArguments
+      );
     }
   }
 
   private static checkNamesFormat(aliasName: string, positionalArguments: PositionalArgument[]) {
-    const positionalArgumentNames = positionalArguments.map(positionalArgument => positionalArgument.name)
+    const positionalArgumentNames = this.getPositionalArgumentNames(positionalArguments);
     WhiteSpaceValidator.validate(positionalArgumentNames, elementsWithWhitespaces => {
-      return `${aliasName}: positional argument names cannot contain whitespaces [${elementsWithWhitespaces}]`;
+      return `${aliasName}: positional argument names cannot contain whitespaces ` +
+        `[${elementsWithWhitespaces}]`;
     });
   }
 
   private static checkDuplicateNames(aliasName: string, positionalArguments: PositionalArgument[]) {
-    const positionalArgumentNames = positionalArguments.map(positionalArgument => positionalArgument.name);
+    const positionalArgumentNames = this.getPositionalArgumentNames(positionalArguments);
     const getErrorMessage = (duplicates: string[]) => {
-      return `${aliasName}: multiple positional arguments has been defined with the same name: [${duplicates}]`;
+      return `${aliasName}: multiple positional arguments has been defined ` +
+        `with the same name: [${duplicates}]`;
     };
 
     DuplicatesValidator.validate(positionalArgumentNames, getErrorMessage);
   }
 
-  private static checkMultipleListPositionalArguments(aliasName: string, positionalArguments: PositionalArgument[]) {
+  private static checkMultipleListPositionalArguments(
+    aliasName: string, positionalArguments: PositionalArgument[]
+  ) {
     const listPositionalArgumentNames = positionalArguments
       .filter(positionalArgument => PositionalArgumentType.isListType(positionalArgument.type))
       .map(positionalArgument => positionalArgument.name);
 
     if (listPositionalArgumentNames.length > 1) {
-      const errorMessage = `${aliasName}: only one list type positional argument is allowed, found: [${listPositionalArgumentNames}]`;
-      throw new Error(errorMessage);
+      throw new Error(
+        `${aliasName}: only one list type positional argument is allowed, ` +
+        `found: [${listPositionalArgumentNames}]`
+      );
     }
+  }
+
+  private static getPositionalArgumentNames(positionalArguments: PositionalArgument[]): string[] {
+    return positionalArguments.map(positionalArgument => positionalArgument.name);
   }
 }

@@ -9,7 +9,10 @@ export class ConfigValidator {
 
   private static throwErrorIfAliasIsDefined(configPath: string, config: Config, aliasName: string) {
     if (config.aliases?.some(alias => alias.name === aliasName)) {
-      throw new Error(`${configPath}: You can not define an alias called '${aliasName}' since it is a special keyword`);
+      throw new Error(
+        `${configPath}: you cannot define an alias called '${aliasName}'` +
+        'since it is a special keyword'
+      );
     }
   }
 }

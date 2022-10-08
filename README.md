@@ -1,6 +1,9 @@
 # nca - Node Command Alias
 
+[![lint-and-test](https://github.com/FlamingTuri/nca/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/FlamingTuri/nca/actions/workflows/lint-and-test.yml)
+
 A command line utility to manage cross platform command aliases.
+
 
 ## Table of Contents
 

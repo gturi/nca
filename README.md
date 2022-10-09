@@ -18,7 +18,7 @@ A command line utility to manage cross platform command aliases.
 ## Install
 
 ```
-npm install -g nca
+npm install -g node-command-alias
 ```
 
 [Back to top](#nca---Node-Command-Alias)

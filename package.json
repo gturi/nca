@@ -1,7 +1,15 @@
 {
-  "name": "nca",
-  "version": "0.1.0",
+  "name": "node-command-alias",
+  "version": "0.1.1",
   "description": "Node cross platform command alias",
+  "keywords": [
+    "alias",
+    "cli",
+    "cmd",
+    "command",
+    "shell",
+    "terminal"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {

@@ -10,7 +10,8 @@
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "doc": "node .github/script/generate-typedoc.mjs",
-    "lint": "eslint \"src/**\""
+    "lint": "eslint \"src/**\"",
+    "preinstall": "node script/setup.mjs"
   },
   "repository": {
     "type": "git",

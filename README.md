@@ -32,7 +32,7 @@ The heart of nca resides in `$HOME/.nca/config.yml`.
 
 This file is where your cross platform aliases will be declared.
 
-```yml
+```yaml
 includePaths:
   - /absolute/path/to/alternative-config.yml
   - /absolute/path/to/another-alternative-config.yml

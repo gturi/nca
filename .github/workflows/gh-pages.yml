@@ -1,0 +1,41 @@
+name: gh-pages
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  setup-gh-pages-files:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+      - run: npm ci
+      - run: echo running on branch ${{ env.BRANCH }}
+      - run: npm run doc ${{ env.BRANCH }}
+      - run: ls gh-pages/${{ env.BRANCH }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: gh-pages-artifacts
+          path: gh-pages/*
+  update-gh-pages:
+    needs: setup-gh-pages-files
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: gh-pages-artifacts
+          path: gh-pages
+      - run: ls
+      - run: ls gh-pages
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: gh-pages
+          clean: false

@@ -2,13 +2,14 @@
   "name": "nca",
   "version": "1.0.0",
   "description": "Node cross platform command alias",
-  "main": "./dist/nca.js",
+  "main": "./dist/index.js",
   "bin": {
-    "nca": "./dist/nca.js"
+    "nca": "./dist/index.js"
   },
   "scripts": {
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "doc": "node .github/script/generate-typedoc.mjs",
     "lint": "eslint \"src/**\""
   },
   "repository": {
@@ -35,6 +36,7 @@
     "eslint": "^8.24.0",
     "eslint-plugin-import": "^2.26.0",
     "ts-node": "^10.9.1",
+    "typedoc": "^0.23.15",
     "typescript": "^4.8.3"
   },
   "publishConfig": {

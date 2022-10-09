@@ -1,6 +1,6 @@
 {
   "name": "nca",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Node cross platform command alias",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

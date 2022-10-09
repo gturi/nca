@@ -1,6 +1,4 @@
 import fs from 'fs';
-import os from "os";
-import path from 'path';
 import yaml from 'js-yaml';
 import { Alias } from '../model/alias';
 import { Config } from '../model/config';
@@ -11,7 +9,7 @@ import { AliasValidator } from '../validator/alias-validator';
 export class ConfigLoader {
 
   static loadAliases(): Alias[] {
-    const configPath = path.join(os.homedir(), '.nca', 'config.yml');
+    const configPath = Config.getMainConfigFilePath();
 
     const configs = ConfigLoader.loadConfigs(configPath, new Set(configPath));
     const aliases = configs.flatMap(config => config.aliases ?? []);

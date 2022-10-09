@@ -4,6 +4,7 @@ import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import { AliasMapper } from './mapper/alias-mapper';
 import { ConfigLoader } from './util/config-loader';
+import { ConfigCommand } from './command/config-command';
 
 function nca() {
   try {
@@ -14,6 +15,8 @@ function nca() {
     aliases.sort((a, b) => a.name.localeCompare(b.name))
       .map(alias => AliasMapper.map(alias))
       .forEach(commandModule => argvBuilder.command(commandModule));
+
+    argvBuilder.command(new ConfigCommand().getCommand());
 
     argvBuilder
       .completion()

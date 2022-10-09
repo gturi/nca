@@ -7,6 +7,7 @@ import { OptionBuilder as OptionBuilder } from "./option-builder";
 import { PositionalArgumentBuilder } from "./positional-argument-builder";
 import { YargsHandlerBuilder } from "./yargs-handler-builder";
 import { AnyObj, ArgvBuilder } from "../util/custom-types";
+import { YargsBuilder } from "../util/yargs-builder";
 
 export class AliasMapper {
 
@@ -56,7 +57,7 @@ export class AliasMapper {
 
     this.buildSubAliases<T>(yargs, positionalArguments, alias.subAliases);
 
-    return this.emptyBuilder<T>();
+    return YargsBuilder.emptyBuilder<T>();
   }
 
   private static buildSubAliases<T = AnyObj>(
@@ -67,9 +68,5 @@ export class AliasMapper {
         yargs.command(this.buildAlias<T>(subAlias, parentPositionalArguments));
       });
     }
-  }
-
-  private static emptyBuilder<T = AnyObj>(): ArgvBuilder<T> {
-    return {} as ArgvBuilder<T>;
   }
 }

@@ -1,6 +1,5 @@
-import yargs from "yargs";
 import { AnyObj, ArgvBuilder } from "../../util/custom-types";
-import { YargsBuilder } from "../../util/yargs-builder";
+import { YargsUtils } from "../../util/yargs-utils";
 import { Command } from "../command";
 import { AddPathCommand } from "./add-path-command";
 
@@ -18,6 +17,6 @@ export class PathCommand extends Command {
     const addPathCommand = new AddPathCommand();
     yargs.command(addPathCommand.getCommand());
 
-    return YargsBuilder.emptyBuilder<T>();
+    return YargsUtils.emptyBuilder<T>();
   }
 }

@@ -7,7 +7,7 @@ import { OptionBuilder as OptionBuilder } from "./option-builder";
 import { PositionalArgumentBuilder } from "./positional-argument-builder";
 import { YargsHandlerBuilder } from "./yargs-handler-builder";
 import { AnyObj, ArgvBuilder } from "../util/custom-types";
-import { YargsBuilder } from "../util/yargs-builder";
+import { YargsUtils } from "../util/yargs-utils";
 
 export class AliasMapper {
 
@@ -20,7 +20,7 @@ export class AliasMapper {
   ): CommandModule<T, AnyObj> {
     const positionalArguments = this.getPositionalArguments(alias, parentPositionalArguments);
     return {
-      command: this.getCommand(alias, positionalArguments),
+      command: YargsUtils.getCommand(alias.name, positionalArguments),
       describe: alias.description,
       builder: yargs => this.getBuilder<T>(yargs, alias, positionalArguments),
       handler: args => YargsHandlerBuilder.getHandler(args, alias)
@@ -35,19 +35,6 @@ export class AliasMapper {
     });
   }
 
-  private static getCommand(alias: Alias, positionalArguments: PositionalArgument[]) {
-    const positionalCommands = positionalArguments.map(positionalArgument => {
-      const listType = PositionalArgumentType.isListType(positionalArgument.type) ? '..' : '';
-      if (PositionalArgumentUtils.isRequired(positionalArgument)) {
-        return `<${positionalArgument.name}${listType}>`
-      } else {
-        return `[${positionalArgument.name}${listType}]`
-      }
-    }).join(' ');
-
-    return `${alias.name} ${positionalCommands}`.trimEnd();
-  }
-
   private static getBuilder<T = AnyObj>(
     yargs: yargs.Argv<T>, alias: Alias, positionalArguments: PositionalArgument[]
   ): ArgvBuilder<T> {
@@ -57,7 +44,7 @@ export class AliasMapper {
 
     this.buildSubAliases<T>(yargs, positionalArguments, alias.subAliases);
 
-    return YargsBuilder.emptyBuilder<T>();
+    return YargsUtils.emptyBuilder<T>();
   }
 
   private static buildSubAliases<T = AnyObj>(

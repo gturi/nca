@@ -2,25 +2,33 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import yargs from "yargs";
 import { Config } from "../../model/config";
+import { PositionalArgument } from '../../model/positional-argument';
+import { PositionalArgumentType } from '../../model/positional-argument-type';
 import { AnyObj, ArgvBuilder } from "../../util/custom-types";
+import { YargsUtils } from '../../util/yargs-utils';
 import { Command } from "../command";
 
 export class AddPathCommand extends Command {
 
   protected getCommandName(): string {
-    return 'add <configPath>';
+    return YargsUtils.getCommand('add', this.getPositionalArguments());
   }
 
   protected getCommandDescription(): string {
     return 'include path into configuration file';
   }
 
-  protected getBuilder<T = AnyObj>(yargs: yargs.Argv<T>): ArgvBuilder<T> {
-    yargs.positional('configPath', {
-      describe: 'config path to add',
-      type: 'string',
+  protected getPositionalArguments(): PositionalArgument[] {
+    const positionalArgument: PositionalArgument = {
+      name: 'newConfigPath',
+      description: 'config path to add',
+      type: PositionalArgumentType.String,
       required: true
-    });
+    }
+    return [positionalArgument];
+  }
+
+  protected getBuilder<T = AnyObj>(yargs: yargs.Argv<T>): ArgvBuilder<T> {
 
     yargs.option('f', {
       alias: 'file',

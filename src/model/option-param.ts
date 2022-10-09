@@ -5,6 +5,8 @@ export interface OptionParam {
   name: string;
   /** Option alternative name. */
   alternativeName?: string;
+  /** Option description. */
+  description?: string;
   /** Option type. */
   optionType: OptionParamType;
   /** Default option value. */

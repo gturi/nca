@@ -2,9 +2,11 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import yargs from "yargs";
 import { Config } from "../../model/config";
+import { OptionParam } from '../../model/option-param';
+import { OptionParamType } from '../../model/option-param-type';
 import { PositionalArgument } from '../../model/positional-argument';
 import { PositionalArgumentType } from '../../model/positional-argument-type';
-import { AnyObj, ArgvBuilder } from "../../util/custom-types";
+import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from '../../util/yargs-utils';
 import { Command } from "../command";
 
@@ -28,16 +30,15 @@ export class AddPathCommand extends Command {
     return [positionalArgument];
   }
 
-  protected getBuilder<T = AnyObj>(yargs: yargs.Argv<T>): ArgvBuilder<T> {
-
-    yargs.option('f', {
-      alias: 'file',
-      describe: 'configuration path to that will include the new config',
-      type: 'string',
-      default: Config.getMainConfigFilePath()
-    });
-
-    return super.getBuilder<T>(yargs);
+  protected getOptionParams(): OptionParam[] {
+    const optionParam: OptionParam = {
+      name: 'f',
+      alternativeName: 'file',
+      description: 'configuration path to that will include the new config',
+      optionType: OptionParamType.Boolean,
+      defaultValue: Config.getMainConfigFilePath()
+    }
+    return [optionParam];
   }
 
   protected getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {

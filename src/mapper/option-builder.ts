@@ -15,6 +15,7 @@ export class OptionBuilder {
   private static mapOption<T = AnyObj>(yargs: yargs.Argv<T>, aliasOption: OptionParam) {
     yargs.option(aliasOption.name, {
       alias: aliasOption.alternativeName,
+      description: aliasOption.description,
       type: aliasOption.optionType,
       default: aliasOption.defaultValue
     });

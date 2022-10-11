@@ -1,5 +1,6 @@
 import { Command } from "../command";
 import { AddPathCommand } from "./add-path-command";
+import { DeletePathCommand } from "./delete-path-command";
 
 export class PathCommand extends Command {
 
@@ -12,6 +13,6 @@ export class PathCommand extends Command {
   }
 
   protected override getCommands(): Command[] {
-    return [new AddPathCommand()];
+    return [new AddPathCommand(), new DeletePathCommand()];
   }
 }

@@ -11,4 +11,13 @@ export class ArrayUtils {
   static concat<T>(array: T[], optionalArray?: T[]): T[] {
     return array.concat(optionalArray ?? []);
   }
+
+  static remove<T>(array: T[], element: T): boolean {
+    const index = array.indexOf(element);
+    const result = index !== -1;
+    if (result) {
+      array.splice(index, 1);
+    }
+    return result;
+  }
 }

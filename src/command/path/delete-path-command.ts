@@ -1,29 +1,30 @@
 import yargs from "yargs";
 import { Config } from "../../model/config";
-import { OptionParam } from '../../model/option-param';
-import { OptionParamType } from '../../model/option-param-type';
+import { OptionParam } from "../../model/option-param";
+import { OptionParamType } from "../../model/option-param-type";
 import { PositionalArgument } from '../../model/positional-argument';
 import { PositionalArgumentType } from '../../model/positional-argument-type';
+import { ArrayUtils } from '../../util/array-utils';
 import { ConfigLoader } from '../../util/config-loader';
 import { ConfigSaver } from '../../util/config-saver';
 import { AnyObj } from "../../util/custom-types";
-import { YargsUtils } from '../../util/yargs-utils';
+import { YargsUtils } from "../../util/yargs-utils";
 import { Command } from "../command";
 
-export class AddPathCommand extends Command {
+export class DeletePathCommand extends Command {
 
   protected override getCommandName(): string {
-    return YargsUtils.getCommand('add', this.getPositionalArguments());
+    return YargsUtils.getCommand('delete', this.getPositionalArguments());
   }
 
   protected override getCommandDescription(): string {
-    return 'include path into configuration file';
+    return 'remove path from configuration file';
   }
 
   protected override getPositionalArguments(): PositionalArgument[] {
     const positionalArgument: PositionalArgument = {
       name: 'configPath',
-      description: 'config path to add',
+      description: 'config path to remove',
       type: PositionalArgumentType.String,
       required: true
     }
@@ -43,16 +44,12 @@ export class AddPathCommand extends Command {
 
   protected override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
     const configPath = args.f as string;
-    const configPathToAdd = args.configPath as string;
+    const configPathToRemove = args.configPath as string;
 
     const config = ConfigLoader.loadConfig(configPath);
 
-    if (config.includePaths) {
-      config.includePaths.push(configPathToAdd);
-    } else {
-      config.includePaths = [configPathToAdd];
+    if (config.includePaths && ArrayUtils.remove(config.includePaths, configPathToRemove)) {
+      ConfigSaver.save(configPath, config);
     }
-
-    ConfigSaver.save(configPath, config);
   }
 }

@@ -1,11 +1,11 @@
-import fs from 'fs';
-import yaml from 'js-yaml';
 import yargs from "yargs";
 import { Config } from "../../model/config";
 import { OptionParam } from '../../model/option-param';
 import { OptionParamType } from '../../model/option-param-type';
 import { PositionalArgument } from '../../model/positional-argument';
 import { PositionalArgumentType } from '../../model/positional-argument-type';
+import { ConfigLoader } from '../../util/config-loader';
+import { ConfigSaver } from '../../util/config-saver';
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from '../../util/yargs-utils';
 import { Command } from "../command";
@@ -45,12 +45,7 @@ export class AddPathCommand extends Command {
     const configPath = args.f as string;
     const configPathToAdd = args.configPath as string;
 
-    if (!fs.existsSync(configPath)) {
-      throw new Error(`Config file not found: ${configPath}`);
-    }
-
-    const data = fs.readFileSync(configPath, 'utf8');
-    const config: Config = yaml.load(data) ?? {};
+    const config = ConfigLoader.loadConfig(configPath);
 
     if (config.includePaths) {
       config.includePaths.push(configPathToAdd);
@@ -58,6 +53,6 @@ export class AddPathCommand extends Command {
       config.includePaths = [configPathToAdd];
     }
 
-    fs.writeFileSync(configPath, yaml.dump(config), { encoding: 'utf8' });
+    ConfigSaver.save(configPath, config);
   }
 }

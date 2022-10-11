@@ -11,7 +11,7 @@ export class ConfigLoader {
   static loadAliases(): Alias[] {
     const configPath = Config.getMainConfigFilePath();
 
-    const configs = ConfigLoader.loadConfigs(configPath, new Set(configPath));
+    const configs = this.loadConfigs(configPath, new Set(configPath));
     const aliases = configs.flatMap(config => config.aliases ?? []);
 
     AliasValidator.validate(aliases);
@@ -22,8 +22,10 @@ export class ConfigLoader {
   private static loadConfigs(configPath: string, loadedConfigs: Set<string>): Config[] {
     const result: Config[] = [];
 
-    const mainConfig = ConfigLoader.loadConfig(configPath);
+    const mainConfig = this.nullableLoadConfig(configPath);
     if (mainConfig) {
+      ConfigValidator.validate(configPath, mainConfig);
+
       result.push(mainConfig);
 
       if (mainConfig.includePaths) {
@@ -33,7 +35,7 @@ export class ConfigLoader {
             loadedConfigs.add(path);
             return path;
           })
-          .flatMap(path => ConfigLoader.loadConfigs(path, loadedConfigs))
+          .flatMap(path => this.loadConfigs(path, loadedConfigs))
           .forEach(path => result.push(path));
       }
     }
@@ -41,17 +43,20 @@ export class ConfigLoader {
     return result;
   }
 
-  private static loadConfig(configPath: string): Config | null {
+  private static nullableLoadConfig(configPath: string): Config | null {
     if (!fs.existsSync(configPath)) {
       console.warn(`Config file not found: ${configPath}`);
       return null;
     }
+    return this.loadConfig(configPath);
+  }
+
+  public static loadConfig(configPath: string): Config {
+    if (!fs.existsSync(configPath)) {
+      throw new Error(`Config file not found: ${configPath}`);
+    }
 
     const data = fs.readFileSync(configPath, 'utf8');
-    const config: Config = yaml.load(data) ?? {};
-
-    ConfigValidator.validate(configPath, config);
-
-    return config;
+    return yaml.load(data) ?? {};
   }
 }

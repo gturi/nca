@@ -3,15 +3,15 @@ import { PathCommand } from "./path/path-command";
 
 export class ConfigCommand extends Command {
 
-  protected getCommandName(): string {
+  protected override getCommandName(): string {
     return 'config <command>';
   }
 
-  protected getCommandDescription(): string {
+  protected override getCommandDescription(): string {
     return 'nca configuration commands';
   }
 
-  protected getCommands(): Command[] {
+  protected override getCommands(): Command[] {
     return [new PathCommand()]
   }
 }

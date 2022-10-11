@@ -12,15 +12,15 @@ import { Command } from "../command";
 
 export class AddPathCommand extends Command {
 
-  protected getCommandName(): string {
+  protected override getCommandName(): string {
     return YargsUtils.getCommand('add', this.getPositionalArguments());
   }
 
-  protected getCommandDescription(): string {
+  protected override getCommandDescription(): string {
     return 'include path into configuration file';
   }
 
-  protected getPositionalArguments(): PositionalArgument[] {
+  protected override getPositionalArguments(): PositionalArgument[] {
     const positionalArgument: PositionalArgument = {
       name: 'newConfigPath',
       description: 'config path to add',
@@ -30,7 +30,7 @@ export class AddPathCommand extends Command {
     return [positionalArgument];
   }
 
-  protected getOptionParams(): OptionParam[] {
+  protected override getOptionParams(): OptionParam[] {
     const optionParam: OptionParam = {
       name: 'f',
       alternativeName: 'file',
@@ -41,7 +41,7 @@ export class AddPathCommand extends Command {
     return [optionParam];
   }
 
-  protected getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
+  protected override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
     const configPath = args.f as string;
     const configPathToAdd = args.configPath as string;
 

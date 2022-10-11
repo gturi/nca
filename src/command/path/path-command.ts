@@ -3,15 +3,15 @@ import { AddPathCommand } from "./add-path-command";
 
 export class PathCommand extends Command {
 
-  protected getCommandName(): string {
+  protected override getCommandName(): string {
     return 'path <command>';
   }
 
-  protected getCommandDescription(): string {
+  protected override getCommandDescription(): string {
     return 'nca configuration commands';
   }
 
-  protected getCommands(): Command[] {
+  protected override getCommands(): Command[] {
     return [new AddPathCommand()];
   }
 }

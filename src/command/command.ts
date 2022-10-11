@@ -43,6 +43,8 @@ export abstract class Command {
     return [];
   }
 
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  /* eslint-disable @typescript-eslint/no-empty-function */
   protected getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>) {
   }
 }

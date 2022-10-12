@@ -1,0 +1,64 @@
+name: npm-release-dev
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  check-for-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      output: ${{ steps.status.outputs.value }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: develop
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+      - run: npm ci
+      - id: status
+        # using a run statement for each command does not work
+        run: |
+          OUT=`node .github/script/check-for-changes-within-24h.mjs "src package.json package-lock.json"`
+          echo "$OUT check-for-changes step"
+          echo "::set-output name=value::$OUT"
+  create-dev-version:
+    needs: check-for-changes
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.value }}
+    if: ${{ needs.check-for-changes.outputs.output == 'run' }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: develop
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+      - id: version
+        run: |
+          DEV_VERSION=`node .github/script/create-develop-version.mjs`
+          echo "library dev version $DEV_VERSION"
+          echo "::set-output name=value::$DEV_VERSION"
+  npm-registry-release:
+    needs: create-dev-version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: develop
+      # setup to publish to npm registry
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      # temporary modifies package.json version (the timestamp is used to get a uuid)
+      - run: npm version ${{ needs.create-dev-version.outputs.version }} --no-git-tag-version
+      - run: npm publish --access public --tag dev
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

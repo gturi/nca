@@ -57,6 +57,7 @@ jobs:
           node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
+      - run: npm run build
       # temporary modifies package.json version (the timestamp is used to get a uuid)
       - run: npm version ${{ needs.create-dev-version.outputs.version }} --no-git-tag-version
       - run: npm publish --access public --tag dev

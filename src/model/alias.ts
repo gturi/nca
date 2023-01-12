@@ -7,7 +7,7 @@ export interface Alias {
   name: string;
   /** The alias description. It is showed when using the help command or 
    * when providing wrong/urecognized input. */
-  description: string;
+  description?: string;
   /** The command to run when the alias is called. It is evaluated as a shell command
    * or a javascript function based on {@link Alias.commandType} value.
    * It can be left empty when {@link Alias.subAliases} are defined. */

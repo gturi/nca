@@ -20,7 +20,7 @@ export class AliasMapper {
     const positionalArguments = this.getPositionalArguments(alias, parentPositionalArguments);
     return {
       command: YargsUtils.getCommand(alias.name, positionalArguments),
-      describe: alias.description,
+      describe: alias.description ?? '',
       builder: yargs => this.getBuilder<T>(yargs, alias, positionalArguments),
       handler: args => YargsHandlerBuilder.getHandler(args, alias)
     }

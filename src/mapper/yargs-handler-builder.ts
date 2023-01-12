@@ -9,10 +9,20 @@ export class YargsHandlerBuilder {
 
   static getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>, alias: Alias) {
     if (!StringUtils.isEmpty(alias.command)) {
-      if (CommandType.Function === alias.commandType) {
-        this.functionRunner(args, alias.command ?? '');
-      } else {
-        shelljs.exec(alias.command ?? '');
+      const command = alias.command ?? '';
+      switch (alias.commandType ?? CommandType.Simple) {
+        case CommandType.Simple:
+          shelljs.exec(command);
+          break;
+        case CommandType.Function:
+          this.functionRunner(args, command);
+          break;
+        case CommandType.Module:
+          const defaultExport = require(command);
+          defaultExport(args, shelljs, this.safeExec);
+          break;
+        default:
+          console.error(`Command type not supported ${alias.commandType}`);
       }
     }
   }

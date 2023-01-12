@@ -20,11 +20,11 @@ export class YargsHandlerBuilder {
         () => new ModuleCommandHandler<T>(args, command)
       ];
 
-      const commandSupplier = commandHandlersSupplier.map(getCommandHandler => getCommandHandler())
+      const commandHandler = commandHandlersSupplier.map(getCommandHandler => getCommandHandler())
         .find(commandHandler => commandType === commandHandler.commandType)
 
-      if (commandSupplier) {
-        commandSupplier.run()
+      if (commandHandler) {
+        commandHandler.run()
       } else {
         console.error(`Command type not supported ${alias.commandType}`);
       }

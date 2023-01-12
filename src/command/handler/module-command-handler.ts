@@ -20,7 +20,8 @@ export class ModuleCommandHandler<T = AnyObj> implements CommandHandler {
   }
 
   run(): void {
-    const defaultExport = require(this.path);
-    defaultExport(this.args, shelljs, ShelljsUtils.safeExec);
+    // modules need to assign a function to module.exports
+    // i.e. module.exports = function (args, shelljs, safeExec) { /* code */ };
+    import(this.path).then(module => module.default(this.args, shelljs, ShelljsUtils.safeExec));
   }
 }

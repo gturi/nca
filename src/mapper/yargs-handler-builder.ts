@@ -16,8 +16,8 @@ export class YargsHandlerBuilder {
 
       const commandHandlersSupplier = [
         () => new SimpleCommandHandler(command),
-        () => new FunctionCommandHandler(args, command),
-        () => new ModuleCommandHandler(args, command)
+        () => new FunctionCommandHandler<T>(args, command),
+        () => new ModuleCommandHandler<T>(args, command)
       ];
 
       const commandSupplier = commandHandlersSupplier.map(getCommandHandler => getCommandHandler())

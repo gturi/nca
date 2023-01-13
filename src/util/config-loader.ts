@@ -5,6 +5,7 @@ import { Alias } from '../model/alias';
 import { Config } from '../model/config';
 import { ConfigValidator } from '../validator/config-validator';
 import { AliasValidator } from '../validator/alias-validator';
+import '../extension/array-extensions';
 
 export class ConfigLoader {
 
@@ -32,10 +33,7 @@ export class ConfigLoader {
         const pathsToLoad = [...new Set(mainConfig.includePaths)]
           .filter(path => !loadedConfigs.has(path))
           .filter(path => fs.existsSync(path))
-          .map(path => {
-            loadedConfigs.add(path);
-            return path;
-          });
+          .peek(path => loadedConfigs.add(path));
 
         pathsToLoad.filter(path => !fs.statSync(path).isDirectory())
           .flatMap(path => this.loadConfigs(path, loadedConfigs))

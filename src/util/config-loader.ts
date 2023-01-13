@@ -1,10 +1,10 @@
 import fs from 'fs';
+import walkdir from 'walkdir';
 import yaml from 'js-yaml';
 import { Alias } from '../model/alias';
 import { Config } from '../model/config';
 import { ConfigValidator } from '../validator/config-validator';
 import { AliasValidator } from '../validator/alias-validator';
-
 
 export class ConfigLoader {
 
@@ -29,13 +29,20 @@ export class ConfigLoader {
       result.push(mainConfig);
 
       if (mainConfig.includePaths) {
-        [...new Set(mainConfig.includePaths)]
+        const pathsToLoad = [...new Set(mainConfig.includePaths)]
           .filter(path => !loadedConfigs.has(path))
+          .filter(path => fs.existsSync(path))
           .map(path => {
             loadedConfigs.add(path);
             return path;
-          })
+          });
+
+        pathsToLoad.filter(path => !fs.statSync(path).isDirectory())
           .flatMap(path => this.loadConfigs(path, loadedConfigs))
+          .forEach(path => result.push(path));
+
+        pathsToLoad.filter(path => fs.statSync(path).isDirectory())
+          .flatMap(path => this.loadDirectoryConfigs(path, loadedConfigs))
           .forEach(path => result.push(path));
       }
     }
@@ -43,12 +50,30 @@ export class ConfigLoader {
     return result;
   }
 
+  private static loadDirectoryConfigs(directoryPath: string, loadedConfigs: Set<string>): Config[] {
+    const paths = walkdir.sync(directoryPath);
+
+    paths.filter(path => fs.statSync(path).isDirectory())
+      .forEach(path => loadedConfigs.add(path))
+
+    return paths.filter(path => !fs.statSync(path).isDirectory())
+      .filter(path => this.isYamlFile(path))
+      .filter(path => !loadedConfigs.has(path))
+      .flatMap(path => this.loadConfigs(path, loadedConfigs))
+  }
+
+  private static isYamlFile(file: string): boolean {
+    const extension = file.split('.').pop();
+    return extension === 'yml' || extension === 'yaml';
+  }
+
   private static nullableLoadConfig(configPath: string): Config | null {
-    if (!fs.existsSync(configPath)) {
+    if (fs.existsSync(configPath)) {
+      return this.loadConfig(configPath);
+    } else {
       console.warn(`Config file not found: ${configPath}`);
       return null;
     }
-    return this.loadConfig(configPath);
   }
 
   public static loadConfig(configPath: string): Config {
@@ -57,6 +82,11 @@ export class ConfigLoader {
     }
 
     const data = fs.readFileSync(configPath, 'utf8');
-    return yaml.load(data) ?? {};
+    try {
+      return yaml.load(data) ?? {};
+    } catch (e) {
+      console.error(`Error encountered while reading ${configPath}`);
+      throw e;
+    }
   }
 }

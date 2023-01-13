@@ -36,6 +36,7 @@
   "dependencies": {
     "js-yaml": "^4.1.0",
     "shelljs": "^0.8.5",
+    "walkdir": "^0.4.1",
     "yargs": "^17.5.1"
   },
   "devDependencies": {

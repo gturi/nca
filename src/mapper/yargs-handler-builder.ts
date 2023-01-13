@@ -6,6 +6,7 @@ import { AnyObj } from "../util/custom-types";
 import { SimpleCommandHandler } from "../command/handler/simple-command-handler";
 import { FunctionCommandHandler } from "../command/handler/function-command-handler";
 import { ModuleCommandHandler } from "../command/handler/module-command-handler";
+import { PathUtils } from "../util/path-utils";
 
 export class YargsHandlerBuilder {
 
@@ -17,7 +18,7 @@ export class YargsHandlerBuilder {
       const commandHandlersSupplier = [
         () => new SimpleCommandHandler(command),
         () => new FunctionCommandHandler<T>(args, command),
-        () => new ModuleCommandHandler<T>(args, command)
+        () => new ModuleCommandHandler<T>(args, PathUtils.resolvePath(command, alias.aliasDirectory))
       ];
 
       const commandHandler = commandHandlersSupplier.map(getCommandHandler => getCommandHandler())

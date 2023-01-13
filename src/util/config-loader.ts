@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import walkdir from 'walkdir';
 import yaml from 'js-yaml';
 import { Alias } from '../model/alias';
@@ -6,10 +7,12 @@ import { Config } from '../model/config';
 import { ConfigValidator } from '../validator/config-validator';
 import { AliasValidator } from '../validator/alias-validator';
 import '../extension/array-extensions';
+import { PathUtils } from './path-utils';
 
 export class ConfigLoader {
 
   static loadAliases(): Alias[] {
+    const configFolderPath = Config.getMainConfigFilePath();
     const configPath = Config.getMainConfigFilePath();
 
     const configs = this.loadConfigs(configPath, new Set(configPath));
@@ -27,10 +30,14 @@ export class ConfigLoader {
     if (mainConfig) {
       ConfigValidator.validate(configPath, mainConfig);
 
+      const configDirectoryPath = path.dirname(configPath);
+      mainConfig.aliases?.forEach(alias => alias.aliasDirectory = configDirectoryPath);
+
       result.push(mainConfig);
 
       if (mainConfig.includePaths) {
         const pathsToLoad = [...new Set(mainConfig.includePaths)]
+          .map(path => PathUtils.resolvePath(path, configDirectoryPath))
           .filter(path => !loadedConfigs.has(path))
           .filter(path => fs.existsSync(path))
           .peek(path => loadedConfigs.add(path));

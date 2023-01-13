@@ -21,4 +21,6 @@ export interface Alias {
   positionalArguments?: PositionalArgument[];
   /** Subaliases, to have more complex alias structures. */
   subAliases?: Alias[];
+  /** Set internally to allow usage of relative paths. */
+  aliasDirectory: string;
 }

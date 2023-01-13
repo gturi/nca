@@ -47,19 +47,25 @@ This file is where your cross platform aliases will be declared.
 ```yaml
 includePaths:
   - /absolute/path/to/alternative-config.yml
-  - /absolute/path/to/another-alternative-config.yml
+  - ../relative/path/to/another-alternative-config.yml
+  - /absolute/path/to/directory
+  - ./relative/path/to/another-directory
 
 aliases:
-  - name: hello
+  - name: hello-bash
     description: prints hello
     command: echo hello
-  - # list of aliases
+  - name: hello-js
+    description: prints hello using javascript
+    command: console.log(hello)
+    commandType: Function
+  - name: run-js
+    description: executes a javascript file
+    command: ./index.js
+    commandType: Module
 ```
 
-If you do not like to store all the aliases in this file you can declare alternative yaml configurations under includePath variables.
-
-In this simple example an alias called hello will be created.
-Running `nca hello` in your terminal will print `hello` in the terminal.
+If you do not like to store all the aliases into this file you can declare alternative yaml configurations under includePath variable. If you declare a directory as a path to include, all the yaml files defined inside it will be loaded.
 
 [Back to top](#nca---Node-Command-Alias)
 
@@ -73,13 +79,10 @@ Configuration model is deployed to github pages. Please refer to the following [
 
 ## Examples
 
-- [hello world](https://github.com/FlamingTuri/nca/blob/main/examples/hello-world.md) - simple hello world
-- [function hello world](https://github.com/FlamingTuri/nca/blob/main/examples/function-hello-world.md) - hello world but leveraging javascript interpreter
-- [function option](https://github.com/FlamingTuri/nca/blob/main/examples/function-option-param.md) - passing option params to an alias
-- [function positional arguments](https://github.com/FlamingTuri/nca/blob/main/examples/function-positional-arguments.md) - passing positional arguments to an alias
-- [function shell command execution](https://github.com/FlamingTuri/nca/blob/main/examples/shell-command-execution.md) - executing shell commands leveragin shelljs
-- [alias hierarchy](https://github.com/FlamingTuri/nca/blob/main/examples/alias-hierarchy.md) - creating alias hierarchies, to create complex command line interfaces
-- [my aliases](https://github.com/FlamingTuri/nca-aliases) - git repo where I save my aliases
+Refer to this [README](https://github.com/FlamingTuri/nca/blob/main/examples/README.md) to know how to define your scripts custom aliases.
+
+Alternatively refer to this [git repository](https://github.com/FlamingTuri/nca-aliases) where I save my aliases.
+
 
 [Back to top](#nca---Node-Command-Alias)
 

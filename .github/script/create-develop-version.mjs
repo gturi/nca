@@ -15,4 +15,4 @@ const seconds = currentDate.getSeconds();
 
 const currentDateFormat = `${year}.${month}.${day}-${hours}.${minutes}.${seconds}`;
 
-console.log(`${currentVersion}-dev-${currentDateFormat}`);
+console.log(`${currentVersion}-${currentDateFormat}`);

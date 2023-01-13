@@ -12,7 +12,6 @@ import { PathUtils } from './path-utils';
 export class ConfigLoader {
 
   static loadAliases(): Alias[] {
-    const configFolderPath = Config.getMainConfigFilePath();
     const configPath = Config.getMainConfigFilePath();
 
     const configs = this.loadConfigs(configPath, new Set(configPath));

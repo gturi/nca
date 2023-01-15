@@ -35,23 +35,23 @@ export class ConfigLoader {
       result.push(mainConfig);
 
       if (mainConfig.includePaths) {
-        const pathsToLoad = [...new Set(mainConfig.includePaths)]
+        [...new Set(mainConfig.includePaths)]
           .map(path => PathUtils.resolvePath(path, configDirectoryPath))
           .filter(path => !loadedConfigs.has(path))
           .filter(path => fs.existsSync(path))
-          .peek(path => loadedConfigs.add(path));
-
-        pathsToLoad.filter(path => !fs.statSync(path).isDirectory())
-          .flatMap(path => this.loadConfigs(path, loadedConfigs))
-          .forEach(path => result.push(path));
-
-        pathsToLoad.filter(path => fs.statSync(path).isDirectory())
-          .flatMap(path => this.loadDirectoryConfigs(path, loadedConfigs))
-          .forEach(path => result.push(path));
+          .peek(path => loadedConfigs.add(path))
+          .flatMap(path => this.loadConfigsFromPath(path, loadedConfigs))
+          .forEach(config => result.push(config));
       }
     }
 
     return result;
+  }
+
+  private static loadConfigsFromPath(path: string, loadedConfigs: Set<string>) {
+    return fs.statSync(path).isDirectory()
+      ? this.loadDirectoryConfigs(path, loadedConfigs)
+      : this.loadConfigs(path, loadedConfigs)
   }
 
   private static loadDirectoryConfigs(directoryPath: string, loadedConfigs: Set<string>): Config[] {

@@ -14,12 +14,30 @@ export class ConfigLoader {
   static loadAliases(): Alias[] {
     const configPath = Config.getMainConfigFilePath();
 
-    const configs = this.loadConfigs(configPath, new Set(configPath));
+    const configs = this.loadConfigsFromPath(configPath, new Set(configPath));
     const aliases = configs.flatMap(config => config.aliases ?? []);
 
     AliasValidator.validate(aliases);
 
     return aliases;
+  }
+
+  private static loadConfigsFromPath(path: string, loadedConfigs: Set<string>): Config[] {
+    return fs.statSync(path).isDirectory()
+      ? this.loadDirectoryConfigs(path, loadedConfigs)
+      : this.loadConfigs(path, loadedConfigs)
+  }
+
+  private static loadDirectoryConfigs(directoryPath: string, loadedConfigs: Set<string>): Config[] {
+    const paths = walkdir.sync(directoryPath);
+
+    paths.filter(path => fs.statSync(path).isDirectory())
+      .forEach(path => loadedConfigs.add(path))
+
+    return paths.filter(path => !fs.statSync(path).isDirectory())
+      .filter(path => this.isYamlFile(path))
+      .filter(path => !loadedConfigs.has(path))
+      .flatMap(path => this.loadConfigs(path, loadedConfigs))
   }
 
   private static loadConfigs(configPath: string, loadedConfigs: Set<string>): Config[] {
@@ -46,24 +64,6 @@ export class ConfigLoader {
     }
 
     return result;
-  }
-
-  private static loadConfigsFromPath(path: string, loadedConfigs: Set<string>) {
-    return fs.statSync(path).isDirectory()
-      ? this.loadDirectoryConfigs(path, loadedConfigs)
-      : this.loadConfigs(path, loadedConfigs)
-  }
-
-  private static loadDirectoryConfigs(directoryPath: string, loadedConfigs: Set<string>): Config[] {
-    const paths = walkdir.sync(directoryPath);
-
-    paths.filter(path => fs.statSync(path).isDirectory())
-      .forEach(path => loadedConfigs.add(path))
-
-    return paths.filter(path => !fs.statSync(path).isDirectory())
-      .filter(path => this.isYamlFile(path))
-      .filter(path => !loadedConfigs.has(path))
-      .flatMap(path => this.loadConfigs(path, loadedConfigs))
   }
 
   private static isYamlFile(file: string): boolean {

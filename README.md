@@ -79,7 +79,7 @@ Configuration model is deployed to github pages. Please refer to the following [
 
 ## Examples
 
-Refer to this [README](https://github.com/FlamingTuri/nca/blob/main/examples/README.md) to know how to define your scripts custom aliases.
+Refer to this [README](./examples/README.md) to know how to define your scripts custom aliases.
 
 Alternatively refer to this [git repository](https://github.com/FlamingTuri/nca-aliases) where I save my aliases.
 

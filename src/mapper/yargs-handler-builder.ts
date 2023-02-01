@@ -9,17 +9,11 @@ import { ModuleCommandHandler } from "../command/handler/module-command-handler"
 import { PathUtils } from "../util/path-utils";
 import { CommandHandler } from "../command/handler/command-handler";
 
-type CommandHandlerSupplier = () => CommandHandler;
-
 export class YargsHandlerBuilder {
 
   static getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>, alias: Alias) {
     if (!StringUtils.isEmpty(alias.command)) {
-      const commandType = alias.commandType ?? CommandType.Simple
-
-      const commandHandler = this.getHandlerSuppliers(args, alias)
-        .map(getCommandHandler => getCommandHandler())
-        .find(commandHandler => commandType === commandHandler.commandType)
+      const commandHandler = this.getCommandHandler(args, alias);
 
       if (commandHandler) {
         commandHandler.run()
@@ -29,15 +23,22 @@ export class YargsHandlerBuilder {
     }
   }
 
-  private static getHandlerSuppliers<T = AnyObj>(
+  private static getCommandHandler<T = AnyObj>(
     args: yargs.ArgumentsCamelCase<T>,
     alias: Alias
-  ): CommandHandlerSupplier[] {
+  ): CommandHandler | null {
+    const commandType = alias.commandType ?? CommandType.Simple
     const command = alias.command ?? '';
-    return [
-      () => new SimpleCommandHandler(command),
-      () => new FunctionCommandHandler<T>(args, command),
-      () => new ModuleCommandHandler<T>(args, PathUtils.resolvePath(command, alias.aliasDirectory))
-    ];
+
+    switch (commandType) {
+      case CommandType.Simple:
+        return new SimpleCommandHandler(command);
+      case CommandType.Function:
+        return new FunctionCommandHandler<T>(args, command);
+      case CommandType.Module:
+        return new ModuleCommandHandler<T>(args, PathUtils.resolvePath(command, alias.aliasDirectory));
+      default:
+        return null;
+    }
   }
 }

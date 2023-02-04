@@ -5,7 +5,26 @@ on:
       - develop
 
 jobs:
+  wait-lint-to-succeed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lewagon/wait-on-check-action@v1.2.0
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'lint'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+  wait-test-to-succeed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lewagon/wait-on-check-action@v1.2.0
+        with:
+          ref: ${{ github.ref }}
+          check-regexp: 'test \(.*\)'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
   check-for-changes:
+    needs: [wait-lint-to-succeed, wait-test-to-succeed]
     runs-on: ubuntu-latest
     outputs:
       output: ${{ steps.status.outputs.value }}

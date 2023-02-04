@@ -8,6 +8,7 @@ import { FunctionCommandHandler } from "../command/handler/function-command-hand
 import { ModuleCommandHandler } from "../command/handler/module-command-handler";
 import { PathUtils } from "../util/path-utils";
 import { CommandHandler } from "../command/handler/command-handler";
+import { CommandHandlerInput } from "../model/command-handler-input";
 
 export class YargsHandlerBuilder {
 
@@ -33,10 +34,15 @@ export class YargsHandlerBuilder {
     switch (commandType) {
       case CommandType.Simple:
         return new SimpleCommandHandler(command);
-      case CommandType.Function:
-        return new FunctionCommandHandler<T>(args, command);
-      case CommandType.Module:
-        return new ModuleCommandHandler<T>(args, PathUtils.resolvePath(command, alias.aliasDirectory));
+      case CommandType.Function: {
+        const input = new CommandHandlerInput<T>(args);
+        return new FunctionCommandHandler<T>(input, command);
+      }
+      case CommandType.Module: {
+        const input = new CommandHandlerInput<T>(args);
+        const jsModulePath = PathUtils.resolvePath(command, alias.aliasDirectory);
+        return new ModuleCommandHandler<T>(input, jsModulePath);
+      }
       default:
         return null;
     }

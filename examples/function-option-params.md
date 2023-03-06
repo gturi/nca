@@ -5,9 +5,9 @@ aliases:
   - name: log-options
     description: options logger
     command: |
-      console.log(args.b);
-      console.log(args.n);
-      console.log(args.s);
+      console.log(input.args.b);
+      console.log(input.args.n);
+      console.log(input.args.s);
     commandType: Function
     options:
       - name: b

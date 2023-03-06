@@ -5,9 +5,9 @@ aliases:
   - name: log-positional
     description: positional arguments logger
     command: |
-      console.log(args.foo);
-      console.log(args.bar);
-      console.log(args.baz);
+      console.log(input.args.foo);
+      console.log(input.args.bar);
+      console.log(input.args.baz);
     commandType: Function
     positionalArguments:
       - name: foo

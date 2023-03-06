@@ -6,10 +6,10 @@ aliases:
     description: description main alias 
     command: |
       console.log('--- main alias started ---\n');
-      console.log(`a: ${args.a}`);
-      console.log(`n: ${args.n}`);
-      console.log(`foo: ${args.foo}`);
-      console.log(`bar: ${args.bar}`);
+      console.log(`a: ${input.args.a}`);
+      console.log(`n: ${input.args.n}`);
+      console.log(`foo: ${input.args.foo}`);
+      console.log(`bar: ${input.args.bar}`);
       console.log('\n--- main alias ended ---');
     commandType: Function
     options:
@@ -32,12 +32,12 @@ aliases:
         description: description subAlias
         command: |
           console.log('--- sub alias started ---\n');
-          console.log(`a: ${args.a}`);
-          console.log(`n: ${args.n}`);
-          console.log(`foo: ${args.foo}`);
-          console.log(`bar: ${args.bar}`);
-          console.log(`c: ${args.c}`);
-          console.log(`baz: ${args.baz}`);
+          console.log(`a: ${input.args.a}`);
+          console.log(`n: ${input.args.n}`);
+          console.log(`foo: ${input.args.foo}`);
+          console.log(`bar: ${input.args.bar}`);
+          console.log(`c: ${input.args.c}`);
+          console.log(`baz: ${input.args.baz}`);
           console.log('\n --- sub alias ended ---');
         commandType: Function
         options:
@@ -52,12 +52,12 @@ aliases:
         description: description anotherSubAlias
         command: |
           console.log('--- another sub alias started ---\n');
-          console.log(`a: ${args.a}`);
-          console.log(`n: ${args.n}`);
-          console.log(`foo: ${args.foo}`);
-          console.log(`bar: ${args.bar}`);
-          console.log(`d: ${args.d}`);
-          console.log(`qux: ${args.qux}`);
+          console.log(`a: ${input.args.a}`);
+          console.log(`n: ${input.args.n}`);
+          console.log(`foo: ${input.args.foo}`);
+          console.log(`bar: ${input.args.bar}`);
+          console.log(`d: ${input.args.d}`);
+          console.log(`qux: ${input.args.qux}`);
           console.log('\n--- another sub alias ended ---');
         commandType: Function
         options:

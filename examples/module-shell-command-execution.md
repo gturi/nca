@@ -11,11 +11,11 @@ aliases:
 
 module-shell.js
 ```js
-module.exports = function (args, shelljs, safeExec) {
-  shelljs.exec('echo hello');
+module.exports = function (input) {
+  input.shelljs.exec('echo hello');
 
   // safeExec will throw an exception if the command exit code is not 0
-  safeExec('git stats'); // intentional typo
+  input.shelljsSafeExec('git stats'); // intentional typo
 };
 ```
 
@@ -41,4 +41,4 @@ The most similar command is
 
 Shelljs is passed as a one of the anonymous function input, to facilitate native command execution (i.e. useful to run git and docker commands which share the same interface across differen operating systems).
 
-Moreover a `safeExec` utility function can be used to run commands which can potentially fail: the function will throw an exception when the command has a non 0 exit code.
+Moreover a `shelljsSafeExec` utility function can be used to run commands which can potentially fail: the function will throw an exception when the command has a non 0 exit code.

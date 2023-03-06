@@ -24,8 +24,8 @@ function concatValues(first, second) {
   return `${first} ${second}`;
 }
 
-module.exports = function (args) {
-  console.log(concatValues(args.s, args.foo));
+module.exports = function (input) {
+  console.log(concatValues(input.args.s, input.args.foo));
 };
 ```
 

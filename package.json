@@ -25,14 +25,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FlamingTuri/nca.git"
+    "url": "git+https://github.com/gturi/nca.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FlamingTuri/nca/issues"
+    "url": "https://github.com/gturi/nca/issues"
   },
-  "homepage": "https://github.com/FlamingTuri/nca#readme",
+  "homepage": "https://github.com/gturi/nca#readme",
   "dependencies": {
     "js-yaml": "^4.1.0",
     "shelljs": "^0.8.5",

@@ -1,6 +1,6 @@
 # nca - Node Command Alias
 
-[![lint-and-test](https://github.com/FlamingTuri/nca/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/FlamingTuri/nca/actions/workflows/lint-and-test.yml)
+[![lint-and-test](https://github.com/gturi/nca/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/gturi/nca/actions/workflows/lint-and-test.yml)
 
 A command line utility to manage cross platform command aliases.
 
@@ -72,7 +72,7 @@ If you do not like to store all the aliases into this file you can declare alter
 
 ## Config API
 
-Configuration model is deployed to github pages. Please refer to the following [README](https://github.com/FlamingTuri/nca/blob/gh-pages/README.md).
+Configuration model is deployed to github pages. Please refer to the following [README](https://github.com/gturi/nca/blob/gh-pages/README.md).
 
 [Back to top](#nca---Node-Command-Alias)
 
@@ -81,7 +81,7 @@ Configuration model is deployed to github pages. Please refer to the following [
 
 Refer to this [README](./examples/README.md) to know how to define your scripts custom aliases.
 
-Alternatively refer to this [git repository](https://github.com/FlamingTuri/nca-aliases) where I save my aliases.
+Alternatively refer to this [git repository](https://github.com/gturi/nca-aliases) where I save my aliases.
 
 
 [Back to top](#nca---Node-Command-Alias)

@@ -10,4 +10,4 @@
 - [js modules shell command execution](./module-shell-command-execution.md) - executing shell commands leveraging shelljs inside javascript modules
 - [js modules external npm dependencies](./module-external-dependencies.md) - executing js scripts which use external npm dependencies
 - [alias hierarchy](./alias-hierarchy.md) - creating alias hierarchies, to create complex command line interfaces
-- [my aliases](https://github.com/FlamingTuri/nca-aliases) - git repo where I save my aliases
+- [my aliases](https://github.com/gturi/nca-aliases) - git repo where I save my aliases

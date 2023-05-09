@@ -4,13 +4,22 @@ const { spawn } = require('child_process');
 function runNcaAndVerifyOutput(done, expected, ...args) {
   const app = runCommand(args);
 
+  const results = [];
+
   app.stdout.on('data', (data) => {
-    expect(bufferToString(data)).toBe(expected);
-    done();
+    const result = bufferToString(data);
+    results.push(result);
   });
 
   app.stderr.on('data', (data) => {
-    fail(`Error: ${bufferToString(data)}`);
+    console.error(`Error: ${bufferToString(data)}`);
+    throw new Error(`Error: ${bufferToString(data)}`);
+  });
+
+  app.on('close', (code) => {
+    expect(results.join('\n')).toBe(expected);
+    expect(code).toBe(0);
+    done();
   });
 }
 

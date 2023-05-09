@@ -24,7 +24,7 @@ aliases:
 ## Usage
 
 - ```bash
-  nca function-hello
+  nca log-options
   ```
 
   Output:

@@ -1,12 +1,2 @@
-aliases:
-  - name: hello
-    description: prints hello world
-    command: echo "hello world"
-  - name: function-hello
-    description: prints hello world
-    command: console.log('hello world');
-    commandType: Function
-  - name: module-hello
-    description: execute a js script which prints hello world
-    command: ./module-hello.js
-    commandType: Module
+includePaths:
+  - command-handler

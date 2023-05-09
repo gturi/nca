@@ -1,4 +1,4 @@
-const testUtils = require('./test-utils')
+const testUtils = require('../../../utils/test-utils')
 
 describe("simple command handler", () => {
 
@@ -6,7 +6,7 @@ describe("simple command handler", () => {
 
   afterEach(() => jest.resetAllMocks());
 
-  it('command hello logs hello world', done => {
+  it('command module-hello logs hello world', done => {
     testUtils.runNcaAndVerifyOutput(done, 'hello world\n', 'hello');
   });
 

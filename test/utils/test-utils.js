@@ -5,8 +5,12 @@ function runNcaAndVerifyOutput(done, expected, ...args) {
   const app = runCommand(args);
 
   app.stdout.on('data', (data) => {
-    expect(Buffer.from(data).toString()).toBe(expected);
+    expect(bufferToString(data)).toBe(expected);
     done();
+  });
+
+  app.stderr.on('data', (data) => {
+    fail(`Error: ${bufferToString(data)}`);
   });
 }
 
@@ -18,7 +22,7 @@ function runNcaAndVerifyOutput(done, expected, ...args) {
 function runCommand(...args) {
   const testAppFilePath = path.join(
     __dirname,
-    '../dist/index.js',
+    '../../dist/index.js',
   )
 
   argv = [
@@ -27,6 +31,11 @@ function runCommand(...args) {
   ];
 
   return spawn('node', argv);
+}
+
+
+function bufferToString(buffer) {
+  return Buffer.from(buffer).toString();
 }
 
 module.exports = {

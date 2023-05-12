@@ -7,7 +7,10 @@ describe("simple command handler", () => {
   afterEach(() => jest.resetAllMocks());
 
   it('command hello logs hello world', done => {
-    testUtils.runNcaAndVerifyOutput(done, 'hello world\n', 'hello');
+    const handleResult = output => {
+      expect(output.join('\n')).toBe('hello world\n');
+    };
+    testUtils.runNcaAndVerifyOutput(done, handleResult, 'hello');
   });
 
 });

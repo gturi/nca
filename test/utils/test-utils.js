@@ -1,25 +1,28 @@
 const path = require('path');
 const { spawn } = require('child_process');
 
-function runNcaAndVerifyOutput(done, expected, ...args) {
+function runNcaAndVerifyOutput(done, handleResult, ...args) {
   const app = runCommand(args);
 
-  const results = [];
+  const output = [];
 
   app.stdout.on('data', (data) => {
-    const result = bufferToString(data);
-    results.push(result);
+    output.push(bufferToString(data));
   });
 
   app.stderr.on('data', (data) => {
     console.error(`Error: ${bufferToString(data)}`);
-    throw new Error(`Error: ${bufferToString(data)}`);
+    done(bufferToString(data));
   });
 
   app.on('close', (code) => {
-    expect(results.join('\n')).toBe(expected);
-    expect(code).toBe(0);
-    done();
+    try {
+      handleResult(output);
+      expect(code).toBe(0);
+      done();
+    } catch (error) {
+      done(error);
+    }
   });
 }
 

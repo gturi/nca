@@ -36,7 +36,7 @@ aliases:
   ```
 
 - ```bash
-  nca function-hello -b true -n 1 -s bar
+  nca log-options -b true -n 1 -s bar
   ```
 
   Output:
@@ -48,7 +48,7 @@ aliases:
   ```
 
 - ```bash
-  nca function-hello --num 100
+  nca log-options --num 100
   ```
 
   Output:

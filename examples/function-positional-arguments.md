@@ -34,7 +34,7 @@ aliases:
   ```js
   false
   1
-  [ 'b', 'c' ]
+  [ 'a', 'b' ]
   ```
 
 - ```
@@ -46,7 +46,7 @@ aliases:
   ```js
   true
   1
-  [ 'b', 'c' ]
+  [ 'a', 'b' ]
   ```
 
 ## Notes

@@ -23,5 +23,13 @@ describe("function command handler", () => {
     };
     testUtils.runNcaAndVerifyOutput(done, handleResult, command);
   });
-  
+
+  it('log-options command logs the specified input value using alternative option name', done => {
+    const expected = [false, 100, 'foo'].join(' ') + '\n';
+    const command = ['log-options', '--num', '100'].join(' ');
+    const handleResult = output => {
+      expect(output.join('\n')).toBe(expected);
+    };
+    testUtils.runNcaAndVerifyOutput(done, handleResult, command);
+  });
 });

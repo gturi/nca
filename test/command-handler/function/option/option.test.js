@@ -12,7 +12,7 @@ describe("function command handler", () => {
     const handleResult = output => {
       expect(output.join('\n')).toBe(expected);
     };
-    testUtils.runNcaAndVerifyOutput(done, handleResult, 'log-options');
+    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, 'log-options');
   });
 
   it('log-options command logs the specified input values', done => {
@@ -21,7 +21,7 @@ describe("function command handler", () => {
     const handleResult = output => {
       expect(output.join('\n')).toBe(expected);
     };
-    testUtils.runNcaAndVerifyOutput(done, handleResult, command);
+    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, command);
   });
 
   it('log-options command logs the specified input value using alternative option name', done => {
@@ -30,6 +30,6 @@ describe("function command handler", () => {
     const handleResult = output => {
       expect(output.join('\n')).toBe(expected);
     };
-    testUtils.runNcaAndVerifyOutput(done, handleResult, command);
+    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, command);
   });
 });

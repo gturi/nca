@@ -1,23 +1,34 @@
 const { spawn } = require('child_process');
 
-function runNcaAndVerifyOutput(done, handleResult, ...args) {
+function runNcaAndVerifySuccessfulOutput(done, handleStdout, ...args) {
+  const handleStderr = stderr => {
+    if (stderr.length !== 0) {
+      console.error(stderr);
+      done(stderr);
+    }
+  }
+  runNcaAndVerifyOutput(done, handleStdout, handleStderr, 0, args);
+}
+
+function runNcaAndVerifyOutput(done, handleStdout, handleStderr, expectedExitCode, ...args) {
   const app = runCommand(args);
 
-  const output = [];
+  const stdout = [];
+  const stderr = [];
 
-  app.stdout.on('data', (data) => {
-    output.push(bufferToString(data));
+  app.stdout.on('data', data => {
+    stdout.push(bufferToString(data));
   });
 
-  app.stderr.on('data', (data) => {
-    console.error(`Error: ${bufferToString(data)}`);
-    done(bufferToString(data));
+  app.stderr.on('data', data => {
+    stderr.push(bufferToString(data));
   });
 
-  app.on('close', (code) => {
+  app.on('close', code => {
     try {
-      handleResult(output);
-      expect(code).toBe(0);
+      handleStdout(stdout);
+      handleStderr(stderr);
+      expect(code).toBe(expectedExitCode);
       done();
     } catch (error) {
       done(error);
@@ -40,5 +51,6 @@ function bufferToString(buffer) {
 }
 
 module.exports = {
-  runNcaAndVerifyOutput: runNcaAndVerifyOutput
+  runNcaAndVerifyOutput: runNcaAndVerifyOutput,
+  runNcaAndVerifySuccessfulOutput: runNcaAndVerifySuccessfulOutput
 }

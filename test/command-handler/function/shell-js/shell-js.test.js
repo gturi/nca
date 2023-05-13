@@ -12,6 +12,6 @@ describe("function command handler", () => {
     const handleResult = output => {
       expect(output.join('')).toBe(expected);
     };
-    testUtils.runNcaAndVerifyOutput(done, handleResult, 'function-shell-js');
+    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, 'function-shell-js');
   });
 });

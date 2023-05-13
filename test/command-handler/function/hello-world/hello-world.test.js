@@ -10,7 +10,7 @@ describe("function command handler", () => {
     const handleResult = output => {
       expect(output.join('\n')).toBe('hello world\n');
     };
-    testUtils.runNcaAndVerifyOutput(done, handleResult, 'function-hello');
+    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, 'function-hello');
   });
 
 });

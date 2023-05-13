@@ -12,7 +12,7 @@ describe("function command handler", () => {
     const handleResult = output => {
       expect(output.join('')).toBe(expected);
     };
-    testUtils.runNcaAndVerifyOutput(done, handleResult, 'log-positional 1 a b');
+    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, 'log-positional 1 a b');
   });
 
   it('log-positional command accepts --{key}={value} syntax', done => {
@@ -21,6 +21,6 @@ describe("function command handler", () => {
     const handleResult = output => {
       expect(output.join('')).toBe(expected);
     };
-    testUtils.runNcaAndVerifyOutput(done, handleResult, command);
+    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, command);
   });
 });

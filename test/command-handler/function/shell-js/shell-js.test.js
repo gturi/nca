@@ -1,4 +1,3 @@
-const { spawn } = require('child_process');
 const testUtils = require('../../../utils/test-utils')
 
 describe("function command handler", () => {

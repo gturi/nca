@@ -1,6 +1,6 @@
 const testUtils = require('../../../utils/test-utils')
 
-describe("simple command handler", () => {
+describe("module command handler", () => {
 
   beforeEach(() => jest.resetModules());
 

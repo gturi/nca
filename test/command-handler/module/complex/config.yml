@@ -1,0 +1,14 @@
+aliases:
+  - name: module-complex
+    description: execute a js script which concats options and positional arguments and then prints them
+    command: ./module-complex.js
+    commandType: Module
+    options:
+      - name: s
+        optionType: String
+        defaultValue: ''
+    positionalArguments:
+      - name: foo
+        description: foo argument
+        type: String
+        defaultValue: ''

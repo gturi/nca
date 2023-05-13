@@ -38,7 +38,7 @@ aliases:
           console.log(`bar: ${input.args.bar}`);
           console.log(`c: ${input.args.c}`);
           console.log(`baz: ${input.args.baz}`);
-          console.log('\n --- sub alias ended ---');
+          console.log('\n--- sub alias ended ---');
         commandType: Function
         options:
           - name: c
@@ -140,7 +140,7 @@ Main alias options and positional arguments are inherited by its subAliases.
 
 Hierarchies are useful when you want to create more complex command line interfaces.
 
-I.E. docker container cli:
+I.E. docker container cli uses this concept:
 
 ```
 docker container create

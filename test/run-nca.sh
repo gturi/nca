@@ -10,4 +10,5 @@ cd "$(dirname "$0")"
 
 cd ..
 
-node ./dist/index.js $@
+FILE=$(readlink -f ./test/test-config.yml)
+ncaMainConfigFilePath="$FILE" node ./dist/index.js $@

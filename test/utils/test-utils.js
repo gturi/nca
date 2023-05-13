@@ -42,7 +42,7 @@ function runNcaAndVerifyOutput(done, handleStdout, handleStderr, expectedExitCod
  * @param {...string} args - positional and option arguments for the command to run
  */
 function runCommand(...args) {
-  return spawn('./test/script.sh', args);
+  return spawn('./test/run-nca.sh', args);
 }
 
 

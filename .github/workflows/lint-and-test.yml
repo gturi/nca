@@ -14,7 +14,7 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [windows, macos, ubuntu]
+        os: [ubuntu]
         node: ['14', 'lts/*']
     runs-on: ${{ matrix.os }}-latest
     steps:
@@ -23,4 +23,4 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: npm ci
-      #- run: npm test
+      - run: npm test

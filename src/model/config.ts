@@ -1,6 +1,7 @@
 import os from "os";
 import path from 'path';
 import { Alias } from "./alias";
+import { StringUtils } from "../util/string-utils";
 
 export interface Config {
   /** Absolute paths to external configs. */
@@ -12,7 +13,10 @@ export interface Config {
 export namespace Config {
 
   export function getMainConfigFilePath(): string {
-    return path.join(getMainConfigFolderPath(), 'config.yml');
+    const envNcaMainConfigFilePath = process.env.ncaMainConfigFilePath;
+    return StringUtils.isEmpty(envNcaMainConfigFilePath)
+      ? path.join(getMainConfigFolderPath(), 'config.yml')
+      : envNcaMainConfigFilePath!;
   }
 
   export function getMainConfigFolderPath(): string {

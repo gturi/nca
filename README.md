@@ -67,6 +67,12 @@ aliases:
 
 If you do not like to store all the aliases into this file you can declare alternative yaml configurations under includePath variable. If you declare a directory as a path to include, all the yaml files defined inside it will be loaded.
 
+You can also change the default main config file by defining `ncaMainConfigFilePath` environment variable. I.E.
+
+```bash
+export ncaMainConfigFilePath=/path/to/your/main/config.yml
+```
+
 [Back to top](#nca---Node-Command-Alias)
 
 

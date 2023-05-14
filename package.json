@@ -18,7 +18,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "npx --verbose tsc",
-    "test": "mocha --require ts-node/register --require source-map-support/register --recursive --timeout 5000 test/**/*.test.ts",
+    "test": "mocha --require ts-node/register --require source-map-support/register --recursive test/**/*.test.ts",
     "coverage": "node .github/script/generate-coverage.mjs",
     "doc": "node .github/script/generate-typedoc.mjs",
     "lint": "eslint \"src/**\"",

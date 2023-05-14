@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { spawn, spawnSync, SpawnSyncReturns } from 'child_process';
 
 export class ChildProcessUtils {
 
@@ -13,5 +13,10 @@ export class ChildProcessUtils {
         }
       });
     });
+  }
+
+  static spawnSync(command: string, params: string[] = []): SpawnSyncReturns<Buffer> {
+    // inherit flag makes the spawned process to use console colors
+    return spawnSync(command, params, { stdio: "inherit" });
   }
 }

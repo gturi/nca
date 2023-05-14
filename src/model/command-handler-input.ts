@@ -2,6 +2,7 @@ import shelljs, { ShellString } from 'shelljs';
 import yargs from 'yargs';
 import { ChildProcessUtils } from "../util/child-process-utils";
 import { ShelljsUtils } from "../util/shelljs-utils";
+import { SpawnSyncReturns } from 'child_process';
 
 /**
  * Input object for {@link CommandType.Function} and {@link CommandType.Module} command types.
@@ -43,5 +44,14 @@ export class CommandHandlerInput<T> {
    */
   get spawn(): (command: string, params?: string[]) => Promise<number | null> {
     return ChildProcessUtils.spawn;
+  }
+
+  /**
+   * Function that executes a command using javascript spawnSync.
+   * The result is a resolved promise when the exit code is 0,
+   * otherwise it is a rejected promise.
+   */
+  get spawnSync(): (command: string, params?: string[]) => SpawnSyncReturns<Buffer> {
+    return ChildProcessUtils.spawnSync;
   }
 }

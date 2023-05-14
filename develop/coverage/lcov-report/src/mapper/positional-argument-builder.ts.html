@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -92,16 +92,6 @@
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -109,7 +99,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -125,18 +125,18 @@ import { AnyObj } from "../util/custom-types";
 &nbsp;
 export class PositionalArgumentBuilder {
 &nbsp;
-  static build&lt;T = AnyObj&gt;(yargs: yargs.Argv&lt;T&gt;, positionalArguments?: PositionalArgument[]) {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (positionalArguments) {
-      positionalArguments.forEach(positionalArgument =&gt; {
-        this.buildPositional&lt;T&gt;(yargs, positionalArgument);
+<span class="fstat-no" title="function not covered" >  st</span>atic build&lt;T = AnyObj&gt;(yargs: yargs.Argv&lt;T&gt;, positionalArguments?: PositionalArgument[]) {
+<span class="cstat-no" title="statement not covered" >    if (positionalArguments) {</span>
+<span class="cstat-no" title="statement not covered" >      positionalArguments.forEach(<span class="fstat-no" title="function not covered" >po</span>sitionalArgument =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        this.buildPositional&lt;T&gt;(yargs, positionalArgument);</span>
       });
     }
   }
 &nbsp;
-  private static buildPositional&lt;T = AnyObj&gt;(
+<span class="fstat-no" title="function not covered" >  pr</span>ivate static buildPositional&lt;T = AnyObj&gt;(
     yargs: yargs.Argv&lt;T&gt;, positionalArgument: PositionalArgument
   ) {
-    yargs.positional(positionalArgument.name, {
+<span class="cstat-no" title="statement not covered" >    yargs.positional(positionalArgument.name, {</span>
       describe: positionalArgument.description,
       type: PositionalArgumentType.toYargsType(positionalArgument.type),
       default: positionalArgument.defaultValue,
@@ -151,7 +151,7 @@ export class PositionalArgumentBuilder {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-14T10:25:02.367Z
+                at 2023-05-14T10:39:09.918Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

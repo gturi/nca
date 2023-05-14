@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/16</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/15</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -100,25 +100,25 @@
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">330x</span>
-<span class="cline-any cline-yes">150x</span>
-<span class="cline-any cline-yes">150x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -132,7 +132,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">#!/usr/bin/env node
 &nbsp;
 import yargs from 'yargs/yargs';
@@ -141,19 +141,19 @@ import { AliasMapper } from './mapper/alias-mapper';
 import { ConfigLoader } from './util/config-loader';
 import { ConfigCommand } from './command/config-command';
 &nbsp;
-function nca() {
-  try {
-    const argvBuilder = yargs(hideBin(process.argv));
+function <span class="fstat-no" title="function not covered" >nca(</span>) {
+<span class="cstat-no" title="statement not covered" >  try {</span>
+    const argvBuilder = <span class="cstat-no" title="statement not covered" >yargs(hideBin(process.argv));</span>
 &nbsp;
-    const aliases = ConfigLoader.loadAliases();
+    const aliases = <span class="cstat-no" title="statement not covered" >ConfigLoader.loadAliases();</span>
 &nbsp;
-    aliases.sort((a, b) =&gt; a.name.localeCompare(b.name))
-      .map(alias =&gt; AliasMapper.map(alias))
-      .forEach(commandModule =&gt; argvBuilder.command(commandModule));
+<span class="cstat-no" title="statement not covered" >    aliases.sort(<span class="fstat-no" title="function not covered" >(a</span>, b) =&gt; <span class="cstat-no" title="statement not covered" >a.name.localeCompare(b.name))</span></span>
+      .map(<span class="fstat-no" title="function not covered" >al</span>ias =&gt; <span class="cstat-no" title="statement not covered" >AliasMapper.map(alias))</span>
+      .forEach(<span class="fstat-no" title="function not covered" >co</span>mmandModule =&gt; <span class="cstat-no" title="statement not covered" >argvBuilder.command(commandModule))</span>;
 &nbsp;
-    argvBuilder.command(new ConfigCommand().getCommand());
+<span class="cstat-no" title="statement not covered" >    argvBuilder.command(new ConfigCommand().getCommand());</span>
 &nbsp;
-    argvBuilder
+<span class="cstat-no" title="statement not covered" >    argvBuilder</span>
       .completion()
       .alias('help', 'h')
       .alias('version', 'v')
@@ -167,7 +167,7 @@ function nca() {
   }
 }
 &nbsp;
-nca();
+<span class="cstat-no" title="statement not covered" >nca();</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -175,7 +175,7 @@ nca();
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-14T10:25:02.367Z
+                at 2023-05-14T10:39:09.918Z
             </div>
         <script src="../prettify.js"></script>
         <script>

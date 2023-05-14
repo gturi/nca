@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/20</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/20</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
@@ -119,19 +119,19 @@
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
 <a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -188,15 +188,15 @@ import { Command } from "../command";
 &nbsp;
 export class DeletePathCommand extends Command {
 &nbsp;
-  protected override <span class="fstat-no" title="function not covered" >getCommandName(</span>): string {
+<span class="fstat-no" title="function not covered" >  pr</span>otected override getCommandName(): string {
 <span class="cstat-no" title="statement not covered" >    return YargsUtils.getCommand('delete', this.getPositionalArguments());</span>
   }
 &nbsp;
-  protected override <span class="fstat-no" title="function not covered" >getCommandDescription(</span>): string {
+<span class="fstat-no" title="function not covered" >  pr</span>otected override getCommandDescription(): string {
 <span class="cstat-no" title="statement not covered" >    return 'remove path from configuration file';</span>
   }
 &nbsp;
-  protected override <span class="fstat-no" title="function not covered" >getPositionalArguments(</span>): PositionalArgument[] {
+<span class="fstat-no" title="function not covered" >  pr</span>otected override getPositionalArguments(): PositionalArgument[] {
     const positionalArgument: PositionalArgument = <span class="cstat-no" title="statement not covered" >{</span>
       name: 'configPath',
       description: 'config path to remove',
@@ -206,7 +206,7 @@ export class DeletePathCommand extends Command {
 <span class="cstat-no" title="statement not covered" >    return [positionalArgument];</span>
   }
 &nbsp;
-  protected override <span class="fstat-no" title="function not covered" >getOptionParams(</span>): OptionParam[] {
+<span class="fstat-no" title="function not covered" >  pr</span>otected override getOptionParams(): OptionParam[] {
     const optionParam: OptionParam = <span class="cstat-no" title="statement not covered" >{</span>
       name: 'f',
       alternativeName: 'file',
@@ -217,7 +217,7 @@ export class DeletePathCommand extends Command {
 <span class="cstat-no" title="statement not covered" >    return [optionParam];</span>
   }
 &nbsp;
-  protected override <span class="fstat-no" title="function not covered" >getHandler&lt;</span>T = AnyObj&gt;(args: yargs.ArgumentsCamelCase&lt;T&gt;): void {
+<span class="fstat-no" title="function not covered" >  pr</span>otected override getHandler&lt;T = AnyObj&gt;(args: yargs.ArgumentsCamelCase&lt;T&gt;): void {
     const configPath = <span class="cstat-no" title="statement not covered" >args.f as string;</span>
     const configPathToRemove = <span class="cstat-no" title="statement not covered" >args.configPath as string;</span>
 &nbsp;
@@ -235,7 +235,7 @@ export class DeletePathCommand extends Command {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-14T10:25:02.367Z
+                at 2023-05-14T10:39:09.918Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

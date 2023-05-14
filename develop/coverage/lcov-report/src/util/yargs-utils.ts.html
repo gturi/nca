@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -88,27 +88,27 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">156x</span>
-<span class="cline-any cline-yes">108x</span>
-<span class="cline-any cline-yes">108x</span>
-<span class="cline-any cline-yes">78x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">156x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { PositionalArgument } from "../model/positional-argument";
@@ -118,21 +118,21 @@ import { PositionalArgumentUtils } from "./positional-argument-utils";
 &nbsp;
 export class YargsUtils {
 &nbsp;
-  static emptyBuilder&lt;T = AnyObj&gt;(): ArgvBuilder&lt;T&gt; {
-    return {} as ArgvBuilder&lt;T&gt;;
+<span class="fstat-no" title="function not covered" >  st</span>atic emptyBuilder&lt;T = AnyObj&gt;(): ArgvBuilder&lt;T&gt; {
+<span class="cstat-no" title="statement not covered" >    return {} as ArgvBuilder&lt;T&gt;;</span>
   }
 &nbsp;
-  static getCommand(name: string, positionalArguments: PositionalArgument[]) {
-    const positionalCommands = positionalArguments.map(positionalArgument =&gt; {
-      const listType = PositionalArgumentType.isListType(positionalArgument.type) ? '..' : '';
-      if (PositionalArgumentUtils.isRequired(positionalArgument)) {
-        return `&lt;${positionalArgument.name}${listType}&gt;`
+<span class="fstat-no" title="function not covered" >  st</span>atic getCommand(name: string, positionalArguments: PositionalArgument[]) {
+    const positionalCommands = <span class="cstat-no" title="statement not covered" >positionalArguments.map(<span class="fstat-no" title="function not covered" >po</span>sitionalArgument =&gt; {</span>
+      const listType = <span class="cstat-no" title="statement not covered" >PositionalArgumentType.isListType(positionalArgument.type) ? '..' : '';</span>
+<span class="cstat-no" title="statement not covered" >      if (PositionalArgumentUtils.isRequired(positionalArgument)) {</span>
+<span class="cstat-no" title="statement not covered" >        return `&lt;${positionalArgument.name}${listType}&gt;`</span>
       } else {
-        return `[${positionalArgument.name}${listType}]`
+<span class="cstat-no" title="statement not covered" >        return `[${positionalArgument.name}${listType}]`</span>
       }
     }).join(' ');
 &nbsp;
-    return `${name} ${positionalCommands}`.trimEnd();
+<span class="cstat-no" title="statement not covered" >    return `${name} ${positionalCommands}`.trimEnd();</span>
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -142,7 +142,7 @@ export class YargsUtils {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-14T10:25:02.367Z
+                at 2023-05-14T10:39:09.918Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -23,6 +23,5 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: npm ci
-      - run: npm run build
-      - run: npm install --prefix './test/command-handler/module/external-dependency'
+      - run: node .github/script/setup-test.mjs
       - run: npm test

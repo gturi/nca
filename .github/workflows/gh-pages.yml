@@ -38,6 +38,8 @@ jobs:
         with:
           node-version: 'lts/*'
       - run: npm ci
+      - run: node .github/script/setup-test.mjs
+      - run: ls dist
       - run: echo running on branch ${{ env.BRANCH }}
       - run: npm run doc ${{ env.BRANCH }}
       - run: npm run coverage ${{ env.BRANCH }}

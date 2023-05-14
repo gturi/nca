@@ -1,6 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-const testUtils = require('../../../utils/test-utils')
+import * as testUtils from '../../../utils/test-utils';
 
 describe("function command handler", () => {
 

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 
-function runNcaAndVerifySuccessfulOutput(done: (arg: any) => void, handleStdout: (stdout: string[]) => void, args: string) {
+export function runNcaAndVerifySuccessfulOutput(done: (arg: any) => void, handleStdout: (stdout: string[]) => void, args: string) {
   const handleStderr = (stderr: string[]) => {
     if (stderr.length !== 0) {
       console.error(stderr);
@@ -11,7 +11,7 @@ function runNcaAndVerifySuccessfulOutput(done: (arg: any) => void, handleStdout:
   runNcaAndVerifyOutput(done, handleStdout, handleStderr, 0, args);
 }
 
-function runNcaAndVerifyOutput(done: (arg?: any) => void, handleStdout: (stdout: string[]) => void, handleStderr: (stderr: string[]) => void, expectedExitCode: number, args: string) {
+export function runNcaAndVerifyOutput(done: (arg?: any) => void, handleStdout: (stdout: string[]) => void, handleStderr: (stderr: string[]) => void, expectedExitCode: number, args: string) {
   const app = runCommand(args);
 
   const stdout: string[] = [];
@@ -49,9 +49,4 @@ function runCommand(args: string): ChildProcessWithoutNullStreams {
 
 function bufferToString(buffer: ArrayBuffer | SharedArrayBuffer | { valueOf(): ArrayBuffer | SharedArrayBuffer; }): string {
   return Buffer.from(buffer).toString();
-}
-
-module.exports = {
-  runNcaAndVerifyOutput: runNcaAndVerifyOutput,
-  runNcaAndVerifySuccessfulOutput: runNcaAndVerifySuccessfulOutput
 }

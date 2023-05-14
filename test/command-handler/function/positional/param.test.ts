@@ -1,6 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
 import * as testUtils from '../../../utils/test-utils';
+import { VerifyOutputBuilder } from '../../../utils/verify-output-builder';
 
 describe("function command handler", () => {
 
@@ -16,10 +17,12 @@ describe("function command handler", () => {
       '1',
       "[ 'a', 'b' ]"
     ].join('\n') + '\n';
-    const handleResult = (stdout: string[]) => {
-      expect(stdout.join('')).to.equal(expected);
-    };
-    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, ...command);
+    const verifyOutput = new VerifyOutputBuilder(done)
+      .handleStdout((stdout: string[]) => {
+        expect(stdout.join('')).to.equal(expected);
+      })
+      .build();
+    testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
   });
 
   it('log-positional command accepts --{key}={value} syntax', done => {
@@ -35,9 +38,11 @@ describe("function command handler", () => {
       'a',
       'b'
     ];
-    const handleResult = (stdout: string[]) => {
-      expect(stdout.join('')).to.equal(expected);
-    };
-    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, ...command);
+    const verifyOutput = new VerifyOutputBuilder(done)
+      .handleStdout((stdout: string[]) => {
+        expect(stdout.join('')).to.equal(expected);
+      })
+      .build();
+    testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
   });
 });

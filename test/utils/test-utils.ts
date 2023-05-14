@@ -1,17 +1,8 @@
 import { expect } from 'chai';
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
+import { VerifyOutput } from './verify-output';
 
-export function runNcaAndVerifySuccessfulOutput(done: (arg: any) => void, handleStdout: (stdout: string[]) => void, ...args: string[]) {
-  const handleStderr = (stderr: string[]) => {
-    if (stderr.length !== 0) {
-      console.error(stderr);
-      done(stderr);
-    }
-  }
-  runNcaAndVerifyOutput(done, handleStdout, handleStderr, 0, ...args);
-}
-
-export function runNcaAndVerifyOutput(done: (arg?: any) => void, handleStdout: (stdout: string[]) => void, handleStderr: (stderr: string[]) => void, expectedExitCode: number, ...args: string[]) {
+export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: string[]) {
   const app = runCommand(...args);
 
   const stdout: string[] = [];
@@ -27,12 +18,12 @@ export function runNcaAndVerifyOutput(done: (arg?: any) => void, handleStdout: (
 
   app.on('close', (code: number) => {
     try {
-      handleStdout(stdout);
-      handleStderr(stderr);
-      expect(code).to.equal(expectedExitCode);
-      done();
+      verifyOutput.handleStdout(stdout);
+      verifyOutput.handleStderr(stderr);
+      expect(code).to.equal(verifyOutput.expectedExitCode);
+      verifyOutput.done();
     } catch (error) {
-      done(error);
+      verifyOutput.done(error);
     }
   });
 }

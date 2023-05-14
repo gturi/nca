@@ -1,6 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
 import * as testUtils from '../../../utils/test-utils';
+import { VerifyOutputBuilder } from '../../../utils/verify-output-builder';
 
 describe("module command handler", () => {
 
@@ -8,9 +9,11 @@ describe("module command handler", () => {
   it('command module-external logs todays date using moment.js library', done => {
     const command = 'module-external';
     const expected = `${new Date().toISOString().split('T')[0]}\n`;
-    const handleResult = (stdout: string[]) => {
+    const verifyOutput = new VerifyOutputBuilder(done)
+    .handleStdout((stdout: string[]) => {
       expect(stdout.join('\n')).to.equal(expected);
-    };
-    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, command);
+    })
+    .build();
+    testUtils.runNcaAndVerifyOutput(verifyOutput, command);
   });
 });

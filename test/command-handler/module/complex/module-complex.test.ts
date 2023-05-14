@@ -1,6 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
 import * as testUtils from '../../../utils/test-utils';
+import { VerifyOutputBuilder } from '../../../utils/verify-output-builder';
 
 describe("module command handler", () => {
 
@@ -12,9 +13,11 @@ describe("module command handler", () => {
       '--foo=world'
     ];
     const expected = 'hello world\n';
-    const handleResult = (stdout: string[]) => {
-      expect(stdout.join('\n')).to.equal(expected);
-    };
-    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, ...command);
+    const verifyOutput = new VerifyOutputBuilder(done)
+      .handleStdout((stdout: string[]) => {
+        expect(stdout.join('\n')).to.equal(expected);
+      })
+      .build();
+    testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
   });
 });

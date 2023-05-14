@@ -1508,11 +1508,11 @@ FNH:8
 FNDA:14,runNcaAndVerifySuccessfulOutput
 FNDA:14,(anonymous_1)
 FNDA:15,runNcaAndVerifyOutput
-FNDA:24,(anonymous_3)
+FNDA:31,(anonymous_3)
 FNDA:2,(anonymous_4)
 FNDA:15,(anonymous_5)
 FNDA:15,runCommand
-FNDA:26,bufferToString
+FNDA:33,bufferToString
 DA:1,1
 DA:2,1
 DA:4,1
@@ -1526,7 +1526,7 @@ DA:15,15
 DA:17,15
 DA:18,15
 DA:20,15
-DA:21,24
+DA:21,31
 DA:24,15
 DA:25,2
 DA:28,15
@@ -1537,7 +1537,7 @@ DA:32,15
 DA:33,15
 DA:35,0
 DA:46,15
-DA:51,26
+DA:51,33
 LF:25
 LH:22
 BRDA:6,0,0,0

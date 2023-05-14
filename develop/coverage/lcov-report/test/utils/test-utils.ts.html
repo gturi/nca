@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88% </span>
+                <span class="strong">94.73% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>22/25</span>
+                <span class='fraction'>18/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88% </span>
+                <span class="strong">94.73% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/25</span>
+                <span class='fraction'>18/19</span>
             </div>
         
             
@@ -106,26 +106,8 @@
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a>
-<a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a>
-<a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -135,11 +117,11 @@
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">32x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
@@ -165,23 +147,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">34x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { expect } from 'chai';
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
+import { VerifyOutput } from './verify-output';
 &nbsp;
-export function runNcaAndVerifySuccessfulOutput(done: (arg: any) =&gt; void, handleStdout: (stdout: string[]) =&gt; void, args: string) {
-  const handleStderr = (stderr: string[]) =&gt; {
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (stderr.length !== 0) {
-<span class="cstat-no" title="statement not covered" >      console.error(stderr);</span>
-<span class="cstat-no" title="statement not covered" >      done(stderr);</span>
-    }
-  }
-  runNcaAndVerifyOutput(done, handleStdout, handleStderr, 0, args);
-}
-&nbsp;
-export function runNcaAndVerifyOutput(done: (arg?: any) =&gt; void, handleStdout: (stdout: string[]) =&gt; void, handleStderr: (stderr: string[]) =&gt; void, expectedExitCode: number, args: string) {
-  const app = runCommand(args);
+export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: string[]) {
+  const app = runCommand(...args);
 &nbsp;
   const stdout: string[] = [];
   const stderr: string[] = [];
@@ -196,12 +169,12 @@ export function runNcaAndVerifyOutput(done: (arg?: any) =&gt; void, handleStdout
 &nbsp;
   app.on('close', (code: number) =&gt; {
     try {
-      handleStdout(stdout);
-      handleStderr(stderr);
-      expect(code).to.equal(expectedExitCode);
-      done();
+      verifyOutput.handleStdout(stdout);
+      verifyOutput.handleStderr(stderr);
+      expect(code).to.equal(verifyOutput.expectedExitCode);
+      verifyOutput.done();
     } catch (error) {
-<span class="cstat-no" title="statement not covered" >      done(error);</span>
+<span class="cstat-no" title="statement not covered" >      verifyOutput.done(error);</span>
     }
   });
 }
@@ -211,8 +184,8 @@ export function runNcaAndVerifyOutput(done: (arg?: any) =&gt; void, handleStdout
  *
  * @param {...string} args - positional and option arguments for the command to run
  */
-function runCommand(args: string): ChildProcessWithoutNullStreams {
-  return spawn('./test/run-nca.sh', [args]);
+function runCommand(...args: string[]): ChildProcessWithoutNullStreams {
+  return spawn('./test/run-nca.sh', args);
 }
 &nbsp;
 &nbsp;
@@ -226,7 +199,7 @@ function bufferToString(buffer: ArrayBuffer | SharedArrayBuffer | { valueOf(): A
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-14T15:09:09.232Z
+                at 2023-05-14T16:17:18.180Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

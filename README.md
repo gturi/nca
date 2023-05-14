@@ -1,18 +1,18 @@
 # nca - Node Command Alias
 
-| branch | |
-| --- | --- |
-| main | [![lint-and-test](https://github.com/FlamingTuri/nca/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/FlamingTuri/nca/actions/workflows/lint-and-test.yml) |
-| develop | [![lint-and-test](https://github.com/FlamingTuri/nca/actions/workflows/lint-and-test.yml/badge.svg?branch=develop)](https://github.com/FlamingTuri/nca/actions/workflows/lint-and-test.yml) |
+| branch | build | coverage |
+| --- | --- | --- |
+| main | [![lint-and-test](https://github.com/gturi/nca/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/gturi/nca/actions/workflows/lint-and-test.yml) | [![Coverage Status](https://coveralls.io/repos/github/gturi/nca/badge.svg?branch=main)](https://coveralls.io/github/gturi/nca?branch=main) |
+| develop | [![lint-and-test](https://github.com/gturi/nca/actions/workflows/lint-and-test.yml/badge.svg?branch=develop)](https://github.com/gturi/nca/actions/workflows/lint-and-test.yml) | [![Coverage Status](https://coveralls.io/repos/github/gturi/nca/badge.svg?branch=develop)](https://coveralls.io/github/gturi/nca?branch=develop) |
 
 
 ## main
 
-- [typedoc](https://flamingturi.github.io/nca/main/docs/index.html)
+- [typedoc](https://gturi.github.io/nca/main/docs/index.html)
 
 ## develop
 
-- [typedoc](https://flamingturi.github.io/nca/develop/docs/index.html)
+- [typedoc](https://gturi.github.io/nca/develop/docs/index.html)
 
 
 ## Config notes

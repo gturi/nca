@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">85% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>17/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">70% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>7/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">82.35% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>14/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -100,39 +100,39 @@
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">180x</span>
+<span class="cline-any cline-yes">180x</span>
+<span class="cline-any cline-yes">180x</span>
+<span class="cline-any cline-yes">180x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">180x</span>
+<span class="cline-any cline-yes">180x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">180x</span>
+<span class="cline-any cline-yes">180x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">180x</span>
+<span class="cline-any cline-yes">180x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">180x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { OptionParam } from "../model/option-param";
@@ -141,34 +141,34 @@ import { WhiteSpaceValidator } from "./white-space-validator";
 &nbsp;
 export class OptionParamValidator {
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic validate(aliasName: string, options?: OptionParam[]) {
-<span class="cstat-no" title="statement not covered" >    if (options) {</span>
-<span class="cstat-no" title="statement not covered" >      this.checkNamesFormat(aliasName, options);</span>
-<span class="cstat-no" title="statement not covered" >      this.checkAlternativeNamesFormat(aliasName, options);</span>
-<span class="cstat-no" title="statement not covered" >      this.checkDuplicateNames(aliasName, options);</span>
+  static validate(aliasName: string, options?: OptionParam[]) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (options) {
+      this.checkNamesFormat(aliasName, options);
+      this.checkAlternativeNamesFormat(aliasName, options);
+      this.checkDuplicateNames(aliasName, options);
     }
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  pr</span>ivate static checkNamesFormat(aliasName: string, options: OptionParam[]) {
-    const optionNames = <span class="cstat-no" title="statement not covered" >options.map(<span class="fstat-no" title="function not covered" >op</span>tion =&gt; <span class="cstat-no" title="statement not covered" >option.name)</span></span>
-<span class="cstat-no" title="statement not covered" >    WhiteSpaceValidator.validate(optionNames, <span class="fstat-no" title="function not covered" >el</span>ementsWithWhitespaces =&gt; {</span>
+  private static checkNamesFormat(aliasName: string, options: OptionParam[]) {
+    const optionNames = options.map(option =&gt; option.name)
+    WhiteSpaceValidator.validate(optionNames, <span class="fstat-no" title="function not covered" >elementsWithWhitespaces </span>=&gt; {
 <span class="cstat-no" title="statement not covered" >      return `${aliasName}: option names cannot contain whitespaces [${elementsWithWhitespaces}]`;</span>
     });
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  pr</span>ivate static checkAlternativeNamesFormat(aliasName: string, options: OptionParam[]) {
-    const optionAlternativeNames = <span class="cstat-no" title="statement not covered" >options.map(<span class="fstat-no" title="function not covered" >op</span>tion =&gt; <span class="cstat-no" title="statement not covered" >option.alternativeName ?? '')</span>;</span>
-<span class="cstat-no" title="statement not covered" >    WhiteSpaceValidator.validate(optionAlternativeNames, <span class="fstat-no" title="function not covered" >el</span>ementsWithWhitespaces =&gt; {</span>
+  private static checkAlternativeNamesFormat(aliasName: string, options: OptionParam[]) {
+    const optionAlternativeNames = options.map(option =&gt; option.alternativeName ?? '');
+    WhiteSpaceValidator.validate(optionAlternativeNames, <span class="fstat-no" title="function not covered" >elementsWithWhitespaces </span>=&gt; {
 <span class="cstat-no" title="statement not covered" >      return `${aliasName}: option names cannot contain whitespaces [${elementsWithWhitespaces}]`;</span>
     });
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  pr</span>ivate static checkDuplicateNames(aliasName: string, options: OptionParam[]) {
-    const optionNames = <span class="cstat-no" title="statement not covered" >options.map(<span class="fstat-no" title="function not covered" >op</span>tion =&gt; <span class="cstat-no" title="statement not covered" >option.name)</span>;</span>
-    const getErrorMessage = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(d</span>uplicates: string[]) =&gt; {</span>
+  private static checkDuplicateNames(aliasName: string, options: OptionParam[]) {
+    const optionNames = options.map(option =&gt; option.name);
+    const getErrorMessage = <span class="fstat-no" title="function not covered" >(d</span>uplicates: string[]) =&gt; {
 <span class="cstat-no" title="statement not covered" >      return `${aliasName}: multiple option has been defined with the same name: [${duplicates}]`;</span>
     };
-<span class="cstat-no" title="statement not covered" >    DuplicatesValidator.validate(optionNames, getErrorMessage);</span>
+    DuplicatesValidator.validate(optionNames, getErrorMessage);
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -178,7 +178,7 @@ export class OptionParamValidator {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-14T11:01:28.912Z
+                at 2023-05-14T13:22:26.803Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>5/15</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">11.11% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>1/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">35.71% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>5/14</span>
             </div>
         
             
@@ -114,17 +114,17 @@
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
 <a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -173,12 +173,12 @@ import { YargsUtils } from "../util/yargs-utils";
 &nbsp;
 export abstract class Command {
 &nbsp;
-<span class="fstat-no" title="function not covered" >  ge</span>tCommand&lt;T = AnyObj&gt;(): CommandModule&lt;T, AnyObj&gt; {
-<span class="cstat-no" title="statement not covered" >    return {</span>
+  getCommand&lt;T = AnyObj&gt;(): CommandModule&lt;T, AnyObj&gt; {
+    return {
       command: this.getCommandName(),
       describe: this.getCommandDescription(),
-      builder: <span class="fstat-no" title="function not covered" >ya</span>rgs =&gt; <span class="cstat-no" title="statement not covered" >this.getBuilder&lt;T&gt;(yargs),</span>
-      handler: <span class="fstat-no" title="function not covered" >ar</span>gs =&gt; <span class="cstat-no" title="statement not covered" >this.getHandler(args)</span>
+      builder: <span class="fstat-no" title="function not covered" >yargs </span>=&gt; <span class="cstat-no" title="statement not covered" >this.getBuilder&lt;T&gt;(yargs),</span>
+      handler: <span class="fstat-no" title="function not covered" >args </span>=&gt; <span class="cstat-no" title="statement not covered" >this.getHandler(args)</span>
     };
   }
 &nbsp;
@@ -186,7 +186,7 @@ export abstract class Command {
 &nbsp;
   protected abstract getCommandDescription(): string;
 &nbsp;
-<span class="fstat-no" title="function not covered" >  pr</span>ivate getBuilder&lt;T = AnyObj&gt;(yargs: yargs.Argv&lt;T&gt;): ArgvBuilder&lt;T&gt; {
+  private <span class="fstat-no" title="function not covered" >getBuilder&lt;</span>T = AnyObj&gt;(yargs: yargs.Argv&lt;T&gt;): ArgvBuilder&lt;T&gt; {
 <span class="cstat-no" title="statement not covered" >    PositionalArgumentBuilder.build(yargs, this.getPositionalArguments());</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    OptionBuilder.build(yargs, this.getOptionParams());</span>
@@ -196,21 +196,21 @@ export abstract class Command {
 <span class="cstat-no" title="statement not covered" >    return YargsUtils.emptyBuilder&lt;T&gt;();</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  pr</span>otected getPositionalArguments(): PositionalArgument[] {
+  protected <span class="fstat-no" title="function not covered" >getPositionalArguments(</span>): PositionalArgument[] {
 <span class="cstat-no" title="statement not covered" >    return [];</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  pr</span>otected getOptionParams(): OptionParam[] {
+  protected <span class="fstat-no" title="function not covered" >getOptionParams(</span>): OptionParam[] {
 <span class="cstat-no" title="statement not covered" >    return [];</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  pr</span>otected getCommands(): Command[] {
+  protected <span class="fstat-no" title="function not covered" >getCommands(</span>): Command[] {
 <span class="cstat-no" title="statement not covered" >    return [];</span>
   }
 &nbsp;
   /* eslint-disable @typescript-eslint/no-unused-vars */
   /* eslint-disable @typescript-eslint/no-empty-function */
-<span class="fstat-no" title="function not covered" >  pr</span>otected getHandler&lt;T = AnyObj&gt;(args: yargs.ArgumentsCamelCase&lt;T&gt;) {
+  protected <span class="fstat-no" title="function not covered" >getHandler&lt;</span>T = AnyObj&gt;(args: yargs.ArgumentsCamelCase&lt;T&gt;) {
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -220,7 +220,7 @@ export abstract class Command {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-14T11:01:28.912Z
+                at 2023-05-14T13:22:26.803Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

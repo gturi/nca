@@ -1,10 +1,9 @@
+import 'mocha';
+import { expect } from 'chai';
 const testUtils = require('../../../utils/test-utils')
 
 describe("function command handler", () => {
 
-  beforeEach(() => jest.resetModules());
-
-  afterEach(() => jest.resetAllMocks());
 
   it('command mainAlias logs expected values', done => {
     const command = 'mainAlias -a true -n 100 fooValue barValue1 barValue2';
@@ -16,8 +15,8 @@ describe("function command handler", () => {
       'bar: barValue1,barValue2',
       '--- main alias ended ---'
     ].join('\n') + '\n';
-    const handleResult = output => {
-      expect(output.join('')).toBe(expected);
+    const handleResult = (stdout: string[]) => {
+      expect(stdout.join('')).to.equal(expected);
     };
     testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, command);
   });
@@ -34,8 +33,8 @@ describe("function command handler", () => {
       'baz: bazValue',
       '--- sub alias ended ---'
     ].join('\n') + '\n';
-    const handleResult = output => {
-      expect(output.join('')).toBe(expected);
+    const handleResult = (stdout: string[]) => {
+      expect(stdout.join('')).to.equal(expected);
     };
     testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, command);
   });
@@ -52,8 +51,8 @@ describe("function command handler", () => {
       'qux: quxValue',
       '--- another sub alias ended ---'
     ].join('\n') + '\n';
-    const handleResult = output => {
-      expect(output.join('')).toBe(expected);
+    const handleResult = (stdout: string[]) => {
+      expect(stdout.join('')).to.equal(expected);
     };
     testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, command);
   });

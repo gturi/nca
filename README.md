@@ -85,6 +85,8 @@ export ncaMainConfigFilePath=/path/to/your/main/config.yml
 
 Configuration model is deployed to github pages. Please refer to the following [README](https://github.com/gturi/nca/blob/gh-pages/README.md).
 
+Refer to [CommandHandlerInput](https://gturi.github.io/nca/main/docs/classes/command_handler_input.CommandHandlerInput.html) interface when using function and module aliases. It contains option, arguments and utility functions that can be used inside javascript functions/modules.
+
 [Back to top](#nca---Node-Command-Alias)
 
 

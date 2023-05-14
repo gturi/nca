@@ -1,18 +1,18 @@
 import { expect } from 'chai';
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 
-export function runNcaAndVerifySuccessfulOutput(done: (arg: any) => void, handleStdout: (stdout: string[]) => void, args: string) {
+export function runNcaAndVerifySuccessfulOutput(done: (arg: any) => void, handleStdout: (stdout: string[]) => void, ...args: string[]) {
   const handleStderr = (stderr: string[]) => {
     if (stderr.length !== 0) {
       console.error(stderr);
       done(stderr);
     }
   }
-  runNcaAndVerifyOutput(done, handleStdout, handleStderr, 0, args);
+  runNcaAndVerifyOutput(done, handleStdout, handleStderr, 0, ...args);
 }
 
-export function runNcaAndVerifyOutput(done: (arg?: any) => void, handleStdout: (stdout: string[]) => void, handleStderr: (stderr: string[]) => void, expectedExitCode: number, args: string) {
-  const app = runCommand(args);
+export function runNcaAndVerifyOutput(done: (arg?: any) => void, handleStdout: (stdout: string[]) => void, handleStderr: (stderr: string[]) => void, expectedExitCode: number, ...args: string[]) {
+  const app = runCommand(...args);
 
   const stdout: string[] = [];
   const stderr: string[] = [];
@@ -42,8 +42,8 @@ export function runNcaAndVerifyOutput(done: (arg?: any) => void, handleStdout: (
  *
  * @param {...string} args - positional and option arguments for the command to run
  */
-function runCommand(args: string): ChildProcessWithoutNullStreams {
-  return spawn('./test/run-nca.sh', [args]);
+function runCommand(...args: string[]): ChildProcessWithoutNullStreams {
+  return spawn('./test/run-nca.sh', args);
 }
 
 

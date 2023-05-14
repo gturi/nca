@@ -6,10 +6,11 @@ describe("function command handler", () => {
 
 
   it('command function-hello logs hello world', done => {
+    const command = ['function-hello']
     const handleResult = (stdout: string[]) => {
       expect(stdout.join('\n')).to.equal('hello world\n');
     };
-    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, 'function-hello');
+    testUtils.runNcaAndVerifySuccessfulOutput(done, handleResult, ...command);
   });
 
 });

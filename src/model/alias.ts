@@ -1,4 +1,5 @@
 import { CommandType } from "./command-type"
+import { Completion } from "./completion";
 import { OptionParam } from "./option-param";
 import { PositionalArgument } from "./positional-argument";
 
@@ -21,6 +22,8 @@ export interface Alias {
   positionalArguments?: PositionalArgument[];
   /** Subaliases, to have more complex alias structures. */
   subAliases?: Alias[];
+  /** Defines a command custom completion */
+  completion: Completion;
   /** Set internally to allow usage of relative paths. */
   aliasDirectory: string;
 }

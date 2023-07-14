@@ -5,6 +5,7 @@ import { hideBin } from 'yargs/helpers';
 import { AliasMapper } from './mapper/alias-mapper';
 import { ConfigLoader } from './util/config-loader';
 import { ConfigCommand } from './command/config-command';
+import { CompletionLoader } from './mapper/completion-loader';
 
 function nca() {
   const argvBuilder = yargs(hideBin(process.argv));
@@ -17,8 +18,9 @@ function nca() {
 
   argvBuilder.command(new ConfigCommand().getCommand());
 
+  CompletionLoader.initCompletion(argvBuilder, aliases);
+
   argvBuilder
-    .completion()
     .alias('help', 'h')
     .alias('version', 'v')
     .strict()

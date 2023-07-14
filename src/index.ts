@@ -7,29 +7,24 @@ import { ConfigLoader } from './util/config-loader';
 import { ConfigCommand } from './command/config-command';
 
 function nca() {
-  try {
-    const argvBuilder = yargs(hideBin(process.argv));
+  const argvBuilder = yargs(hideBin(process.argv));
 
-    const aliases = ConfigLoader.loadAliases();
+  const aliases = ConfigLoader.loadAliases();
 
-    aliases.sort((a, b) => a.name.localeCompare(b.name))
-      .map(alias => AliasMapper.map(alias))
-      .forEach(commandModule => argvBuilder.command(commandModule));
+  aliases.sort((a, b) => a.name.localeCompare(b.name))
+    .map(alias => AliasMapper.map(alias))
+    .forEach(commandModule => argvBuilder.command(commandModule));
 
-    argvBuilder.command(new ConfigCommand().getCommand());
+  argvBuilder.command(new ConfigCommand().getCommand());
 
-    argvBuilder
-      .completion()
-      .alias('help', 'h')
-      .alias('version', 'v')
-      .strict()
-      .wrap(argvBuilder.terminalWidth())
-      .demandCommand(1, '')
-      .parse();
-
-  } catch (e) {
-    console.log(e);
-  }
+  argvBuilder
+    .completion()
+    .alias('help', 'h')
+    .alias('version', 'v')
+    .strict()
+    .wrap(argvBuilder.terminalWidth())
+    .demandCommand(1, '')
+    .parse();
 }
 
 nca();

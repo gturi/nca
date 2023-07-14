@@ -4,8 +4,11 @@ import { Completion } from "../model/completion";
 import { LoggingUtil } from "../util/logging-utils";
 import { ArrayUtils } from "../util/array-utils";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type CompletionFilter = (onCompleted?: CompletionCallback) => any;
 type Done = (completions: string[]) => any;
+/* eslint-enable @typescript-eslint/no-explicit-any */
+type OptCompletion = Completion | null;
 
 export class CompletionLoader {
 
@@ -15,7 +18,7 @@ export class CompletionLoader {
     this.aliases = aliases;
   }
 
-  static initCompletion(argvBuilder: yargs.Argv<{}>, aliases: Alias[]) {
+  static initCompletion<T>(argvBuilder: yargs.Argv<T>, aliases: Alias[]) {
     argvBuilder.completion(
       'completion',
       (current: string, argv: Arguments,
@@ -40,7 +43,7 @@ export class CompletionLoader {
       );
 
       const completion = this.getCompletion(argv._);
-      const completionArray = this.getCompletionArrayOrDefault(completion, defaultCompletions ?? [])
+      const completionArray = this.getCompletionArray(completion, defaultCompletions ?? [])
       done(completionArray);
     });
   }
@@ -62,10 +65,12 @@ export class CompletionLoader {
     return alias?.completion ?? null;
   }
 
-  private getCompletionArrayOrDefault(completion: Completion | null, defaultCompletions: string[]): string[] {
+  private getCompletionArray(completion: OptCompletion, defaultCompletions: string[]): string[] {
     let result: string[] | undefined;
     if (completion) {
-      const completionArray = this.getCompletionArray(completion);
+      const completionArray = ArrayUtils.concatAll(
+        [], completion.completionArray, this.loadCompletionFromPath(completion)
+      );
       if (completion.merge) {
         result = completionArray;
       } else {
@@ -77,16 +82,14 @@ export class CompletionLoader {
     return result ?? [];
   }
 
-  private getCompletionArray(completion: Completion): string[] {
-    return ArrayUtils.concatAll([], completion.completionArray, this.loadCompletionFromPath(completion));
-  }
-
   private loadCompletionFromPath(completion: Completion): string[] | null {
+    /* eslint-disable @typescript-eslint/no-var-requires */
     if (completion.completionPath) {
       const module = require(completion.completionPath);
       return module.default() as string[];
     } else {
       return null;
     }
+    /* eslint-enable @typescript-eslint/no-var-requires */
   }
 }

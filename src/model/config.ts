@@ -14,9 +14,9 @@ export namespace Config {
 
   export function getMainConfigFilePath(): string {
     const envNcaMainConfigFilePath = process.env.ncaMainConfigFilePath;
-    return StringUtils.isEmpty(envNcaMainConfigFilePath)
-      ? path.join(getMainConfigFolderPath(), 'config.yml')
-      : envNcaMainConfigFilePath!;
+    return StringUtils.ifNotEmptyOrDefault(
+      envNcaMainConfigFilePath, () => path.join(getMainConfigFolderPath(), 'config.yml')
+    );
   }
 
   export function getLogFilePath(): string {

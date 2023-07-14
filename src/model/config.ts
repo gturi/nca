@@ -19,6 +19,10 @@ export namespace Config {
       : envNcaMainConfigFilePath!;
   }
 
+  export function getLogFilePath(): string {
+    return path.join(getMainConfigFolderPath(), 'out.log');
+  }
+
   export function getMainConfigFolderPath(): string {
     return path.join(os.homedir(), '.nca');
   }

@@ -1,8 +1,8 @@
 import yargs, { Arguments, CompletionCallback } from "yargs";
 import { Alias } from "../model/alias";
 import { Completion } from "../model/completion";
-import { CompletionType } from "../model/completion-type";
 import { LoggingUtil } from "../util/logging-utils";
+import { ArrayUtils } from "../util/array-utils";
 
 type CompletionFilter = (onCompleted?: CompletionCallback) => any;
 type Done = (completions: string[]) => any;
@@ -77,18 +77,15 @@ export class CompletionLoader {
   }
 
   private getCompletionArray(completion: Completion): string[] {
-    const result = (() => {
-      const completionType = completion.completionType ?? CompletionType.Simple;
-      switch (completionType) {
-        case CompletionType.Simple:
-          return completion.completionArray;
-        case CompletionType.Module:
-          const module = require(completion.completionPath ?? '');
-          return module.default() as string[];
-        default:
-          return [];
-      }
-    })();
-    return result ?? [];
+    return ArrayUtils.concatAll([], completion.completionArray, this.loadCompletionFromPath(completion));
+  }
+
+  private loadCompletionFromPath(completion: Completion): string[] | null {
+    if (completion.completionPath) {
+      const module = require(completion.completionPath);
+      return module.default() as string[];
+    } else {
+      return null;
+    }
   }
 }

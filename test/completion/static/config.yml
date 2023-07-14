@@ -1,0 +1,6 @@
+aliases:
+  - name: static-completion
+    description: prints hello world
+    command: echo "hello world"
+    completion:
+      completionArray: [foo, bar, baz]

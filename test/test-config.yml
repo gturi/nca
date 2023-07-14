@@ -1,2 +1,3 @@
 includePaths:
   - command-handler
+  - completion

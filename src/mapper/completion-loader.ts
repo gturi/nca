@@ -48,6 +48,7 @@ export class CompletionLoader {
   private getCompletion(commands: (string | number)[]): Completion | null {
     let aliases: Alias[] | undefined = this.aliases;
     let alias: Alias | undefined;
+    // TODO: find a way to rewrite it in a more functional way
     for (const command of commands) {
       if (command !== 'nca' && command !== '') {
         alias = aliases?.find(alias => alias.name === '' + command);

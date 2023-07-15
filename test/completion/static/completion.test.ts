@@ -5,7 +5,7 @@ import { VerifyOutputBuilder } from '../../utils/verify-output-builder';
 
 describe("completion", () => {
 
-  it('completion array logs expected values', done => {
+  it('static array completion logs expected values', done => {
     const command = [
       '--get-yargs-completions',
       'static-completion'
@@ -16,9 +16,24 @@ describe("completion", () => {
       'baz'
     ].join('\n') + '\n';
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout((stdout: string[]) => {
-        expect(stdout.join('')).to.equal(expected);
-      })
+      .handleStdout(stdout => expect(stdout.join('')).to.equal(expected))
+      .build();
+
+    testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
+  });
+
+  it('js completion logs expected values', done => {
+    const command = [
+      '--get-yargs-completions',
+      'js-completion'
+    ];
+    const expected = [
+      'a',
+      'b',
+      'c'
+    ].join('\n') + '\n';
+    const verifyOutput = new VerifyOutputBuilder(done)
+      .handleStdout(stdout => expect(stdout.join('')).to.equal(expected))
       .build();
 
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);

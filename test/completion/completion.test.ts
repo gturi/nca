@@ -1,7 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
-import * as testUtils from '../../utils/test-utils';
-import { VerifyOutputBuilder } from '../../utils/verify-output-builder';
+import * as testUtils from '../utils/test-utils';
+import { VerifyOutputBuilder } from '../utils/verify-output-builder';
 
 describe("completion", () => {
 

@@ -42,7 +42,7 @@ describe("completion", () => {
   it('hierarchy default completion logs expected values', done => {
     const command = [
       '--get-yargs-completions',
-      'hierarchy-completion'
+      'hierarchy-default-completion'
     ];
     const expected = [
       'subAlias',
@@ -58,11 +58,65 @@ describe("completion", () => {
   it('hierarchy default completion logs expected option values', done => {
     const command = [
       '--get-yargs-completions',
-      'hierarchy-completion',
+      'hierarchy-default-completion',
       '-'
     ];
     const expected = [
       '-a',
+      '--help',
+      '-n',
+      '--version',
+      ''
+    ].join('\n').split('\n').sort();
+    const verifyOutput = new VerifyOutputBuilder(done)
+      .handleStdout(stdout => {
+        const result = stdout.join('').split('\n').sort();
+        //console.log(`result ${JSON.stringify(result)}`)
+        //console.log(`expected ${JSON.stringify(expected)}`)
+        expect(result).deep.equal(expected);
+      })
+      .build();
+
+    testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
+  });
+
+  it('hierarchy default completion subalias logs expected option values', done => {
+    const command = [
+      '--get-yargs-completions',
+      'hierarchy-default-completion',
+      'subAlias',
+      '-'
+    ];
+    const expected = [
+      '-a',
+      '-c',
+      '--help',
+      '-n',
+      '--version',
+      ''
+    ].join('\n').split('\n').sort();
+    const verifyOutput = new VerifyOutputBuilder(done)
+      .handleStdout(stdout => {
+        const result = stdout.join('').split('\n').sort();
+        //console.log(`result ${JSON.stringify(result)}`)
+        //console.log(`expected ${JSON.stringify(expected)}`)
+        expect(result).deep.equal(expected);
+      })
+      .build();
+
+    testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
+  });
+
+  it('hierarchy default completion anotherSubalias logs expected option values', done => {
+    const command = [
+      '--get-yargs-completions',
+      'hierarchy-default-completion',
+      'anotherSubAlias',
+      '-'
+    ];
+    const expected = [
+      '-a',
+      '-d',
       '--help',
       '-n',
       '--version',

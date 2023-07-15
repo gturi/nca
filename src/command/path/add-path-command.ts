@@ -1,5 +1,4 @@
 import yargs from "yargs";
-import { Config } from "../../model/config";
 import { OptionParam } from '../../model/option-param';
 import { OptionParamType } from '../../model/option-param-type';
 import { PositionalArgument } from '../../model/positional-argument';
@@ -9,6 +8,7 @@ import { ConfigSaver } from '../../util/config-saver';
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from '../../util/yargs-utils';
 import { Command } from "../command";
+import { NcaConfig } from "../../config/nca-config";
 
 export class AddPathCommand extends Command {
 
@@ -36,7 +36,7 @@ export class AddPathCommand extends Command {
       alternativeName: 'file',
       description: 'configuration path to that will include the new config',
       optionType: OptionParamType.String,
-      defaultValue: Config.getMainConfigFilePath()
+      defaultValue: NcaConfig.getMainConfigFilePath()
     }
     return [optionParam];
   }

@@ -3,6 +3,7 @@ import { Alias } from "../model/alias";
 import { Completion } from "../model/completion";
 import { LoggingUtil } from "../util/logging-utils";
 import { ArrayUtils } from "../util/array-utils";
+import { PathUtils } from "../util/path-utils";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type CompletionFilter = (onCompleted?: CompletionCallback) => any;
@@ -42,13 +43,13 @@ export class CompletionLoader {
         ].join('\n')
       );
 
-      const completion = this.getCompletion(argv._);
-      const completionArray = this.getCompletionArray(completion, defaultCompletions ?? [])
+      const alias = this.getCurrentAlias(argv._);
+      const completionArray = this.getCompletionArray(alias, defaultCompletions ?? [])
       done(completionArray);
     });
   }
 
-  private getCompletion(commands: (string | number)[]): Completion | null {
+  private getCurrentAlias(commands: (string | number)[]): Alias | null {
     let aliases: Alias[] | undefined = this.aliases;
     let alias: Alias | undefined;
     // TODO: find a way to rewrite it in a more functional way
@@ -62,14 +63,15 @@ export class CompletionLoader {
         }
       }
     }
-    return alias?.completion ?? null;
+    return alias ?? null;
   }
 
-  private getCompletionArray(completion: OptCompletion, defaultCompletions: string[]): string[] {
+  private getCompletionArray(alias: Alias | null, defaultCompletions: string[]): string[] {
+    const completion = alias?.completion;
     let result: string[] | undefined;
     if (completion) {
       const completionArray = ArrayUtils.concatAll(
-        [], completion.completionArray, this.loadCompletionFromPath(completion)
+        [], completion.completionArray, this.loadCompletionFromPath(alias)
       );
       if (completion.merge) {
         result = completionArray;
@@ -82,11 +84,13 @@ export class CompletionLoader {
     return result ?? [];
   }
 
-  private loadCompletionFromPath(completion: Completion): string[] | null {
+  private loadCompletionFromPath(alias: Alias): string[] | null {
     /* eslint-disable @typescript-eslint/no-var-requires */
-    if (completion.completionPath) {
-      const module = require(completion.completionPath);
-      return module.default() as string[];
+    const completionPath = alias.completion?.completionPath;
+    if (completionPath) {
+      const modulePath = PathUtils.resolvePath(completionPath, alias.aliasDirectory);
+      const module = require(modulePath);
+      return module() as string[];
     } else {
       return null;
     }

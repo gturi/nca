@@ -1,6 +1,6 @@
 aliases:
   - name: mainAlias
-    description: description main alias 
+    description: description main alias
     command: |
       console.log('--- main alias started ---');
       console.log(`a: ${input.args.a}`);

@@ -67,21 +67,25 @@ export class CompletionLoader {
   }
 
   private getCompletionArray(alias: Alias | null, defaultCompletions: string[]): string[] {
-    const completion = alias?.completion;
     let result: string[] | undefined;
+
+    const completion = alias?.completion;
     if (completion) {
-      const completionArray = ArrayUtils.concatAll(
-        [], completion.completionArray, this.loadCompletionFromPath(alias)
-      );
-      if (completion.merge) {
-        result = completionArray.concat(defaultCompletions);
-      } else {
-        result = completionArray;
-      }
+      const customCompletionArray = this.getCustomCompletionArray(alias, completion);
+      result = completion.merge
+        ? customCompletionArray.concat(defaultCompletions)
+        : customCompletionArray;
     } else {
       result = defaultCompletions;
     }
+
     return result ?? [];
+  }
+
+  private getCustomCompletionArray(alias: Alias, completion: Completion): string[] {
+    return ArrayUtils.concatAll(
+      [], completion.completionArray, this.loadCompletionFromPath(alias)
+    );
   }
 
   private loadCompletionFromPath(alias: Alias): string[] | null {

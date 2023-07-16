@@ -15,9 +15,9 @@ describe("completion", () => {
       'foo',
       'bar',
       'baz'
-    ].join('\n') + '\n';
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout(stdout => expect(stdout.join('')).to.equal(expected))
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))
       .build();
 
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
@@ -32,9 +32,9 @@ describe("completion", () => {
       'a',
       'b',
       'c'
-    ].join('\n') + '\n';
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout(stdout => expect(stdout.join('')).to.equal(expected))
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))
       .build();
 
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
@@ -48,9 +48,9 @@ describe("completion", () => {
     const expected = [
       'subAlias',
       'anotherSubAlias'
-    ].join('\n') + '\n';
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout(stdout => expect(stdout.join('')).to.equal(expected))
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))
       .build();
 
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);

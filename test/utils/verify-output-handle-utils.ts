@@ -2,6 +2,11 @@ import { expect } from 'chai';
 
 export class VerifyOutputHandleUtils {
 
+  static isEqualToString(stdout: string[], expected: string[]) {
+    const stringExpected = this.addEmptyLine(expected).join('\n');
+    expect(stdout.join('')).to.equal(stringExpected)
+  }
+
   static isEqualToArray(stdout: string[], expected: string[], debug = false) {
     const result = stdout.join('').split('\n').sort();
     const sortedExpected = this.addEmptyLine(expected).sort();

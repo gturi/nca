@@ -2,6 +2,7 @@ import 'mocha';
 import { expect } from 'chai';
 import * as testUtils from '../../../utils/test-utils';
 import { VerifyOutputBuilder } from '../../../utils/verify-output-builder';
+import { VerifyOutputHandleUtils } from '../../../utils/verify-output-handle-utils';
 
 describe("function command handler", () => {
 
@@ -21,11 +22,9 @@ describe("function command handler", () => {
       'foo: fooValue',
       'bar: barValue1,barValue2',
       '--- main alias ended ---'
-    ].join('\n') + '\n';
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout((stdout: string[]) => {
-        expect(stdout.join('')).to.equal(expected);
-      })
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))
       .build();
 
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
@@ -52,11 +51,9 @@ describe("function command handler", () => {
       'c: cValue',
       'baz: bazValue',
       '--- sub alias ended ---'
-    ].join('\n') + '\n';
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout((stdout: string[]) => {
-        expect(stdout.join('')).to.equal(expected);
-      })
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))
       .build();
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
   });
@@ -81,11 +78,9 @@ describe("function command handler", () => {
       'd: dValue',
       'qux: quxValue',
       '--- another sub alias ended ---'
-    ].join('\n') + '\n';
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout((stdout: string[]) => {
-        expect(stdout.join('')).to.equal(expected);
-      })
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))
       .build();
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
   });

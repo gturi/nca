@@ -1,14 +1,17 @@
 import { Arguments } from "yargs";
+import { CliUtils } from "./cli-utils";
 
 /**
- * Input object for {@link Completion.completionPath} imported script.
+ * Input object passed to the completion script loaded
+ * when specifying {@link Completion.completionPath}.
  */
 export class CompletionInput {
   private readonly _current: string;
   private readonly _argv: Arguments;
   private readonly _error: Error | null;
   private readonly _defaultCompletions: string[];
-  private readonly _modulePath: string | null
+  private readonly _modulePath: string | null;
+  private readonly _cliUtils: CliUtils;
 
   constructor(
     current: string,
@@ -22,6 +25,7 @@ export class CompletionInput {
     this._error = error;
     this._defaultCompletions = defaultCompletions ?? [];
     this._modulePath = modulePath;
+    this._cliUtils = new CliUtils();
   }
 
   /**
@@ -57,5 +61,12 @@ export class CompletionInput {
    */
   get modulePath(): string | null {
     return this._modulePath;
+  }
+
+  /**
+   * CLI utilities, useful to run commands.
+   */
+  get cliUtils(): CliUtils {
+    return this._cliUtils;
   }
 }

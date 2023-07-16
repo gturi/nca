@@ -1,18 +1,17 @@
-import shelljs, { ShellString } from 'shelljs';
 import yargs from 'yargs';
-import { ChildProcessUtils } from "../util/child-process-utils";
-import { ShelljsUtils } from "../util/shelljs-utils";
-import { SpawnSyncReturns } from 'child_process';
+import { CliUtils } from './cli-utils';
 
 /**
  * Input object for {@link CommandType.Function} and {@link CommandType.Module} command types.
  * Stores arguments information and other javascript utilites.
  */
 export class CommandHandlerInput<T> {
-  private _args: yargs.ArgumentsCamelCase<T>;
+  private readonly _args: yargs.ArgumentsCamelCase<T>;
+  private readonly _cliUtils: CliUtils;
 
   constructor(args: yargs.ArgumentsCamelCase<T>) {
     this._args = args;
+    this._cliUtils = new CliUtils();
   }
 
   /**
@@ -23,35 +22,9 @@ export class CommandHandlerInput<T> {
   }
 
   /**
-   * Shelljs instance, useful to run scripts.
+   * CLI utilities, useful to run commands.
    */
-  get shelljs(): typeof shelljs {
-    return shelljs;
-  }
-
-  /**
-   * Function that executes a command using shelljs.
-   * If the exit code is not 0 it throws an exception.
-   */
-  get shelljsSafeExec(): (command: string, errorMessage?: string) => ShellString {
-    return ShelljsUtils.safeExec;
-  }
-
-  /**
-   * Function that executes a command using javascript spawn.
-   * The result is a resolved promise when the exit code is 0,
-   * otherwise it is a rejected promise.
-   */
-  get spawn(): (command: string, params?: string[]) => Promise<number | null> {
-    return ChildProcessUtils.spawn;
-  }
-
-  /**
-   * Function that executes a command using javascript spawnSync.
-   * The result is a resolved promise when the exit code is 0,
-   * otherwise it is a rejected promise.
-   */
-  get spawnSync(): (command: string, params?: string[]) => SpawnSyncReturns<Buffer> {
-    return ChildProcessUtils.spawnSync;
+  get cliUtils(): CliUtils {
+    return this._cliUtils;
   }
 }

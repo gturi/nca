@@ -34,8 +34,9 @@ export class CompletionLoader {
       LoggingUtil.logToFile(
         () => [
           '------------------',
-          'current "' + current + '"',
-          'argv "' + JSON.stringify(argv) + '"',
+          `current: "${current}"`,
+          `argv: "${JSON.stringify(argv)}"`,
+          `error: "${JSON.stringify(err)}"`,
           '------------------',
           '',
           ''

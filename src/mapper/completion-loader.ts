@@ -9,7 +9,6 @@ import { PathUtils } from "../util/path-utils";
 type CompletionFilter = (onCompleted?: CompletionCallback) => any;
 type Done = (completions: string[]) => any;
 /* eslint-enable @typescript-eslint/no-explicit-any */
-type OptCompletion = Completion | null;
 
 export class CompletionLoader {
 

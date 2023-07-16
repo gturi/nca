@@ -4,6 +4,7 @@ import { Completion } from "../model/completion";
 import { LoggingUtil } from "../util/logging-utils";
 import { ArrayUtils } from "../util/array-utils";
 import { PathUtils } from "../util/path-utils";
+import { CompletionInput } from "../model/completion-input";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type CompletionFilter = (onCompleted?: CompletionCallback) => any;
@@ -12,10 +13,24 @@ type Done = (completions: string[]) => any;
 
 export class CompletionLoader {
 
-  private aliases: Alias[];
+  private readonly aliases: Alias[];
+  private readonly current: string;
+  private readonly argv: Arguments;
+  private readonly completionFilter: CompletionFilter;
+  private readonly done: Done;
 
-  constructor(aliases: Alias[]) {
+  protected constructor(
+    aliases: Alias[],
+    current: string,
+    argv: Arguments,
+    completionFilter: CompletionFilter,
+    done: Done
+  ) {
     this.aliases = aliases;
+    this.current = current;
+    this.argv = argv;
+    this.completionFilter = completionFilter;
+    this.done = done;
   }
 
   static initCompletion<T>(argvBuilder: yargs.Argv<T>, aliases: Alias[]) {
@@ -23,19 +38,19 @@ export class CompletionLoader {
       'completion',
       (current: string, argv: Arguments,
         completionFilter: CompletionFilter, done: Done) => {
-        return new CompletionLoader(aliases).load(current, argv, completionFilter, done);
+        return new CompletionLoader(aliases, current, argv, completionFilter, done).load();
       }
     );
   }
 
-  load(current: string, argv: Arguments, completionFilter: CompletionFilter, done: Done) {
-    completionFilter((err, defaultCompletions) => {
+  protected load() {
+    this.completionFilter((err, defaultCompletions) => {
 
       LoggingUtil.logToFile(
         () => [
           '------------------',
-          `current: "${current}"`,
-          `argv: "${JSON.stringify(argv)}"`,
+          `current: "${this.current}"`,
+          `argv: "${JSON.stringify(this.argv)}"`,
           `error: "${JSON.stringify(err)}"`,
           '------------------',
           '',
@@ -43,9 +58,16 @@ export class CompletionLoader {
         ].join('\n')
       );
 
-      const alias = this.getCurrentAlias(argv._);
-      const completionArray = this.getCompletionArray(alias, defaultCompletions ?? [])
-      done(completionArray);
+      const alias = this.getCurrentAlias(this.argv._);
+
+      const modulePath = this.getModulePath(alias);
+
+      const completionInput = new CompletionInput(
+        this.current, this.argv, err, defaultCompletions, modulePath
+      );
+
+      const completionArray = this.getCompletionArray(alias?.completion, completionInput)
+      this.done(completionArray);
     });
   }
 
@@ -66,12 +88,27 @@ export class CompletionLoader {
     return alias ?? null;
   }
 
-  private getCompletionArray(alias: Alias | null, defaultCompletions: string[]): string[] {
+  private getModulePath(alias: Alias | null): string | null {
+    if (alias) {
+      const completionPath = alias.completion?.completionPath
+      return completionPath
+        ? PathUtils.resolvePath(completionPath, alias.aliasDirectory)
+        : null;
+    } else {
+      return null;
+    }
+  }
+
+  private getCompletionArray(
+    completion: Completion | undefined, completionInput: CompletionInput
+  ): string[] {
     let result: string[] | undefined;
 
-    const completion = alias?.completion;
+    const defaultCompletions = completionInput.defaultCompletions
     if (completion) {
-      const customCompletionArray = this.getCustomCompletionArray(alias, completion);
+      const customCompletionArray = this.getCustomCompletionArray(
+        completion, completionInput
+      );
       result = completion.merge
         ? customCompletionArray.concat(defaultCompletions)
         : customCompletionArray;
@@ -82,19 +119,20 @@ export class CompletionLoader {
     return result ?? [];
   }
 
-  private getCustomCompletionArray(alias: Alias, completion: Completion): string[] {
+  private getCustomCompletionArray(
+    completion: Completion, completionInput: CompletionInput
+  ): string[] {
     return ArrayUtils.concatAll(
-      [], completion.completionArray, this.loadCompletionFromPath(alias)
+      [], completion.completionArray, this.loadCompletionFromPath(completionInput)
     );
   }
 
-  private loadCompletionFromPath(alias: Alias): string[] | null {
+  private loadCompletionFromPath(completionInput: CompletionInput): string[] | null {
     /* eslint-disable @typescript-eslint/no-var-requires */
-    const completionPath = alias.completion?.completionPath;
-    if (completionPath) {
-      const modulePath = PathUtils.resolvePath(completionPath, alias.aliasDirectory);
+    const modulePath = completionInput.modulePath;
+    if (modulePath) {
       const module = require(modulePath);
-      return module() as string[];
+      return module(completionInput) as string[];
     } else {
       return null;
     }

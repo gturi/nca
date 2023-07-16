@@ -74,9 +74,9 @@ export class CompletionLoader {
         [], completion.completionArray, this.loadCompletionFromPath(alias)
       );
       if (completion.merge) {
-        result = completionArray;
-      } else {
         result = completionArray.concat(defaultCompletions);
+      } else {
+        result = completionArray;
       }
     } else {
       result = defaultCompletions;

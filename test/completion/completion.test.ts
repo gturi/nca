@@ -2,6 +2,7 @@ import 'mocha';
 import { expect } from 'chai';
 import * as testUtils from '../utils/test-utils';
 import { VerifyOutputBuilder } from '../utils/verify-output-builder';
+import { VerifyOutputHandleUtils } from '../utils/verify-output-handle-utils';
 
 describe("completion", () => {
 
@@ -65,16 +66,10 @@ describe("completion", () => {
       '-a',
       '--help',
       '-n',
-      '--version',
-      ''
-    ].sort();
+      '--version'
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout(stdout => {
-        const result = stdout.join('').split('\n').sort();
-        //console.log(`result ${JSON.stringify(result)}`)
-        //console.log(`expected ${JSON.stringify(expected)}`)
-        expect(result).deep.equal(expected);
-      })
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToArray(stdout, expected))
       .build();
 
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
@@ -92,16 +87,10 @@ describe("completion", () => {
       '-c',
       '--help',
       '-n',
-      '--version',
-      ''
-    ].sort();
+      '--version'
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout(stdout => {
-        const result = stdout.join('').split('\n').sort();
-        //console.log(`result ${JSON.stringify(result)}`)
-        //console.log(`expected ${JSON.stringify(expected)}`)
-        expect(result).deep.equal(expected);
-      })
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToArray(stdout, expected))
       .build();
 
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
@@ -119,16 +108,10 @@ describe("completion", () => {
       '-d',
       '--help',
       '-n',
-      '--version',
-      ''
-    ].sort();
+      '--version'
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout(stdout => {
-        const result = stdout.join('').split('\n').sort();
-        //console.log(`result ${JSON.stringify(result)}`)
-        //console.log(`expected ${JSON.stringify(expected)}`)
-        expect(result).deep.equal(expected);
-      })
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToArray(stdout, expected))
       .build();
 
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
@@ -141,16 +124,10 @@ describe("completion", () => {
     ];
     const expected = [
       'firstValue',
-      'secondValue',
-      ''
-    ].sort();
+      'secondValue'
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout(stdout => {
-        const result = stdout.join('').split('\n').sort();
-        //console.log(`result ${JSON.stringify(result)}`)
-        //console.log(`expected ${JSON.stringify(expected)}`)
-        expect(result).deep.equal(expected);
-      })
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToArray(stdout, expected))
       .build();
 
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
@@ -165,16 +142,10 @@ describe("completion", () => {
       'firstValue',
       'secondValue',
       'subAlias',
-      'anotherSubAlias',
-      ''
-    ].sort();
+      'anotherSubAlias'
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout(stdout => {
-        const result = stdout.join('').split('\n').sort();
-        //console.log(`result ${JSON.stringify(result)}`)
-        //console.log(`expected ${JSON.stringify(expected)}`)
-        expect(result).deep.equal(expected);
-      })
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToArray(stdout, expected))
       .build();
 
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);

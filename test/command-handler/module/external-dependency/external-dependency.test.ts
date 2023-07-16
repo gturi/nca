@@ -8,7 +8,7 @@ describe("module command handler", () => {
 
   it('command module-external logs todays date using moment.js library', done => {
     const command = 'module-external';
-    const expected = `${new Date().toISOString().split('T')[0]}\n`;
+    const expected = `[[1,3],[2,4]]\n`;
     const verifyOutput = new VerifyOutputBuilder(done)
     .handleStdout((stdout: string[]) => {
       expect(stdout.join('\n')).to.equal(expected);

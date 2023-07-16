@@ -1,4 +1,4 @@
 module.exports = function () {
-  var moment = require('moment');
-  console.log(moment().format('YYYY-MM-DD'));
+  const _ = require('lodash');
+  console.log(JSON.stringify(_.partition([1, 2, 3, 4], n => n % 2)));
 };

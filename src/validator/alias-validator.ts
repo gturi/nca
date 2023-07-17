@@ -1,9 +1,11 @@
 import { Alias } from "../model/api/alias";
+import { CommandType } from "../model/api/command-type";
 import { OptionParam } from "../model/api/option-param";
 import { PositionalArgument } from "../model/api/positional-argument";
 import { ArrayUtils } from "../util/array-utils";
 import { StringUtils } from "../util/string-utils";
 import { DuplicatesValidator } from "./duplicates-validator";
+import { EnumValidator } from "./enum-validator";
 import { OptionParamValidator } from "./option-param-validator";
 import { PositionalArgumentValidator } from "./positional-argument-validator";
 import { WhiteSpaceValidator } from "./white-space-validator";
@@ -56,6 +58,8 @@ export class AliasValidator {
     );
     PositionalArgumentValidator.validate(alias.name, positionalArguments);
 
+    this.checkSubAliasCommandType(alias);
+
     if (alias.subAliases) {
       this.checkSubAliasesAndPositionalArgumentNames(alias, positionalArguments);
 
@@ -90,5 +94,13 @@ export class AliasValidator {
         );
       }
     }
+  }
+
+  private static checkSubAliasCommandType(alias: Alias) {
+    const getErrorMessage = () =>
+      `Alias '${alias.name}' commandType '${alias.commandType}' is not valid: ` +
+      `supported values are ${Object.keys(CommandType)}`;
+    const commandType = alias.commandType ?? CommandType.Simple;
+    EnumValidator.validate(CommandType, commandType, getErrorMessage)
   }
 }

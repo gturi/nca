@@ -1,6 +1,7 @@
 import { PositionalArgument } from "../model/api/positional-argument";
 import { PositionalArgumentType } from "../model/api/positional-argument-type";
 import { DuplicatesValidator } from "./duplicates-validator";
+import { EnumValidator } from "./enum-validator";
 import { WhiteSpaceValidator } from "./white-space-validator";
 
 export class PositionalArgumentValidator {
@@ -10,6 +11,7 @@ export class PositionalArgumentValidator {
       this.checkNamesFormat(aliasName, positionalArguments);
       this.checkDuplicateNames(aliasName, positionalArguments);
       this.checkMultipleListPositionalArguments(aliasName, positionalArguments);
+      this.checkPositionalArgumentType(aliasName, positionalArguments);
     }
   }
 
@@ -48,5 +50,20 @@ export class PositionalArgumentValidator {
 
   private static getPositionalArgumentNames(positionalArguments: PositionalArgument[]): string[] {
     return positionalArguments.map(positionalArgument => positionalArgument.name);
+  }
+
+  private static checkPositionalArgumentType(
+    aliasName: string, positionalArguments: PositionalArgument[]
+  ) {
+    const getErrorMessage = (positionalArgument: PositionalArgument) => {
+      return `Alias '${aliasName}' positionalArgument '${positionalArgument.name}' ` +
+        `type '${positionalArgument.type}' is not valid: ` +
+        `supported values are ${Object.keys(PositionalArgumentType)}`;
+    }
+    positionalArguments.forEach(positionalArgument => {
+      EnumValidator.validate(
+        PositionalArgumentType, positionalArgument.type, () => getErrorMessage(positionalArgument)
+      );
+    });
   }
 }

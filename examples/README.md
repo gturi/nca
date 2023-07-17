@@ -10,5 +10,8 @@
 - [js modules shell command execution](./module-shell-command-execution.md) - executing shell commands leveraging shelljs inside javascript modules
 - [js modules external npm dependencies](./module-external-dependencies.md) - executing js scripts which use external npm dependencies
 - [alias hierarchy](./alias-hierarchy.md) - creating alias hierarchies, to create complex command line interfaces
+- [custom static completion](./custom-static-array-completion.md) - override yargs shell completion with a custom one statically defined
+- [custom js completion](./custom-js-completion.md) - override yargs shell completion with a custom one returned by invoking a custom js module
+- [custom js input completion](./custom-js-input-completion.md) - override yargs shell completion with a custom one returned by invoking a custom js module. It uses current command line status to determine what to return
 - [my aliases](https://github.com/gturi/nca-aliases) - git repo where I save my aliases
 - [tests](../test)

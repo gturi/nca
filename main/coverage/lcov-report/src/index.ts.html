@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/16</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/15</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
@@ -95,31 +95,29 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">330x</span>
-<span class="cline-any cline-yes">150x</span>
-<span class="cline-any cline-yes">150x</span>
+<span class="cline-any cline-yes">1125x</span>
+<span class="cline-any cline-yes">400x</span>
+<span class="cline-any cline-yes">400x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -128,11 +126,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">#!/usr/bin/env node
 &nbsp;
 import yargs from 'yargs/yargs';
@@ -140,31 +134,28 @@ import { hideBin } from 'yargs/helpers';
 import { AliasMapper } from './mapper/alias-mapper';
 import { ConfigLoader } from './util/config-loader';
 import { ConfigCommand } from './command/config-command';
+import { CompletionLoader } from './mapper/completion-loader';
 &nbsp;
 function nca() {
-  try {
-    const argvBuilder = yargs(hideBin(process.argv));
+  const argvBuilder = yargs(hideBin(process.argv));
 &nbsp;
-    const aliases = ConfigLoader.loadAliases();
+  const aliases = ConfigLoader.loadAliases();
 &nbsp;
-    aliases.sort((a, b) =&gt; a.name.localeCompare(b.name))
-      .map(alias =&gt; AliasMapper.map(alias))
-      .forEach(commandModule =&gt; argvBuilder.command(commandModule));
+  aliases.sort((a, b) =&gt; a.name.localeCompare(b.name))
+    .map(alias =&gt; AliasMapper.map(alias))
+    .forEach(commandModule =&gt; argvBuilder.command(commandModule));
 &nbsp;
-    argvBuilder.command(new ConfigCommand().getCommand());
+  argvBuilder.command(new ConfigCommand().getCommand());
 &nbsp;
-    argvBuilder
-      .completion()
-      .alias('help', 'h')
-      .alias('version', 'v')
-      .strict()
-      .wrap(argvBuilder.terminalWidth())
-      .demandCommand(1, '')
-      .parse();
+  CompletionLoader.initCompletion(argvBuilder, aliases);
 &nbsp;
-  } catch (e) {
-<span class="cstat-no" title="statement not covered" >    console.log(e);</span>
-  }
+  argvBuilder
+    .alias('help', 'h')
+    .alias('version', 'v')
+    .strict()
+    .wrap(argvBuilder.terminalWidth())
+    .demandCommand(1, '')
+    .parse();
 }
 &nbsp;
 nca();
@@ -175,7 +166,7 @@ nca();
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-05-14T16:35:06.174Z
+                at 2023-07-17T22:02:19.871Z
             </div>
         <script src="../prettify.js"></script>
         <script>

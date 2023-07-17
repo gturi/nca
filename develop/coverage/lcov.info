@@ -1952,8 +1952,8 @@ FN:41,bufferToString
 FNF:6
 FNH:6
 FNDA:25,runNcaAndVerifyOutput
-FNDA:55,(anonymous_1)
-FNDA:3,(anonymous_2)
+FNDA:56,(anonymous_1)
+FNDA:2,(anonymous_2)
 FNDA:25,(anonymous_3)
 FNDA:25,runCommand
 FNDA:58,bufferToString
@@ -1964,9 +1964,9 @@ DA:6,25
 DA:8,25
 DA:9,25
 DA:11,25
-DA:12,55
+DA:12,56
 DA:15,25
-DA:16,3
+DA:16,2
 DA:19,25
 DA:20,25
 DA:21,25

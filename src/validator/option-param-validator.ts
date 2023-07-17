@@ -1,4 +1,4 @@
-import { OptionParam } from "../model/option-param";
+import { OptionParam } from "../model/api/option-param";
 import { DuplicatesValidator } from "./duplicates-validator";
 import { WhiteSpaceValidator } from "./white-space-validator";
 

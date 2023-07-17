@@ -1,6 +1,6 @@
-import { Alias } from "../model/alias";
-import { OptionParam } from "../model/option-param";
-import { PositionalArgument } from "../model/positional-argument";
+import { Alias } from "../model/api/alias";
+import { OptionParam } from "../model/api/option-param";
+import { PositionalArgument } from "../model/api/positional-argument";
 import { ArrayUtils } from "../util/array-utils";
 import { StringUtils } from "../util/string-utils";
 import { DuplicatesValidator } from "./duplicates-validator";

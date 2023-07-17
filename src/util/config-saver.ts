@@ -1,6 +1,6 @@
 import fs from 'fs';
 import yaml from 'js-yaml';
-import { Config } from '../model/config';
+import { Config } from '../model/api/config';
 
 export class ConfigSaver {
 

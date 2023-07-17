@@ -1,6 +1,6 @@
 import yargs from "yargs";
-import { PositionalArgument } from "../model/positional-argument";
-import { PositionalArgumentType } from "../model/positional-argument-type";
+import { PositionalArgument } from "../model/api/positional-argument";
+import { PositionalArgumentType } from "../model/api/positional-argument-type";
 import { PositionalArgumentUtils } from "../util/positional-argument-utils";
 import { AnyObj } from "../util/custom-types";
 

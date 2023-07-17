@@ -1,8 +1,8 @@
 import yargs from "yargs";
-import { OptionParam } from '../../model/option-param';
-import { OptionParamType } from '../../model/option-param-type';
-import { PositionalArgument } from '../../model/positional-argument';
-import { PositionalArgumentType } from '../../model/positional-argument-type';
+import { OptionParam } from '../../model/api/option-param';
+import { OptionParamType } from '../../model/api/option-param-type';
+import { PositionalArgument } from '../../model/api/positional-argument';
+import { PositionalArgumentType } from '../../model/api/positional-argument-type';
 import { ConfigLoader } from '../../util/config-loader';
 import { ConfigSaver } from '../../util/config-saver';
 import { AnyObj } from "../../util/custom-types";

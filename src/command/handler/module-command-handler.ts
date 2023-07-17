@@ -1,5 +1,5 @@
-import { CommandHandlerInput } from '../../model/command-handler-input';
-import { CommandType } from "../../model/command-type";
+import { CommandHandlerInput } from '../../model/input/command-handler-input';
+import { CommandType } from "../../model/api/command-type";
 import { AnyObj } from "../../util/custom-types";
 import { CommandHandler } from "./command-handler";
 

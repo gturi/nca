@@ -1,5 +1,5 @@
-import { PositionalArgument } from "../model/positional-argument";
-import { PositionalArgumentType } from "../model/positional-argument-type";
+import { PositionalArgument } from "../model/api/positional-argument";
+import { PositionalArgumentType } from "../model/api/positional-argument-type";
 import { DuplicatesValidator } from "./duplicates-validator";
 import { WhiteSpaceValidator } from "./white-space-validator";
 

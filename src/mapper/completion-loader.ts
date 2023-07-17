@@ -1,10 +1,10 @@
 import yargs, { Arguments, CompletionCallback } from "yargs";
-import { Alias } from "../model/alias";
-import { Completion } from "../model/completion";
+import { Alias } from "../model/api/alias";
+import { Completion } from "../model/api/completion";
 import { LoggingUtil } from "../util/logging-utils";
 import { ArrayUtils } from "../util/array-utils";
 import { PathUtils } from "../util/path-utils";
-import { CompletionInput } from "../model/completion-input";
+import { CompletionInput } from "../model/input/completion-input";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type CompletionFilter = (onCompleted?: CompletionCallback) => any;

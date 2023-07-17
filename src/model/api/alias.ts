@@ -24,6 +24,6 @@ export interface Alias {
   subAliases?: Alias[];
   /** Defines a command custom completion */
   completion?: Completion;
-  /** Set internally to allow usage of relative paths. */
+  /** Set internally to allow usage of relative paths with Module command and completionPath. */
   aliasDirectory: string;
 }

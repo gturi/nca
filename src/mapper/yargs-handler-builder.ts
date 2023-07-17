@@ -1,6 +1,6 @@
 import yargs from "yargs";
-import { Alias } from "../model/alias";
-import { CommandType } from "../model/command-type";
+import { Alias } from "../model/api/alias";
+import { CommandType } from "../model/api/command-type";
 import { StringUtils } from "../util/string-utils";
 import { AnyObj } from "../util/custom-types";
 import { SimpleCommandHandler } from "../command/handler/simple-command-handler";
@@ -8,7 +8,7 @@ import { FunctionCommandHandler } from "../command/handler/function-command-hand
 import { ModuleCommandHandler } from "../command/handler/module-command-handler";
 import { PathUtils } from "../util/path-utils";
 import { CommandHandler } from "../command/handler/command-handler";
-import { CommandHandlerInput } from "../model/command-handler-input";
+import { CommandHandlerInput } from "../model/input/command-handler-input";
 
 export class YargsHandlerBuilder {
 

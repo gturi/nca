@@ -1,8 +1,8 @@
 import yargs, { CommandModule } from "yargs";
 import { OptionBuilder } from "../mapper/option-builder";
 import { PositionalArgumentBuilder } from "../mapper/positional-argument-builder";
-import { OptionParam } from "../model/option-param";
-import { PositionalArgument } from "../model/positional-argument";
+import { OptionParam } from "../model/api/option-param";
+import { PositionalArgument } from "../model/api/positional-argument";
 import { AnyObj, ArgvBuilder } from "../util/custom-types";
 import { YargsUtils } from "../util/yargs-utils";
 

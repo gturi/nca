@@ -1,5 +1,5 @@
-import { PositionalArgument } from "../model/positional-argument";
-import { PositionalArgumentType } from "../model/positional-argument-type";
+import { PositionalArgument } from "../model/api/positional-argument";
+import { PositionalArgumentType } from "../model/api/positional-argument-type";
 import { AnyObj, ArgvBuilder } from "./custom-types";
 import { PositionalArgumentUtils } from "./positional-argument-utils";
 

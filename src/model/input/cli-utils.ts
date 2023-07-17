@@ -1,6 +1,6 @@
 import shelljs, { ShellString } from 'shelljs';
-import { ChildProcessUtils } from "../util/child-process-utils";
-import { ShelljsUtils } from "../util/shelljs-utils";
+import { ChildProcessUtils } from "../../util/child-process-utils";
+import { ShelljsUtils } from "../../util/shelljs-utils";
 import { SpawnSyncReturns } from 'child_process';
 
 /**

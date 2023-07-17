@@ -1,7 +1,7 @@
 import yargs, { CommandModule } from "yargs";
-import { Alias } from "../model/alias";
-import { PositionalArgument } from "../model/positional-argument";
-import { PositionalArgumentType } from "../model/positional-argument-type";
+import { Alias } from "../model/api/alias";
+import { PositionalArgument } from "../model/api/positional-argument";
+import { PositionalArgumentType } from "../model/api/positional-argument-type";
 import { OptionBuilder as OptionBuilder } from "./option-builder";
 import { PositionalArgumentBuilder } from "./positional-argument-builder";
 import { YargsHandlerBuilder } from "./yargs-handler-builder";

@@ -1,15 +1,15 @@
 import yargs from "yargs";
-import { Config } from "../../model/config";
-import { OptionParam } from "../../model/option-param";
-import { OptionParamType } from "../../model/option-param-type";
-import { PositionalArgument } from '../../model/positional-argument';
-import { PositionalArgumentType } from '../../model/positional-argument-type';
+import { OptionParam } from "../../model/api/option-param";
+import { OptionParamType } from "../../model/api/option-param-type";
+import { PositionalArgument } from '../../model/api/positional-argument';
+import { PositionalArgumentType } from '../../model/api/positional-argument-type';
 import { ArrayUtils } from '../../util/array-utils';
 import { ConfigLoader } from '../../util/config-loader';
 import { ConfigSaver } from '../../util/config-saver';
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from "../../util/yargs-utils";
 import { Command } from "../command";
+import { NcaConfig } from "../../config/nca-config";
 
 export class DeletePathCommand extends Command {
 
@@ -37,7 +37,7 @@ export class DeletePathCommand extends Command {
       alternativeName: 'file',
       description: 'configuration path to that will include the new config',
       optionType: OptionParamType.String,
-      defaultValue: Config.getMainConfigFilePath()
+      defaultValue: NcaConfig.getMainConfigFilePath()
     }
     return [optionParam];
   }

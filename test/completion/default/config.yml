@@ -1,0 +1,67 @@
+aliases:
+  - name: hierarchy-default-completion
+    description: description main alias
+    command: |
+      console.log('--- main alias started ---');
+      console.log(`a: ${input.args.a}`);
+      console.log(`n: ${input.args.n}`);
+      console.log(`foo: ${input.args.foo}`);
+      console.log(`bar: ${input.args.bar}`);
+      console.log('--- main alias ended ---');
+    commandType: Function
+    options:
+      - name: a
+        optionType: Boolean
+        defaultValue: 'false'
+      - name: n
+        optionType: Number
+    positionalArguments:
+      - name: foo
+        description: string
+        type: String
+        required: true
+      - name: bar
+        description: string
+        type: StringList
+        required: true
+    subAliases:
+      - name: subAlias
+        description: description subAlias
+        command: |
+          console.log('--- sub alias started ---');
+          console.log(`a: ${input.args.a}`);
+          console.log(`n: ${input.args.n}`);
+          console.log(`foo: ${input.args.foo}`);
+          console.log(`bar: ${input.args.bar}`);
+          console.log(`c: ${input.args.c}`);
+          console.log(`baz: ${input.args.baz}`);
+          console.log('--- sub alias ended ---');
+        commandType: Function
+        options:
+          - name: c
+            optionType: String
+        positionalArguments:
+          - name: baz
+            description: baz
+            type: String
+            required: true
+      - name: anotherSubAlias
+        description: description anotherSubAlias
+        command: |
+          console.log('--- another sub alias started ---');
+          console.log(`a: ${input.args.a}`);
+          console.log(`n: ${input.args.n}`);
+          console.log(`foo: ${input.args.foo}`);
+          console.log(`bar: ${input.args.bar}`);
+          console.log(`d: ${input.args.d}`);
+          console.log(`qux: ${input.args.qux}`);
+          console.log('--- another sub alias ended ---');
+        commandType: Function
+        options:
+          - name: d
+            optionType: String
+        positionalArguments:
+          - name: qux
+            description: qux
+            type: String
+            required: true

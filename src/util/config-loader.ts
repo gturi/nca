@@ -2,17 +2,18 @@ import fs from 'fs';
 import path from 'path';
 import walkdir from 'walkdir';
 import yaml from 'js-yaml';
-import { Alias } from '../model/alias';
-import { Config } from '../model/config';
+import { Alias } from '../model/api/alias';
+import { Config } from '../model/api/config';
 import { ConfigValidator } from '../validator/config-validator';
 import { AliasValidator } from '../validator/alias-validator';
 import '../extension/array-extensions';
 import { PathUtils } from './path-utils';
+import { NcaConfig } from '../config/nca-config';
 
 export class ConfigLoader {
 
   static loadAliases(): Alias[] {
-    const configPath = Config.getMainConfigFilePath();
+    const configPath = NcaConfig.getMainConfigFilePath();
 
     const configs = this.loadConfigsFromPath(configPath, new Set(configPath));
     const aliases = configs.flatMap(config => config.aliases ?? []);

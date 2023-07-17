@@ -1,4 +1,4 @@
-import { PositionalArgument } from "../model/positional-argument";
+import { PositionalArgument } from "../model/api/positional-argument";
 
 export class PositionalArgumentUtils {
 

@@ -1,7 +1,7 @@
-import { CommandType } from "../../model/command-type";
+import { CommandType } from "../../model/api/command-type";
 import { AnyObj } from "../../util/custom-types";
 import { CommandHandler } from "./command-handler";
-import { CommandHandlerInput } from "../../model/command-handler-input";
+import { CommandHandlerInput } from "../../model/input/command-handler-input";
 
 export class FunctionCommandHandler<T = AnyObj> implements CommandHandler {
 

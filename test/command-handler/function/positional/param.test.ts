@@ -2,6 +2,7 @@ import 'mocha';
 import { expect } from 'chai';
 import * as testUtils from '../../../utils/test-utils';
 import { VerifyOutputBuilder } from '../../../utils/verify-output-builder';
+import { VerifyOutputHandleUtils } from '../../../utils/verify-output-handle-utils';
 
 describe("function command handler", () => {
 
@@ -16,11 +17,9 @@ describe("function command handler", () => {
       'false',
       '1',
       "[ 'a', 'b' ]"
-    ].join('\n') + '\n';
+    ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout((stdout: string[]) => {
-        expect(stdout.join('')).to.equal(expected);
-      })
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))
       .build();
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
   });
@@ -30,7 +29,7 @@ describe("function command handler", () => {
       'true',
       '1',
       "[ 'a', 'b' ]"
-    ].join('\n') + '\n';
+    ];
     const command = [
       'log-positional',
       '--foo=true',
@@ -39,9 +38,7 @@ describe("function command handler", () => {
       'b'
     ];
     const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout((stdout: string[]) => {
-        expect(stdout.join('')).to.equal(expected);
-      })
+      .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))
       .build();
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
   });

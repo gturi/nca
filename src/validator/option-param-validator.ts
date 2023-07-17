@@ -1,5 +1,7 @@
-import { OptionParam } from "../model/option-param";
+import { OptionParam } from "../model/api/option-param";
+import { OptionParamType } from "../model/api/option-param-type";
 import { DuplicatesValidator } from "./duplicates-validator";
+import { EnumValidator } from "./enum-validator";
 import { WhiteSpaceValidator } from "./white-space-validator";
 
 export class OptionParamValidator {
@@ -9,6 +11,7 @@ export class OptionParamValidator {
       this.checkNamesFormat(aliasName, options);
       this.checkAlternativeNamesFormat(aliasName, options);
       this.checkDuplicateNames(aliasName, options);
+      this.checkOptionParamType(aliasName, options);
     }
   }
 
@@ -32,5 +35,16 @@ export class OptionParamValidator {
       return `${aliasName}: multiple option has been defined with the same name: [${duplicates}]`;
     };
     DuplicatesValidator.validate(optionNames, getErrorMessage);
+  }
+
+  private static checkOptionParamType(aliasName: string, options: OptionParam[]) {
+    const getErrorMessage = (option: OptionParam) => {
+      return `Alias '${aliasName}' optionParam '${option.name}' ` +
+        `optionType '${option.optionType}' is not valid: ` +
+        `supported values are ${Object.keys(OptionParamType)}`;
+    }
+    options.forEach(option => {
+      EnumValidator.validate(OptionParamType, option.optionType, () => getErrorMessage(option))
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { CommandType } from "../../model/command-type";
+import { CommandType } from "../../model/api/command-type";
 
 export interface CommandHandler {
 

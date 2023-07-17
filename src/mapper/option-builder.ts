@@ -1,5 +1,5 @@
 import yargs from "yargs";
-import { OptionParam } from "../model/option-param";
+import { OptionParam } from "../model/api/option-param";
 import { AnyObj } from "../util/custom-types";
 
 export class OptionBuilder {

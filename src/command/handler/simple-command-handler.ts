@@ -1,4 +1,4 @@
-import { CommandType } from "../../model/command-type";
+import { CommandType } from "../../model/api/command-type";
 import { CommandHandler } from "./command-handler";
 import shelljs from 'shelljs';
 

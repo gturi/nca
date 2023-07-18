@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const index = require('../dist/index');
+index();

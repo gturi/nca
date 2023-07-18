@@ -18,4 +18,8 @@ export class NcaConfig {
   static getMainConfigFolderPath(): string {
     return path.join(os.homedir(), '.nca');
   }
+
+  static isDebugEnabled(): boolean {
+    return process.env.ncaDebug === 'true'
+  }
 }

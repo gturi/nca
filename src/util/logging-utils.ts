@@ -4,7 +4,7 @@ import fs from 'fs';
 export class LoggingUtil {
 
   static logToFile(getLogMessage: () => string) {
-    if (process.env.ncaDebug === 'true') {
+    if (NcaConfig.isDebugEnabled()) {
       const logFile = NcaConfig.getLogFilePath();
       fs.appendFileSync(logFile, getLogMessage());
     }

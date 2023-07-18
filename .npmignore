@@ -108,3 +108,7 @@ examples/
 gh-pages/
 # src is excluded because deployed files are the ones in dist directory
 src/
+test/
+.eslintrc
+.gitignore
+.tsconfig.json

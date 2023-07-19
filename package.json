@@ -62,5 +62,13 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "bin/*",
+    "dist/*.js",
+    "package.json",
+    "script/*.mjs",
+    "LICENSE",
+    "README.md"
+  ]
 }

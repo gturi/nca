@@ -65,7 +65,7 @@
   },
   "files": [
     "bin/*",
-    "dist/*.js",
+    "dist/**/*.js",
     "package.json",
     "script/*.mjs",
     "LICENSE",

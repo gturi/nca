@@ -22,4 +22,8 @@ export class NcaConfig {
   static isDebugEnabled(): boolean {
     return process.env.ncaDebug === 'true'
   }
+
+  static getForbiddenNames(): string[] {
+    return ['nca', ''];
+  }
 }

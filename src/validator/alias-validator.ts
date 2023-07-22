@@ -1,3 +1,4 @@
+import { NcaConfig } from "../config/nca-config";
 import { Alias } from "../model/api/alias";
 import { CommandType } from "../model/api/command-type";
 import { OptionParam } from "../model/api/option-param";
@@ -25,26 +26,35 @@ export class AliasValidator {
   }
 
   private static privateValidator(aliases: Alias[], parent: Parent) {
-    this.checkNamesFormat(aliases);
-    this.checkForDuplicateNames(aliases);
+    const aliasesNames = aliases.map(alias => alias.name);
+    this.checkNamesFormat(aliasesNames);
+    this.checkForDuplicateNames(aliasesNames);
 
     aliases.forEach(alias => this.validateAlias(alias, parent));
   }
 
-  private static checkNamesFormat(aliases: Alias[]) {
-    const aliasesNames = aliases.map(alias => alias.name)
+  private static checkNamesFormat(aliasesNames: string[]) {
     WhiteSpaceValidator.validate(aliasesNames, elementsWithWhitespaces => {
       return `Alias names cannot contain whitespaces [${elementsWithWhitespaces}]`;
     });
+
+    this.checkForbiddenNames(aliasesNames);
   }
 
-  private static checkForDuplicateNames(aliases: Alias[]) {
-    const aliasNames = aliases.map(alias => alias.name);
+  private static checkForbiddenNames(aliasesNames: string[]) {
+    const forbiddenNames = NcaConfig.getForbiddenNames();
+    const forbiddenNamesFound = aliasesNames.filter(element => forbiddenNames.includes(element));
+    if (forbiddenNamesFound.length > 0) {
+      throw new Error(`The following aliases names are not allowed: [${forbiddenNamesFound}]`);
+    }
+  }
+
+  private static checkForDuplicateNames(aliasesNames: string[]) {
     const getErrorMessage = (duplicates: string[]) => {
       return `Multiple aliases has been defined with the same name: [${duplicates}]`;
     };
 
-    DuplicatesValidator.validate(aliasNames, getErrorMessage);
+    DuplicatesValidator.validate(aliasesNames, getErrorMessage);
   }
 
   private static validateAlias(alias: Alias, parent: Parent) {

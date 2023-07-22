@@ -40,6 +40,18 @@ npm install -g node-command-alias@dev
 nca completion >> ~/.bashrc
 ```
 
+#### Completion for git-bash
+
+Completion also works on git-bash: there is a bug in yargs (the library used to implement the cli) which returns the wrong path to nca. To fix it just convert the windows style path to unix style.
+
+```bash
+# before
+type_list=$(C:\Program Files\nodejs\node_modules\node-command-alias\bin\nca --get-yargs-completions "${args[@]}")
+
+# after
+type_list=$(/c/Program Files/nodejs/node_modules/node-command-alias/bin/nca --get-yargs-completions "${args[@]}")
+```
+
 [Back to top](#nca---Node-Command-Alias)
 
 
@@ -68,6 +80,9 @@ aliases:
     description: executes a javascript file
     command: ./index.js
     commandType: Module
+    # overrides yargs default completion
+    completion:
+      completionArray: [foo, bar]
 ```
 
 If you do not like to store all the aliases into this file you can declare alternative yaml configurations under includePath variable. If you declare a directory as a path to include, all the yaml files defined inside it will be loaded.

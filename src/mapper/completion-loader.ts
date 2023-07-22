@@ -5,11 +5,16 @@ import { LoggingUtil } from "../util/logging-utils";
 import { ArrayUtils } from "../util/array-utils";
 import { PathUtils } from "../util/path-utils";
 import { CompletionInput } from "../model/input/completion-input";
+import { NcaConfig } from "../config/nca-config";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type CompletionFilter = (onCompleted?: CompletionCallback) => any;
 type Done = (completions: string[]) => any;
 /* eslint-enable @typescript-eslint/no-explicit-any */
+type CurrentAlias = {
+  alias: Alias | undefined;
+  subAliases: Alias[] | undefined;
+};
 
 export class CompletionLoader {
 
@@ -72,20 +77,23 @@ export class CompletionLoader {
   }
 
   private getCurrentAlias(commands: (string | number)[]): Alias | null {
-    let aliases: Alias[] | undefined = this.aliases;
-    let alias: Alias | undefined;
-    // TODO: find a way to rewrite it in a more functional way
-    for (const command of commands) {
-      if (command !== 'nca' && command !== '') {
-        alias = aliases?.find(alias => alias.name === '' + command);
-        if (alias === undefined) {
-          return null;
-        } else {
-          aliases = alias.subAliases;
-        }
-      }
-    }
-    return alias ?? null;
+    const currentAlias: CurrentAlias = {
+      alias: undefined,
+      subAliases: this.aliases
+    };
+    commands
+      .map(command => `${command}`)
+      .filter(command => !NcaConfig.getForbiddenNames().includes(command))
+      // find last + break operation:
+      // the first command that is not found will terminate the loop
+      .every(command => this.existsAliasForCommand(currentAlias, command));
+    return currentAlias.alias ?? null;
+  }
+
+  private existsAliasForCommand(currentAlias: CurrentAlias, command: string): boolean {
+    currentAlias.alias = currentAlias.subAliases?.find(alias => alias.name === command);
+    currentAlias.subAliases = currentAlias.alias?.subAliases;
+    return currentAlias.alias !== undefined;
   }
 
   private getModulePath(alias: Alias | null): string | null {

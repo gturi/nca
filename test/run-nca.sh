@@ -11,4 +11,8 @@ cd "$(dirname "$0")"
 cd ..
 
 FILE=$(readlink -f ./test/test-config.yml)
-ncaMainConfigFilePath="$FILE" node ./dist/index.js $@
+export ncaMainConfigFilePath="$FILE"
+
+# shellcheck disable=SC2068
+# SC2068 is not relevant since $@ needs to expand to multiple words
+./bin/nca $@

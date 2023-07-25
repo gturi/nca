@@ -27,4 +27,4 @@ function nca() {
     .parse();
 }
 
-nca();
+export { nca };

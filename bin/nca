@@ -3,4 +3,4 @@
 'use strict';
 
 const index = require('../dist/index');
-index();
+index.nca();

@@ -17,6 +17,14 @@
 - [coverage](https://gturi.github.io/nca/develop/coverage/lcov-report/index.html)
 
 
+## Yaml config models
+
+Refer to:
+- [Config](https://gturi.github.io/nca/main/docs/interfaces/api_config.Config.html) for the config file entrypoint, where you will define your cross platform node aliases
+- [CommandHandlerInput](https://gturi.github.io/nca/main/docs/classes/input_command_handler_input.CommandHandlerInput.html) when using function and module aliases. It contains option, arguments and utility functions that can be used inside javascript functions/modules.
+- [CompletionInput](https://gturi.github.io/nca/main/docs/classes/input_completion_input.CompletionInput.html) when defining an alias custom completion. Similarly to `CommandHandlerInput`, it exposes current cli arguments and utility functions, allowing to create complex custom completion.
+
+
 ## Config notes
 
 - An alias name must be unique across all configs.

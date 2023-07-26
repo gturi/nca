@@ -42,14 +42,14 @@ nca completion >> ~/.bashrc
 
 #### Completion for git-bash
 
-Completion also works on git-bash: there is a bug in yargs (the library used to implement the cli) which returns the wrong path to nca. To fix it just convert the windows style path to unix style.
+Completion also works on git-bash: there is a bug in yargs (the library used to implement the cli) which returns the wrong path to nca. To fix it just convert the windows style path to unix style. It should work even when using `nvm` inside git-bash (in the example `nodejs` directory is a windows shortcut).
 
 ```bash
 # before
 type_list=$(C:\Program Files\nodejs\node_modules\node-command-alias\bin\nca --get-yargs-completions "${args[@]}")
 
 # after
-type_list=$(/c/Program Files/nodejs/node_modules/node-command-alias/bin/nca --get-yargs-completions "${args[@]}")
+type_list=$("/c/Program Files/nodejs/node_modules/node-command-alias/bin/nca" --get-yargs-completions "${args[@]}")
 ```
 
 [Back to top](#nca---Node-Command-Alias)

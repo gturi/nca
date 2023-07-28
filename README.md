@@ -63,6 +63,7 @@ This file is where your cross platform aliases will be declared.
 
 ```yaml
 includePaths:
+  # be careful, absolute paths needs to use windows style even when running inside a git-bash session i.e. C:\absolute\path\to\alternative-config.yml
   - /absolute/path/to/alternative-config.yml
   - ../relative/path/to/another-alternative-config.yml
   - /absolute/path/to/directory

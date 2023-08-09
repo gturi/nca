@@ -22,6 +22,9 @@ export class ModuleCommandHandler<T = AnyObj> implements CommandHandler {
     // i.e. module.exports = function (input) { /* code */ };
     import(this.path)
       .then(module => module.default(this.input))
-      .catch(e => console.error(e));
+      .catch(e => {
+        console.error(e);
+        process.exit(1);
+      });
   }
 }

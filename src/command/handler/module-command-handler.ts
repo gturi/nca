@@ -20,6 +20,8 @@ export class ModuleCommandHandler<T = AnyObj> implements CommandHandler {
   run(): void {
     // modules need to assign a function to module.exports
     // i.e. module.exports = function (input) { /* code */ };
-    import(this.path).then(module => module.default(this.input));
+    import(this.path)
+      .then(module => module.default(this.input))
+      .catch(e => console.error(e));
   }
 }

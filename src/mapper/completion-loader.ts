@@ -6,6 +6,7 @@ import { ArrayUtils } from "../util/array-utils";
 import { PathUtils } from "../util/path-utils";
 import { CompletionInput } from "../model/input/completion-input";
 import { NcaConfig } from "../config/nca-config";
+import { iter } from 'iterator-helper';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type CompletionFilter = (onCompleted?: CompletionCallback) => any;
@@ -81,12 +82,14 @@ export class CompletionLoader {
       alias: undefined,
       subAliases: this.aliases
     };
-    commands
+    
+    iter(commands)
       .map(command => `${command}`)
       .filter(command => !NcaConfig.getForbiddenNames().includes(command))
       // find last + break operation:
-      // the first command that is not found will terminate the loop
+      // the first command that is not found will terminate the iteration
       .every(command => this.existsAliasForCommand(currentAlias, command));
+
     return currentAlias.alias ?? null;
   }
 

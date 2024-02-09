@@ -9,6 +9,7 @@ import { AliasValidator } from '../validator/alias-validator';
 import '../extension/array-extensions';
 import { PathUtils } from './path-utils';
 import { NcaConfig } from '../config/nca-config';
+import { iter } from 'iterator-helper';
 
 export class ConfigLoader {
 
@@ -32,39 +33,46 @@ export class ConfigLoader {
   private static loadDirectoryConfigs(directoryPath: string, loadedConfigs: Set<string>): Config[] {
     const paths = walkdir.sync(directoryPath);
 
-    paths.filter(path => fs.statSync(path).isDirectory())
+    iter(paths)
+      .filter(path => fs.statSync(path).isDirectory())
       .forEach(path => loadedConfigs.add(path))
 
-    return paths.filter(path => !fs.statSync(path).isDirectory())
+    return iter(paths)
+      .filter(path => !fs.statSync(path).isDirectory())
       .filter(path => this.isYamlFile(path))
       .filter(path => !loadedConfigs.has(path))
-      .flatMap(path => this.loadConfigs(path, loadedConfigs))
+      .flatMap(path => iter(this.loadConfigs(path, loadedConfigs)))
+      .toArray();
   }
 
   private static loadConfigs(configPath: string, loadedConfigs: Set<string>): Config[] {
-    const result: Config[] = [];
-
     const mainConfig = this.nullableLoadConfig(configPath);
-    if (mainConfig) {
-      ConfigValidator.validate(configPath, mainConfig);
-
-      const configDirectoryPath = path.dirname(configPath);
-      mainConfig.aliases?.forEach(alias => alias.aliasDirectory = configDirectoryPath);
-
-      result.push(mainConfig);
-
-      if (mainConfig.includePaths) {
-        [...new Set(mainConfig.includePaths)]
-          .map(path => PathUtils.resolvePath(path, configDirectoryPath))
-          .filter(path => !loadedConfigs.has(path))
-          .filter(path => fs.existsSync(path))
-          .peek(path => loadedConfigs.add(path))
-          .flatMap(path => this.loadConfigsFromPath(path, loadedConfigs))
-          .forEach(config => result.push(config));
-      }
+    if (!mainConfig) {
+      return [];
     }
 
-    return result;
+    ConfigValidator.validate(configPath, mainConfig);
+
+    const configDirectoryPath = path.dirname(configPath);
+    mainConfig.aliases?.forEach(alias => alias.aliasDirectory = configDirectoryPath);
+
+
+    if (!mainConfig.includePaths) {
+      return [mainConfig];
+    }
+
+    const includedPaths = iter(new Set(mainConfig.includePaths))
+      .map(path => PathUtils.resolvePath(path, configDirectoryPath))
+      .filter(path => !loadedConfigs.has(path))
+      .filter(path => fs.existsSync(path))
+      .map(path => {
+        loadedConfigs.add(path)
+        return path;
+      })
+      .flatMap(path => iter(this.loadConfigsFromPath(path, loadedConfigs)))
+      .toArray();
+
+    return [mainConfig, ...includedPaths];
   }
 
   private static isYamlFile(file: string): boolean {

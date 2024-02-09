@@ -4,13 +4,14 @@ import { AliasMapper } from './mapper/alias-mapper';
 import { ConfigLoader } from './util/config-loader';
 import { ConfigCommand } from './command/config-command';
 import { CompletionLoader } from './mapper/completion-loader';
+import { iter } from 'iterator-helper';
 
 function nca() {
   const argvBuilder = yargs(hideBin(process.argv));
 
   const aliases = ConfigLoader.loadAliases();
 
-  aliases.sort((a, b) => a.name.localeCompare(b.name))
+  iter(aliases.sort((a, b) => a.name.localeCompare(b.name)))
     .map(alias => AliasMapper.map(alias))
     .forEach(commandModule => argvBuilder.command(commandModule));
 

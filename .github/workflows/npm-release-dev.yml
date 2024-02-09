@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: develop
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - run: npm ci
@@ -52,7 +52,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: develop
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - id: version
@@ -71,7 +71,7 @@ jobs:
         with:
           ref: develop
       # setup to publish to npm registry
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'

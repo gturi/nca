@@ -9,7 +9,9 @@ import { AliasValidator } from '../validator/alias-validator';
 import '../extension/array-extensions';
 import { PathUtils } from './path-utils';
 import { NcaConfig } from '../config/nca-config';
-import { iter } from 'iterator-helper';
+import { HIterator, iter } from 'iterator-helper';
+
+type LazyIterator<T> = HIterator<T, any, any>;
 
 export class ConfigLoader {
 
@@ -17,20 +19,20 @@ export class ConfigLoader {
     const configPath = NcaConfig.getMainConfigFilePath();
 
     const configs = this.loadConfigsFromPath(configPath, new Set(configPath));
-    const aliases = configs.flatMap(config => config.aliases ?? []);
+    const aliases = configs.flatMap(config => iter(config.aliases ?? [])).toArray();
 
     AliasValidator.validate(aliases);
 
     return aliases;
   }
 
-  private static loadConfigsFromPath(path: string, loadedConfigs: Set<string>): Config[] {
+  private static loadConfigsFromPath(path: string, loadedConfigs: Set<string>): LazyIterator<Config> {
     return fs.statSync(path).isDirectory()
       ? this.loadDirectoryConfigs(path, loadedConfigs)
       : this.loadConfigs(path, loadedConfigs)
   }
 
-  private static loadDirectoryConfigs(directoryPath: string, loadedConfigs: Set<string>): Config[] {
+  private static loadDirectoryConfigs(directoryPath: string, loadedConfigs: Set<string>): LazyIterator<Config> {
     const paths = walkdir.sync(directoryPath);
 
     iter(paths)
@@ -41,14 +43,13 @@ export class ConfigLoader {
       .filter(path => !fs.statSync(path).isDirectory())
       .filter(path => this.isYamlFile(path))
       .filter(path => !loadedConfigs.has(path))
-      .flatMap(path => iter(this.loadConfigs(path, loadedConfigs)))
-      .toArray();
+      .flatMap(path => iter(this.loadConfigs(path, loadedConfigs)));
   }
 
-  private static loadConfigs(configPath: string, loadedConfigs: Set<string>): Config[] {
+  private static loadConfigs(configPath: string, loadedConfigs: Set<string>): LazyIterator<Config> {
     const mainConfig = this.nullableLoadConfig(configPath);
     if (!mainConfig) {
-      return [];
+      return iter([]);
     }
 
     ConfigValidator.validate(configPath, mainConfig);
@@ -58,7 +59,7 @@ export class ConfigLoader {
 
 
     if (!mainConfig.includePaths) {
-      return [mainConfig];
+      return iter([mainConfig]);
     }
 
     const includedPaths = iter(new Set(mainConfig.includePaths))
@@ -69,10 +70,9 @@ export class ConfigLoader {
         loadedConfigs.add(path)
         return path;
       })
-      .flatMap(path => iter(this.loadConfigsFromPath(path, loadedConfigs)))
-      .toArray();
+      .flatMap(path => iter(this.loadConfigsFromPath(path, loadedConfigs)));
 
-    return [mainConfig, ...includedPaths];
+    return iter([mainConfig, ...includedPaths]);
   }
 
   private static isYamlFile(file: string): boolean {

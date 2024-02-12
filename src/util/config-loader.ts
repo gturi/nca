@@ -12,6 +12,7 @@ import { NcaConfig } from '../config/nca-config';
 import { HIterator, iter } from 'iterator-helper';
 
 type LazyIterator<T> = HIterator<T, any, any>;
+type ConfigIterator = LazyIterator<Config>;
 
 export class ConfigLoader {
 
@@ -26,13 +27,13 @@ export class ConfigLoader {
     return aliases;
   }
 
-  private static loadConfigsFromPath(path: string, loadedConfigs: Set<string>): LazyIterator<Config> {
+  private static loadConfigsFromPath(path: string, loadedConfigs: Set<string>): ConfigIterator {
     return fs.statSync(path).isDirectory()
       ? this.loadDirectoryConfigs(path, loadedConfigs)
       : this.loadConfigs(path, loadedConfigs)
   }
 
-  private static loadDirectoryConfigs(directoryPath: string, loadedConfigs: Set<string>): LazyIterator<Config> {
+  private static loadDirectoryConfigs(directoryPath: string, loadedConfigs: Set<string>): ConfigIterator {       
     const paths = walkdir.sync(directoryPath);
 
     iter(paths)
@@ -46,7 +47,7 @@ export class ConfigLoader {
       .flatMap(path => iter(this.loadConfigs(path, loadedConfigs)));
   }
 
-  private static loadConfigs(configPath: string, loadedConfigs: Set<string>): LazyIterator<Config> {
+  private static loadConfigs(configPath: string, loadedConfigs: Set<string>): ConfigIterator {
     const mainConfig = this.nullableLoadConfig(configPath);
     if (!mainConfig) {
       return iter([]);

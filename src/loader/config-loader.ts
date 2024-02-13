@@ -7,7 +7,7 @@ import { Config } from '../model/api/config';
 import { ConfigValidator } from '../validator/config-validator';
 import { AliasValidator } from '../validator/alias-validator';
 import '../extension/array-extensions';
-import { PathUtils } from './path-utils';
+import { PathUtils } from '../util/path-utils';
 import { NcaConfig } from '../config/nca-config';
 import { HIterator, iter } from 'iterator-helper';
 
@@ -16,7 +16,7 @@ type ConfigIterator = LazyIterator<Config>;
 
 export class ConfigLoader {
 
-  static loadAliases(): Alias[] {
+  loadAliases(): Alias[] {
     const configPath = NcaConfig.getMainConfigFilePath();
 
     const configs = this.loadConfigsFromPath(configPath, new Set(configPath));
@@ -27,13 +27,13 @@ export class ConfigLoader {
     return aliases;
   }
 
-  private static loadConfigsFromPath(path: string, loadedConfigs: Set<string>): ConfigIterator {
+  private loadConfigsFromPath(path: string, loadedConfigs: Set<string>): ConfigIterator {
     return fs.statSync(path).isDirectory()
       ? this.loadDirectoryConfigs(path, loadedConfigs)
       : this.loadConfigs(path, loadedConfigs)
   }
 
-  private static loadDirectoryConfigs(directoryPath: string, loadedConfigs: Set<string>): ConfigIterator {       
+  private loadDirectoryConfigs(directoryPath: string, loadedConfigs: Set<string>): ConfigIterator {
     const paths = walkdir.sync(directoryPath);
 
     iter(paths)
@@ -47,7 +47,7 @@ export class ConfigLoader {
       .flatMap(path => iter(this.loadConfigs(path, loadedConfigs)));
   }
 
-  private static loadConfigs(configPath: string, loadedConfigs: Set<string>): ConfigIterator {
+  private loadConfigs(configPath: string, loadedConfigs: Set<string>): ConfigIterator {
     const mainConfig = this.nullableLoadConfig(configPath);
     if (!mainConfig) {
       return iter([]);
@@ -76,12 +76,12 @@ export class ConfigLoader {
     return iter([mainConfig, ...includedPaths]);
   }
 
-  private static isYamlFile(file: string): boolean {
+  private isYamlFile(file: string): boolean {
     const extension = file.split('.').pop();
     return extension === 'yml' || extension === 'yaml';
   }
 
-  private static nullableLoadConfig(configPath: string): Config | null {
+  private nullableLoadConfig(configPath: string): Config | null {
     if (fs.existsSync(configPath)) {
       return this.loadConfig(configPath);
     } else {
@@ -90,7 +90,7 @@ export class ConfigLoader {
     }
   }
 
-  public static loadConfig(configPath: string): Config {
+  public loadConfig(configPath: string): Config {
     if (!fs.existsSync(configPath)) {
       throw new Error(`Config file not found: ${configPath}`);
     }

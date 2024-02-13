@@ -3,7 +3,7 @@ import { OptionParam } from '../../model/api/option-param';
 import { OptionParamType } from '../../model/api/option-param-type';
 import { PositionalArgument } from '../../model/api/positional-argument';
 import { PositionalArgumentType } from '../../model/api/positional-argument-type';
-import { ConfigLoader } from '../../util/config-loader';
+import { ConfigLoader } from '../../loader/config-loader';
 import { ConfigSaver } from '../../util/config-saver';
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from '../../util/yargs-utils';
@@ -45,7 +45,8 @@ export class AddPathCommand extends Command {
     const configPath = args.f as string;
     const configPathToAdd = args.configPath as string;
 
-    const config = ConfigLoader.loadConfig(configPath);
+    const configLoader = new ConfigLoader();
+    const config = configLoader.loadConfig(configPath);
 
     if (config.includePaths) {
       config.includePaths.push(configPathToAdd);

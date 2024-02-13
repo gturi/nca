@@ -58,7 +58,6 @@ export class ConfigLoader {
     const configDirectoryPath = path.dirname(configPath);
     mainConfig.aliases?.forEach(alias => alias.aliasDirectory = configDirectoryPath);
 
-
     if (!mainConfig.includePaths) {
       return iter([mainConfig]);
     }
@@ -73,7 +72,7 @@ export class ConfigLoader {
       })
       .flatMap(path => iter(this.loadConfigsFromPath(path, loadedConfigs)));
 
-    return iter([mainConfig, ...includedPaths]);
+    return iter([mainConfig]).chain(includedPaths);
   }
 
   private isYamlFile(file: string): boolean {

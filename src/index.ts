@@ -1,16 +1,18 @@
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import { AliasMapper } from './mapper/alias-mapper';
-import { ConfigLoader } from './util/config-loader';
+import { ConfigLoader } from './loader/config-loader';
 import { ConfigCommand } from './command/config-command';
 import { CompletionLoader } from './mapper/completion-loader';
+import { iter } from 'iterator-helper';
 
 function nca() {
   const argvBuilder = yargs(hideBin(process.argv));
 
-  const aliases = ConfigLoader.loadAliases();
+  const configLoader = new ConfigLoader();
+  const aliases = configLoader.loadAliases();
 
-  aliases.sort((a, b) => a.name.localeCompare(b.name))
+  iter(aliases.sort((a, b) => a.name.localeCompare(b.name)))
     .map(alias => AliasMapper.map(alias))
     .forEach(commandModule => argvBuilder.command(commandModule));
 

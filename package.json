@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/gturi/nca#readme",
   "dependencies": {
+    "iterator-helper": "^1.3.4",
     "js-yaml": "^4.1.0",
     "shelljs": "^0.8.5",
     "walkdir": "^0.4.1",

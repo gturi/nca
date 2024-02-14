@@ -9,6 +9,7 @@ import { AliasValidator } from '../validator/alias-validator';
 import { PathUtils } from '../util/path-utils';
 import { NcaConfig } from '../config/nca-config';
 import { HIterator, iter } from 'iterator-helper';
+import { FileUtils } from '../util/file-utils';
 
 type LazyIterator<T> = HIterator<T, any, any>;
 type ConfigIterator = LazyIterator<Config>;
@@ -41,7 +42,7 @@ export class ConfigLoader {
 
     return iter(paths)
       .filter(path => !fs.statSync(path).isDirectory())
-      .filter(path => this.isYamlFile(path))
+      .filter(path => FileUtils.hasYamlExtension(path))
       .filter(path => !loadedConfigs.has(path))
       .flatMap(path => iter(this.loadConfigs(path, loadedConfigs)));
   }
@@ -72,11 +73,6 @@ export class ConfigLoader {
       .flatMap(path => iter(this.loadConfigsFromPath(path, loadedConfigs)));
 
     return iter([mainConfig]).chain(includedPaths);
-  }
-
-  private isYamlFile(file: string): boolean {
-    const extension = file.split('.').pop();
-    return extension === 'yml' || extension === 'yaml';
   }
 
   private nullableLoadConfig(configPath: string): Config | null {

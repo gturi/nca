@@ -6,7 +6,6 @@ import { Alias } from '../model/api/alias';
 import { Config } from '../model/api/config';
 import { ConfigValidator } from '../validator/config-validator';
 import { AliasValidator } from '../validator/alias-validator';
-import '../extension/array-extensions';
 import { PathUtils } from '../util/path-utils';
 import { NcaConfig } from '../config/nca-config';
 import { HIterator, iter } from 'iterator-helper';

@@ -2028,11 +2028,11 @@ FN:41,bufferToString
 FNF:6
 FNH:6
 FNDA:26,runNcaAndVerifyOutput
-FNDA:62,(anonymous_1)
+FNDA:63,(anonymous_1)
 FNDA:2,(anonymous_2)
 FNDA:26,(anonymous_3)
 FNDA:26,runCommand
-FNDA:64,bufferToString
+FNDA:65,bufferToString
 DA:1,1
 DA:2,1
 DA:5,1
@@ -2040,7 +2040,7 @@ DA:6,26
 DA:8,26
 DA:9,26
 DA:11,26
-DA:12,62
+DA:12,63
 DA:15,26
 DA:16,2
 DA:19,26
@@ -2051,7 +2051,7 @@ DA:23,26
 DA:24,26
 DA:26,0
 DA:37,26
-DA:42,64
+DA:42,65
 LF:19
 LH:18
 BRF:0

@@ -84,7 +84,7 @@ export class ConfigLoader {
     }
   }
 
-  public loadConfig(configPath: string): Config {
+  loadConfig(configPath: string): Config {
     if (!fs.existsSync(configPath)) {
       throw new Error(`Config file not found: ${configPath}`);
     }

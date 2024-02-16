@@ -28,7 +28,7 @@
     "type": "git",
     "url": "git+https://github.com/gturi/nca.git"
   },
-  "author": "",
+  "author": "Giacomo Venturini (https://github.com/gturi)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/gturi/nca/issues"

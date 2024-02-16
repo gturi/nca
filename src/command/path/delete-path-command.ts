@@ -13,15 +13,15 @@ import { NcaConfig } from "../../config/nca-config";
 
 export class DeletePathCommand extends Command {
 
-  protected override getCommandName(): string {
+  override getCommandName(): string {
     return YargsUtils.getCommand('delete', this.getPositionalArguments());
   }
 
-  protected override getCommandDescription(): string {
+  override getCommandDescription(): string {
     return 'remove path from configuration file';
   }
 
-  protected override getPositionalArguments(): PositionalArgument[] {
+  override getPositionalArguments(): PositionalArgument[] {
     const positionalArgument: PositionalArgument = {
       name: 'configPath',
       description: 'config path to remove',
@@ -31,7 +31,7 @@ export class DeletePathCommand extends Command {
     return [positionalArgument];
   }
 
-  protected override getOptionParams(): OptionParam[] {
+  override getOptionParams(): OptionParam[] {
     const optionParam: OptionParam = {
       name: 'f',
       alternativeName: 'file',
@@ -42,7 +42,7 @@ export class DeletePathCommand extends Command {
     return [optionParam];
   }
 
-  protected override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
+  override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
     const configPath = args.f as string;
     const configPathToRemove = args.configPath as string;
 

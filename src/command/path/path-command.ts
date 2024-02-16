@@ -4,15 +4,15 @@ import { DeletePathCommand } from "./delete-path-command";
 
 export class PathCommand extends Command {
 
-  protected override getCommandName(): string {
+  override getCommandName(): string {
     return 'path <command>';
   }
 
-  protected override getCommandDescription(): string {
+  override getCommandDescription(): string {
     return 'nca configuration commands';
   }
 
-  protected override getCommands(): Command[] {
+  override getSubCommands(): Command[] {
     return [new AddPathCommand(), new DeletePathCommand()];
   }
 }

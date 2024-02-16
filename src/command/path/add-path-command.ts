@@ -12,15 +12,15 @@ import { NcaConfig } from "../../config/nca-config";
 
 export class AddPathCommand extends Command {
 
-  protected override getCommandName(): string {
+  override getCommandName(): string {
     return YargsUtils.getCommand('add', this.getPositionalArguments());
   }
 
-  protected override getCommandDescription(): string {
+  override getCommandDescription(): string {
     return 'include path into configuration file';
   }
 
-  protected override getPositionalArguments(): PositionalArgument[] {
+  override getPositionalArguments(): PositionalArgument[] {
     const positionalArgument: PositionalArgument = {
       name: 'configPath',
       description: 'config path to add',
@@ -30,7 +30,7 @@ export class AddPathCommand extends Command {
     return [positionalArgument];
   }
 
-  protected override getOptionParams(): OptionParam[] {
+  override getOptionParams(): OptionParam[] {
     const optionParam: OptionParam = {
       name: 'f',
       alternativeName: 'file',
@@ -41,7 +41,7 @@ export class AddPathCommand extends Command {
     return [optionParam];
   }
 
-  protected override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
+  override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
     const configPath = args.f as string;
     const configPathToAdd = args.configPath as string;
 

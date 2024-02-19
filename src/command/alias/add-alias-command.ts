@@ -39,7 +39,7 @@ export class AddAliasCommand extends Command {
       description:
         'name that will be used to invoke the alias (defaults to the command name when empty)',
       optionType: OptionParamType.String,
-      defaultValue: NcaConfig.getMainConfigFilePath()
+      defaultValue: ''
     }
     return [optionParam];
   }
@@ -47,7 +47,6 @@ export class AddAliasCommand extends Command {
   override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
     const commandArray = args.command as string[];
     this.removeNcaPrefix(commandArray);
-    const command = this.getCommand(commandArray);
 
 
     FileSystemUtils.createFolderIfNotExists(NcaConfig.getAliasSourceFolderPath());
@@ -55,12 +54,11 @@ export class AddAliasCommand extends Command {
     const data = NcaConfig.getAliasPackageJson();
     FileSystemUtils.writePrettyJsonFileIfNotExists(NcaConfig.getAliasPackageJsonPath(), data);
 
-
-    const aliasName = this.getAliasName(args.n as string | undefined, command);
+    const aliasName = this.getAliasName(args.n as string | undefined, commandArray);
 
     this.updateAliasPackageJsonWithNewAlias(aliasName);
 
-    this.createScriptToExecuteNcaCommand(aliasName, command);
+    this.createScriptToExecuteNcaCommand(aliasName, commandArray);
 
 
     shelljs.exec(`npm link "${NcaConfig.getAliasFolderPath()}"`);
@@ -78,21 +76,19 @@ export class AddAliasCommand extends Command {
     }
   }
 
-  private getCommand(commandArray: string[]): string {
-    return commandArray.join(' ');
-  }
-
-  private getAliasName(name: string | undefined, commandArray: string): string {
+  private getAliasName(name: string | undefined, commandArray: string[]): string {
     return StringUtils.ifNotEmptyOrDefault(name, () => commandArray[0]);
   }
 
-  private getAliasCode(command: string): string {
+  private getAliasCode(commandArray: string[]): string {
+    const command = JSON.stringify(commandArray);
     return [
       `#!/usr/bin/env node`,
       `'use strict';`,
-      `const spawn = require('child_process').spawn;`,
-      `spawn('nca ${command}');`,
-    ].join('\n\n');
+      `const spawnSync = require('child_process').spawnSync;`,
+      `const commandArray = ${command};`,
+      `spawnSync('nca', commandArray, { stdio: 'inherit' });`,
+    ].join('\n\n') + '\n';
   }
 
   private updateAliasPackageJsonWithNewAlias(aliasName: string): void {
@@ -105,9 +101,9 @@ export class AddAliasCommand extends Command {
     FileSystemUtils.writePrettyJsonFile(aliasPackageJsonPath, packageJson);
   }
 
-  private createScriptToExecuteNcaCommand(aliasName: string, command: string) {
-    const aliasCode = this.getAliasCode(command);
+  private createScriptToExecuteNcaCommand(aliasName: string, commandArray: string[]) {
+    const aliasCode = this.getAliasCode(commandArray);
     const aliasCodePath = path.join(NcaConfig.getAliasSourceFolderPath(), aliasName);
-    FileSystemUtils.writePrettyJsonFile(aliasCodePath, aliasCode);
+    FileSystemUtils.writeFile(aliasCodePath, aliasCode);
   }
 }

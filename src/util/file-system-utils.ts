@@ -9,7 +9,7 @@ export class FileSystemUtils {
       if (result) {
         return result;
       }
-      throw new Error('Invalid JSON')
+      throw new Error(`Invalid JSON found at ${filePath}`);
     });
   }
 
@@ -47,6 +47,12 @@ export class FileSystemUtils {
   static createFolderIfNotExists(folderPath: string): void {
     if (!fs.existsSync(folderPath)) {
       fs.mkdirSync(folderPath, { recursive: true });
+    }
+  }
+
+  static deleteFile(filePath: string) {
+    if (!fs.existsSync(filePath)) {
+      fs.rmSync(filePath);
     }
   }
 }

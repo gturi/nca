@@ -140,6 +140,20 @@ Each time completion is invoked, cli values will be logged in the same directory
 [Back to top](#nca---Node-Command-Alias)
 
 
+## Development
+
+```bash
+cd /path/to/nca
+
+npm install
+
+npm run build # compile
+
+npm link # create link to project folder
+
+npm unlink --global node-command-alias # remove global link after finishing testing
+```
+
 ## Contributing
 
 Contributions, suggestions, issues and feature requests are welcome!

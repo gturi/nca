@@ -5,6 +5,8 @@ import { ConfigLoader } from './loader/config-loader';
 import { ConfigCommand } from './command/config-command';
 import { CompletionLoader } from './mapper/completion-loader';
 import { iter } from 'iterator-helper';
+import { CommandMapper } from './mapper/command-mapper';
+import { AliasCommand } from './command/alias-command';
 
 function nca() {
   const argvBuilder = yargs(hideBin(process.argv));
@@ -16,7 +18,9 @@ function nca() {
     .map(alias => AliasMapper.map(alias))
     .forEach(commandModule => argvBuilder.command(commandModule));
 
-  argvBuilder.command(new ConfigCommand().getCommand());
+  iter([new ConfigCommand(), new AliasCommand()])
+    .map(command => CommandMapper.map(command))
+    .forEach(commandModule => argvBuilder.command(commandModule));
 
   CompletionLoader.initCompletion(argvBuilder, aliases);
 

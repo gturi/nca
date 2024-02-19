@@ -1,5 +1,7 @@
 import yargs from 'yargs';
 import { CliUtils } from './cli-utils';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { CommandType } from '../api/command-type';
 
 /**
  * Input object for {@link CommandType.Function} and {@link CommandType.Module} command types.

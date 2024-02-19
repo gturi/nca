@@ -30,5 +30,9 @@ export class DeleteAliasCommand extends Command {
     // remove alias from package.json
     // npm unlink --global node-command-alias-local
     // npm link /path/to/dir
+    const aliasNames = args.aliasNames as string[];
+    aliasNames.forEach(aliasName => {
+      console.log(`Removing alias: ${aliasName}`);
+    });
   }
 }

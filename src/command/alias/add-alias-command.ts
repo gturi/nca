@@ -19,7 +19,7 @@ export class AddAliasCommand extends Command {
   }
 
   override getCommandDescription(): string {
-    return 'create an alias for a nca command so that it can be used without typing the whole command';
+    return 'create a global alias for a nca command which can be invoked without "nca" prefix';
   }
 
   override getPositionalArguments(): PositionalArgument[] {
@@ -36,7 +36,8 @@ export class AddAliasCommand extends Command {
     const optionParam: OptionParam = {
       name: 'n',
       alternativeName: 'name',
-      description: 'name that will be used to invoke the alias, by default it will be the command name',
+      description:
+        'name that will be used to invoke the alias (defaults to the command name when empty)',
       optionType: OptionParamType.String,
       defaultValue: NcaConfig.getMainConfigFilePath()
     }

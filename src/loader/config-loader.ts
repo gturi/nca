@@ -8,11 +8,10 @@ import { ConfigValidator } from '../validator/config-validator';
 import { AliasValidator } from '../validator/alias-validator';
 import { PathUtils } from '../util/path-utils';
 import { NcaConfig } from '../config/nca-config';
-import { HIterator, iter } from 'iterator-helper';
+import { iter } from 'iterator-helper';
 import { FileUtils } from '../util/file-utils';
+import { ConfigIterator } from '../util/custom-types';
 
-type LazyIterator<T> = HIterator<T, any, any>;
-type ConfigIterator = LazyIterator<Config>;
 
 export class ConfigLoader {
 

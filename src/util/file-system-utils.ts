@@ -27,13 +27,13 @@ export class FileSystemUtils {
     }
   }
 
-  static writePrettyJsonFileIfNotExists(filePath: string, data: any): void {
+  static writePrettyJsonFileIfNotExists<T>(filePath: string, data: T): void {
     if (!fs.existsSync(filePath)) {
       FileSystemUtils.writePrettyJsonFile(filePath, data);
     }
   }
 
-  static writePrettyJsonFile(filePath: string, data: any): void {
+  static writePrettyJsonFile<T>(filePath: string, data: T): void {
     const prettyJson = JSON.stringify(data, null, 2);
     this.writeFile(filePath, prettyJson);
   }

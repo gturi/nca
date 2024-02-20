@@ -21,14 +21,15 @@ export class PackageJsonLoader {
     return iter(Object.keys(bin))
       .filter(aliasName => {
         const aliasCodeRelativePath = bin[aliasName];
-        return aliasCodeRelativePath !== null
-          && !fs.existsSync(this.getAliasCodePath(aliasName));
+        return aliasCodeRelativePath !== null && !fs.existsSync(this.getAliasCodePath(aliasName));
       })
       .toArray();
   }
 
   getAliasCodePath(aliasName: string): string {
     const aliasCodeRelativePath = this.bin[aliasName];
-    return aliasCodeRelativePath ? path.join(NcaConfig.getAliasFolderPath(), aliasCodeRelativePath) : 'unknown';
+    return aliasCodeRelativePath
+      ? path.join(NcaConfig.getAliasFolderPath(), aliasCodeRelativePath)
+      : 'unknown';
   }
 }

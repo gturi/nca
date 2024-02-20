@@ -6,9 +6,11 @@ import { NcaConfig } from '../config/nca-config';
 
 export class PackageJsonLoader {
 
+  private readonly packageJsonPath: string;
   private readonly _packageJson: Record<string, unknown>;
 
   constructor(packageJsonPath: string) {
+    this.packageJsonPath = packageJsonPath;
     this._packageJson = FileSystemUtils.readJsonFile(packageJsonPath);
   }
 
@@ -31,5 +33,13 @@ export class PackageJsonLoader {
     return aliasCodeRelativePath
       ? path.join(NcaConfig.getAliasFolderPath(), aliasCodeRelativePath)
       : 'unknown';
+  }
+
+  addAlias(aliasName: string): void {
+    this.bin[aliasName] = `./bin/${aliasName}`;
+  }
+
+  writeOnDisk(): void {
+    FileSystemUtils.writePrettyJsonFile(this.packageJsonPath, this._packageJson);
   }
 }

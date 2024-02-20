@@ -11,6 +11,7 @@ import { NcaConfig } from "../../config/nca-config";
 import { Command } from "../command";
 import { StringUtils } from "../../util/string-utils";
 import { FileSystemUtils } from '../../util/file-system-utils';
+import { PackageJsonLoader } from '../../loader/package-json-loader';
 
 export class AddAliasCommand extends Command {
 
@@ -92,13 +93,11 @@ export class AddAliasCommand extends Command {
   }
 
   private updateAliasPackageJsonWithNewAlias(aliasName: string): void {
-    const aliasPackageJsonPath = NcaConfig.getAliasPackageJsonPath();
-    const packageJson = FileSystemUtils.readJsonFile(aliasPackageJsonPath);
+    const packageJsonLoader = new PackageJsonLoader(NcaConfig.getAliasPackageJsonPath());
 
-    const bin = packageJson.bin as Record<string, string>;
-    bin[aliasName] = `./bin/${aliasName}`;
+    packageJsonLoader.addAlias(aliasName);
 
-    FileSystemUtils.writePrettyJsonFile(aliasPackageJsonPath, packageJson);
+    packageJsonLoader.writeOnDisk();
   }
 
   private createScriptToExecuteNcaCommand(aliasName: string, commandArray: string[]) {

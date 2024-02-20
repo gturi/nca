@@ -1,11 +1,19 @@
+import shelljs from "shelljs";
 import { NcaConfig } from "../config/nca-config";
-import { ChildProcessUtils } from "./child-process-utils";
 
 export class NodeUtils {
 
   static refreshLocalAliases(): void {
-    ChildProcessUtils.spawnSync('npm', ['unlink', '--global', 'node-command-alias-local']);
+    this.unlinkLocalAliases();
 
-    ChildProcessUtils.spawnSync('npm', ['link', `"${NcaConfig.getAliasFolderPath()}"`]);
+    this.linkLocalAliases();
+  }
+
+  static unlinkLocalAliases(): void {
+    shelljs.exec(`npm unlink --global node-command-alias-local`);
+  }
+
+  static linkLocalAliases(): void {
+    shelljs.exec(`npm link "${NcaConfig.getAliasFolderPath()}"`);
   }
 }

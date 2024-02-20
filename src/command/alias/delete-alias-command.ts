@@ -1,5 +1,4 @@
 import path from 'path';
-import shelljs from "shelljs";
 import yargs from "yargs";
 import { PositionalArgument } from '../../model/api/positional-argument';
 import { PositionalArgumentType } from '../../model/api/positional-argument-type'
@@ -9,6 +8,7 @@ import { Command } from "../command";
 import { FileSystemUtils } from "../../util/file-system-utils";
 import { NcaConfig } from "../../config/nca-config";
 import { StringUtils } from "../../util/string-utils";
+import { NodeUtils } from '../../util/node-utils';
 
 export class DeleteAliasCommand extends Command {
 
@@ -56,11 +56,13 @@ export class DeleteAliasCommand extends Command {
     if (initialBinEntriesCount === binEntriesCount) {
       console.warn('Alias package json has been left unchanged');
     } else {
-      shelljs.exec(`npm unlink --global node-command-alias-local`);
+      NodeUtils.unlinkLocalAliases();
 
+      // Package json update needs to be done after unlinking the local aliases,
+      // otherwise the local alias start script will not be removed node folder
       FileSystemUtils.writePrettyJsonFile(aliasPackageJsonPath, packageJson);
 
-      shelljs.exec(`npm link "${NcaConfig.getAliasFolderPath()}"`);
+      NodeUtils.linkLocalAliases();
     }
   }
 }

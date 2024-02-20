@@ -11,7 +11,11 @@ export class PackageJsonLoader {
 
   constructor(packageJsonPath: string) {
     this.packageJsonPath = packageJsonPath;
-    this._packageJson = FileSystemUtils.readJsonFile(packageJsonPath);
+    if (fs.existsSync(packageJsonPath)) {
+      this._packageJson = FileSystemUtils.readJsonFile(packageJsonPath);
+    } else {
+      this._packageJson = NcaConfig.getAliasPackageJson();
+    }
   }
 
   get bin(): Record<string, string | null> {

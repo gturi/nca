@@ -1,6 +1,5 @@
 import path from 'path';
 import yargs from "yargs";
-import shelljs from 'shelljs';
 import { OptionParam } from '../../model/api/option-param';
 import { OptionParamType } from '../../model/api/option-param-type';
 import { PositionalArgument } from '../../model/api/positional-argument';
@@ -12,6 +11,7 @@ import { Command } from "../command";
 import { StringUtils } from "../../util/string-utils";
 import { FileSystemUtils } from '../../util/file-system-utils';
 import { PackageJsonLoader } from '../../loader/package-json-loader';
+import { NodeUtils } from '../../util/node-utils';
 
 export class AddAliasCommand extends Command {
 
@@ -49,12 +49,6 @@ export class AddAliasCommand extends Command {
     const commandArray = args.command as string[];
     this.removeNcaPrefix(commandArray);
 
-
-    FileSystemUtils.createFolderIfNotExists(NcaConfig.getAliasSourceFolderPath());
-
-    const data = NcaConfig.getAliasPackageJson();
-    FileSystemUtils.writePrettyJsonFileIfNotExists(NcaConfig.getAliasPackageJsonPath(), data);
-
     const aliasName = this.getAliasName(args.n as string | undefined, commandArray);
 
     this.updateAliasPackageJsonWithNewAlias(aliasName);
@@ -62,7 +56,7 @@ export class AddAliasCommand extends Command {
     this.createScriptToExecuteNcaCommand(aliasName, commandArray);
 
 
-    shelljs.exec(`npm link "${NcaConfig.getAliasFolderPath()}"`);
+    NodeUtils.linkLocalAliases();
 
     console.log(`Alias '${aliasName}' successfully created`);
   }
@@ -103,6 +97,8 @@ export class AddAliasCommand extends Command {
   private createScriptToExecuteNcaCommand(aliasName: string, commandArray: string[]) {
     const aliasCode = this.getAliasCode(commandArray);
     const aliasCodePath = path.join(NcaConfig.getAliasSourceFolderPath(), aliasName);
+
+    FileSystemUtils.createFolderIfNotExists(NcaConfig.getAliasSourceFolderPath());
     FileSystemUtils.writeFile(aliasCodePath, aliasCode);
   }
 }

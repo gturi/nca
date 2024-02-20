@@ -21,7 +21,8 @@ export class PackageJsonLoader {
     return iter(Object.keys(bin))
       .filter(aliasName => {
         const aliasCodeRelativePath = bin[aliasName];
-        return aliasCodeRelativePath !== null && !fs.existsSync(this.getAliasCodePath(aliasName));
+        return aliasCodeRelativePath !== null
+          && !fs.existsSync(this.getAliasCodePath(aliasName));
       })
       .toArray();
   }

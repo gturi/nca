@@ -51,7 +51,7 @@ export class FileSystemUtils {
   }
 
   static deleteFile(filePath: string) {
-    if (!fs.existsSync(filePath)) {
+    if (fs.existsSync(filePath)) {
       fs.rmSync(filePath);
     }
   }

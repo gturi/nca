@@ -1,8 +1,12 @@
+import path from 'path';
 import { expect } from 'chai';
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import { VerifyOutput } from './verify-output';
+import { NodeUtils } from '../../src/util/node-utils';
 
 export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: string[]) {
+  setup();
+
   const app = runCommand(...args);
 
   const stdout: string[] = [];
@@ -24,8 +28,24 @@ export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: strin
       verifyOutput.done();
     } catch (error) {
       verifyOutput.done(error);
+    } finally {
+      cleanup();
     }
   });
+}
+
+function setup() {
+  const ncaFolder = path.join(__dirname, '../../');
+  NodeUtils.link(ncaFolder);
+
+  const ncaMainConfigFilePath = path.join(__dirname, '../', 'test-config.yml');
+  process.env.ncaMainConfigFilePath = ncaMainConfigFilePath;
+}
+
+function cleanup() {
+  NodeUtils.unlink('node-command-alias');
+
+  delete process.env.ncaMainConfigFilePath;
 }
 
 /**
@@ -34,7 +54,7 @@ export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: strin
  * @param {...string} args - positional and option arguments for the command to run
  */
 function runCommand(...args: string[]): ChildProcessWithoutNullStreams {
-  return spawn('./test/run-nca.sh', args);
+  return spawn('nca', args);
 }
 
 

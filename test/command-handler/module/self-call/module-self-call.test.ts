@@ -13,6 +13,6 @@ describe("module command handler", () => {
         expect(stdout.join('\n')).to.equal(expected);
       })
       .build();
-    testUtils.runNcaAndVerifyOutput(verifyOutput, 'module-self-call ./test/run-nca.sh module-hello');
+    testUtils.runNcaAndVerifyOutput(verifyOutput, 'module-self-call', 'nca', 'module-hello');
   });
 });

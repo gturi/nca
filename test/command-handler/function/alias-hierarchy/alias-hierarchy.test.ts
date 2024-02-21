@@ -1,5 +1,4 @@
 import 'mocha';
-import { expect } from 'chai';
 import * as testUtils from '../../../utils/test-utils';
 import { VerifyOutputBuilder } from '../../../utils/verify-output-builder';
 import { VerifyOutputHandleUtils } from '../../../utils/verify-output-handle-utils';
@@ -9,8 +8,8 @@ describe("function command handler", () => {
   it('command mainAlias logs expected values', done => {
     const command = [
       'mainAlias',
-      '-a true',
-      '-n 100',
+      '-a', 'true',
+      '-n', '100',
       'fooValue',
       'barValue1',
       'barValue2'
@@ -34,9 +33,9 @@ describe("function command handler", () => {
     const command = [
       'mainAlias',
       'subAlias',
-      '-a true',
-      '-n 100',
-      '-c cValue',
+      '-a', 'true',
+      '-n', '100',
+      '-c', 'cValue',
       'fooValue',
       'bazValue',
       'barValue1',
@@ -61,9 +60,9 @@ describe("function command handler", () => {
   it('command anotherSubAlias logs expected values', done => {
     const command = ['mainAlias',
       'anotherSubAlias',
-      '-a true',
-      '-n 100',
-      '-d dValue',
+      '-a', 'true',
+      '-n', '100',
+      '-d', 'dValue',
       'fooValue',
       'quxValue',
       'barValue1',

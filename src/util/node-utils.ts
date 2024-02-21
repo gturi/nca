@@ -10,10 +10,18 @@ export class NodeUtils {
   }
 
   static unlinkLocalAliases(): void {
-    shelljs.exec(`npm unlink --global node-command-alias-local`);
+    this.unlink('node-command-alias-local');
+  }
+
+  static unlink(packageName: string): void {
+    shelljs.exec(`npm unlink --global ${packageName}`);
   }
 
   static linkLocalAliases(): void {
-    shelljs.exec(`npm link "${NcaConfig.getAliasFolderPath()}"`);
+    this.link(NcaConfig.getAliasFolderPath());
+  }
+
+  static link(path: string): void {
+    shelljs.exec(`npm link "${path}"`);
   }
 }

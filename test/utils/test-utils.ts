@@ -1,8 +1,9 @@
 import path from 'path';
 import { expect } from 'chai';
-import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
+import { ChildProcess, spawn } from 'child_process';
 import { VerifyOutput } from './verify-output';
 import { NodeUtils } from '../../src/util/node-utils';
+import { Platform } from './platform-values/platform';
 
 export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: string[]) {
   setup();
@@ -12,11 +13,11 @@ export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: strin
   const stdout: string[] = [];
   const stderr: string[] = [];
 
-  app.stdout.on('data', (data: any) => {
+  app.stdout?.on('data', (data: any) => {
     stdout.push(bufferToString(data));
   });
 
-  app.stderr.on('data', (data: any) => {
+  app.stderr?.on('data', (data: any) => {
     stderr.push(bufferToString(data));
   });
 
@@ -29,13 +30,13 @@ export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: strin
     } catch (error) {
       verifyOutput.done(error);
     } finally {
-      cleanup();
+      //cleanup();
     }
   });
 }
 
 function setup() {
-  const ncaFolder = path.join(__dirname, '../../');
+  const ncaFolder = path.resolve(__dirname, '../', '../');
   NodeUtils.link(ncaFolder);
 
   const ncaMainConfigFilePath = path.join(__dirname, '../', 'test-config.yml');
@@ -53,8 +54,8 @@ function cleanup() {
  *
  * @param {...string} args - positional and option arguments for the command to run
  */
-function runCommand(...args: string[]): ChildProcessWithoutNullStreams {
-  return spawn('nca', args);
+function runCommand(...args: string[]): ChildProcess {
+  return spawn(Platform.values.ncaCommand, args);
 }
 
 

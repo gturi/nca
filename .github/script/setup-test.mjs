@@ -1,4 +1,7 @@
 import { execSync } from 'child_process';
 
-execSync('npm run build')
-execSync("npm install --prefix './test/command-handler/module/external-dependency'");
+console.log('Compiling the project');
+execSync('npm run build');
+
+console.log('Installing the external dependency for the test');
+execSync('npm install --prefix "./test/command-handler/module/external-dependency"');

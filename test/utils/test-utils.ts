@@ -1,5 +1,4 @@
 import path from 'path';
-import shelljs from 'shelljs';
 import { expect } from 'chai';
 import { ChildProcess, spawn, spawnSync, SpawnSyncReturns } from 'child_process';
 import { VerifyOutput } from './verify-output';
@@ -40,16 +39,17 @@ export function createAliasAndVerifyOutput(aliasName: string, ...args: string[])
   try {
     setup();
 
-    const commandArgs = removeNcaPrefixIfPresent(...args);
-
-    const commandOutput = runCommandSync(Platform.values.ncaCommand, ...commandArgs);
-
     createAlias(...args);
 
     const aliasCommandOutput = runCommandSync(aliasName);
 
+    const commandArgs = removeNcaPrefixIfPresent(...args);
+
+    const commandOutput = runCommandSync('nca', ...commandArgs);
+
     expect(aliasCommandOutput.stdout).to.equal(commandOutput.stdout);
   } catch (error) {
+    console.error(error);
     throw error;
   } finally {
     cleanup(true);
@@ -87,15 +87,15 @@ function removeNcaPrefixIfPresent(...args: string[]): string[] {
  * @param {...string} args - positional and option arguments for the command to run
  */
 function runCommand(...args: string[]): ChildProcess {
-  return spawn(Platform.values.ncaCommand, args);
+  return spawn(Platform.values.ncaCommand, args, { shell: true });
 }
 
-function createAlias(...args: string[]): shelljs.ShellString {
-  return shelljs.exec('nca alias add ' + args.join(' '));
+function createAlias(...args: string[]): SpawnSyncReturns<string> {
+  return spawnSync('nca', ['alias', 'add', ...args], { encoding: 'utf-8', shell: true });
 }
 
 function runCommandSync(command: string, ...args: string[]): SpawnSyncReturns<string> {
-  return spawnSync(command, args, { encoding: 'utf-8' });
+  return spawnSync(command, args, { encoding: 'utf-8', shell: true });
 }
 
 function bufferToString(buffer: ArrayBuffer | SharedArrayBuffer | { valueOf(): ArrayBuffer | SharedArrayBuffer; }): string {

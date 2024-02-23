@@ -1,23 +1,8 @@
-import yargs from 'yargs/yargs';
-import { hideBin } from 'yargs/helpers';
-import { CommandLoader } from './loader/command-loader';
-import { ErrorHandler } from './exception/error-handler';
+import { YargsLoader } from './loader/yargs-loader';
 
 function nca() {
-  ErrorHandler.run(() => {
-    const argvBuilder = yargs(hideBin(process.argv));
-
-    const commandLoader = new CommandLoader();
-    commandLoader.initYargsCommands(argvBuilder);
-
-    argvBuilder
-      .alias('help', 'h')
-      .alias('version', 'v')
-      .strict()
-      .wrap(argvBuilder.terminalWidth())
-      .demandCommand(1, '')
-      .parse();
-  });
+  const yargsLoader = new YargsLoader();
+  yargsLoader.init();
 }
 
 export { nca };

@@ -50,6 +50,7 @@ export function createAliasAndVerifyOutput(aliasName: string, args: string[]) {
 
     const commandOutput = runCommandSync('nca', ...commandArgs);
 
+    expect(aliasCommandOutput.stderr).to.equal(commandOutput.stderr);
     expect(aliasCommandOutput.stdout).to.equal(commandOutput.stdout);
   } catch (error) {
     console.error(error);

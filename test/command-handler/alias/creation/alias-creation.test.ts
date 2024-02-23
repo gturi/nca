@@ -10,6 +10,7 @@ describe("alias command handler", () => {
     [
       'nca', 'mainAlias', 'subAlias', 'a', 'b', `"c 'd"`
     ],
+    // TODO: not working
     /*[
       'nca', 'mainAlias', 'subAlias', 'a', 'b', `"c \"d"`
     ],*/

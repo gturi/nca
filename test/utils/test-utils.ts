@@ -44,14 +44,15 @@ export function createAliasAndVerifyOutput(aliasName: string, args: string[]) {
       throw new Error(createAliasResult.stderr);
     }
 
-    const aliasCommandOutput = runCommandSync(aliasName);
+    const aliasCommandResult = runCommandSync(aliasName);
+
 
     const commandArgs = removeNcaPrefixIfPresent(...args);
 
-    const commandOutput = runCommandSync('nca', ...commandArgs);
+    const commandResult = runCommandSync('nca', ...commandArgs);
 
-    expect(aliasCommandOutput.stderr).to.equal(commandOutput.stderr);
-    expect(aliasCommandOutput.stdout).to.equal(commandOutput.stdout);
+    expect(aliasCommandResult.stderr).to.equal(commandResult.stderr);
+    expect(aliasCommandResult.stdout).to.equal(commandResult.stdout);
   } catch (error) {
     console.error(error);
     throw error;

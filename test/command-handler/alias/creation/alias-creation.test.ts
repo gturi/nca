@@ -8,6 +8,9 @@ describe("alias command handler", () => {
       'nca', 'mainAlias', 'subAlias', 'a', 'b', 'c'
     ],
     [
+      'nca', 'mainAlias', 'subAlias', 'a', 'b', '"c \"d"'
+    ],
+    [
       'mainAlias',
       '-a', 'true',
       '-n', '100',

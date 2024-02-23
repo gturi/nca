@@ -35,11 +35,14 @@ export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: strin
   });
 }
 
-export function createAliasAndVerifyOutput(aliasName: string, ...args: string[]) {
+export function createAliasAndVerifyOutput(aliasName: string, args: string[]) {
   try {
     setup();
 
-    createAlias(...args);
+    const createAliasResult = createAlias(args);
+    if (createAliasResult.status !== 0) {
+      throw new Error(createAliasResult.stderr);
+    }
 
     const aliasCommandOutput = runCommandSync(aliasName);
 
@@ -90,7 +93,7 @@ function runCommand(...args: string[]): ChildProcess {
   return spawn(Platform.values.ncaCommand, args, { shell: true });
 }
 
-function createAlias(...args: string[]): SpawnSyncReturns<string> {
+function createAlias(args: string[]): SpawnSyncReturns<string> {
   return spawnSync('nca', ['alias', 'add', ...args], { encoding: 'utf-8', shell: true });
 }
 

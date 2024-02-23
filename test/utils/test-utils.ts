@@ -52,7 +52,7 @@ export function createAliasAndVerifyOutput(aliasName: string, ...args: string[])
     console.error(error);
     throw error;
   } finally {
-    cleanup(true);
+    cleanup(aliasName);
   }
 }
 
@@ -64,9 +64,9 @@ function setup() {
   process.env.ncaMainConfigFilePath = ncaMainConfigFilePath;
 }
 
-function cleanup(cleanLocalAliases: boolean = false) {
-  if (cleanLocalAliases) {
-    NodeUtils.unlinkLocalAliases();
+function cleanup(aliasName: string | null = null) {
+  if (aliasName) {
+    runCommandSync('nca', 'alias', 'delete', aliasName);
   }
   NodeUtils.unlink('node-command-alias');
 

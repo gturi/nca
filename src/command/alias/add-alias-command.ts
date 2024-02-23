@@ -78,7 +78,7 @@ export class AddAliasCommand extends Command {
       `'use strict';`,
       `const spawnSync = require('child_process').spawnSync;`,
       `const commandArray = ${command};`,
-      `spawnSync('nca', commandArray, { stdio: 'inherit' });`,
+      `spawnSync('nca', commandArray, { stdio: 'inherit', shell: true });`,
     ].join('\n\n') + '\n';
   }
 

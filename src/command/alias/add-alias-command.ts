@@ -12,6 +12,7 @@ import { StringUtils } from "../../util/string-utils";
 import { FileSystemUtils } from '../../util/file-system-utils';
 import { PackageJsonLoader } from '../../loader/package-json-loader';
 import { NodeUtils } from '../../util/node-utils';
+import { hideBin } from 'yargs/helpers';
 
 export class AddAliasCommand extends Command {
 
@@ -33,21 +34,8 @@ export class AddAliasCommand extends Command {
     return [positionalArgument];
   }
 
-  override getOptionParams(): OptionParam[] {
-    const optionParam: OptionParam = {
-      name: 'n',
-      alternativeName: 'name',
-      description:
-        'name that will be used to invoke the alias (defaults to the command name when empty)',
-      optionType: OptionParamType.String,
-      defaultValue: ''
-    }
-    return [optionParam];
-  }
-
   override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
-    const commandArray = args.command as string[];
-    this.removeNcaPrefix(commandArray);
+    const commandArray = this.getCommandArray();
 
     const aliasName = this.getAliasName(args.n as string | undefined, commandArray);
 
@@ -59,6 +47,16 @@ export class AddAliasCommand extends Command {
     NodeUtils.linkLocalAliases();
 
     console.log(`Alias '${aliasName}' successfully created`);
+  }
+
+  private getCommandArray(): string[] {
+    const commandArray = hideBin(process.argv);
+
+    commandArray.splice(0, 2); // remove ['alias', 'add']
+
+    this.removeNcaPrefix(commandArray);
+
+    return commandArray;
   }
 
   private removeNcaPrefix(commandArray: string[]): void {

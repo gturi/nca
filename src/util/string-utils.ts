@@ -15,4 +15,8 @@ export class StringUtils {
   static ifNotEmptyOrDefault(str: (string | undefined | null), getDefault: () => string): string {
     return str === undefined || str === null || str === '' ? getDefault() : str;
   }
+
+  static wrap(str: string, character: string): string {
+    return `${character}${str}${character}`
+  }
 }

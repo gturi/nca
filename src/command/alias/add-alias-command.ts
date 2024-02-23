@@ -55,7 +55,11 @@ export class AddAliasCommand extends Command {
 
     this.removeNcaPrefix(commandArray);
 
-    return commandArray;
+    return commandArray.map(command => {
+      return StringUtils.hasWhitespace(command)
+        ? StringUtils.wrap(command, '"')
+        : command
+    });
   }
 
   private removeNcaPrefix(commandArray: string[]): void {

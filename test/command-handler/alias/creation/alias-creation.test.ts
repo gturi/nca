@@ -3,29 +3,19 @@ import * as testUtils from '../../../utils/test-utils';
 
 describe("alias command handler", () => {
 
-  it('command alias produces the same output as regular command v1', () => {
-    const command = [
+  const commands: string[][] = [
+    [
       'nca', 'mainAlias', 'subAlias', 'a', 'b', 'c'
-    ];
-
-    testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
-  });
-
-  it('command alias produces the same output as regular command v2', () => {
-    const command = [
+    ],
+    [
       'mainAlias',
       '-a', 'true',
       '-n', '100',
       'fooValue',
       'barValue1',
       'barValue2'
-    ];
-
-    testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
-  });
-
-  it('command alias produces the same output as regular command v3', () => {
-    const command = [
+    ],
+    [
       'mainAlias',
       'subAlias',
       '-a', 'true',
@@ -35,13 +25,9 @@ describe("alias command handler", () => {
       'bazValue',
       'barValue1',
       'barValue2'
-    ];
-
-    testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
-  });
-
-  it('command alias produces the same output as regular command v4', () => {
-    const command = ['mainAlias',
+    ],
+    [
+      'mainAlias',
       'anotherSubAlias',
       '-a', 'true',
       '-n', '100',
@@ -50,9 +36,13 @@ describe("alias command handler", () => {
       'quxValue',
       'barValue1',
       'barValue2'
-    ];
+    ]
+  ]
 
-    testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
+  commands.forEach((command, i) => {
+    it(`command alias produces the same output as regular command (idx: ${i})`, () => {
+      testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
+    });
   });
 
 });

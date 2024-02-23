@@ -1,7 +1,5 @@
 import path from 'path';
 import yargs from "yargs";
-import { OptionParam } from '../../model/api/option-param';
-import { OptionParamType } from '../../model/api/option-param-type';
 import { PositionalArgument } from '../../model/api/positional-argument';
 import { PositionalArgumentType } from '../../model/api/positional-argument-type';
 import { AnyObj } from "../../util/custom-types";

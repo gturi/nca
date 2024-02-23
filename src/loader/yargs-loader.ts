@@ -29,8 +29,9 @@ export class YargsLoader {
     const args = hideBin(process.argv);
 
     if (args.length >= 3 && args[0].trim() === 'alias' && args[1].trim() === 'add') {
-      // alias add command needs to be handled differently, because otherwise yargs will throw an error
-      // since it will try to parse flags and options for the alias command
+      // alias add command needs to be handled differently:
+      // yargs throws an error when parsing unrecognized flags,
+      // so the command to be aliased is changed to 'stub-info'
       return ['alias', 'add', 'stub-info'];
     }
 

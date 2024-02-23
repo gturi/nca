@@ -1,5 +1,6 @@
 import path from 'path';
 import yargs from "yargs";
+import shelljs from 'shelljs';
 import { PositionalArgument } from '../../model/api/positional-argument';
 import { PositionalArgumentType } from '../../model/api/positional-argument-type';
 import { AnyObj } from "../../util/custom-types";
@@ -96,5 +97,6 @@ export class AddAliasCommand extends Command {
 
     FileSystemUtils.createFolderIfNotExists(NcaConfig.getAliasSourceFolderPath());
     FileSystemUtils.writeFile(aliasCodePath, aliasCode);
+    shelljs.chmod('u+x', aliasCodePath);
   }
 }

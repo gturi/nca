@@ -40,7 +40,9 @@ export function createAliasAndVerifyOutput(aliasName: string, ...args: string[])
   try {
     setup();
 
-    const commandOutput = runCommandSync(Platform.values.ncaCommand, ...args);
+    const commandArgs = removeNcaPrefixIfPresent(...args);
+
+    const commandOutput = runCommandSync(Platform.values.ncaCommand, ...commandArgs);
 
     createAlias(...args);
 
@@ -69,6 +71,14 @@ function cleanup(cleanLocalAliases: boolean = false) {
   NodeUtils.unlink('node-command-alias');
 
   delete process.env.ncaMainConfigFilePath;
+}
+
+function removeNcaPrefixIfPresent(...args: string[]): string[] {
+  const result = [...args];
+  if (result[0] === 'nca') {
+    result.shift();
+  }
+  return result;
 }
 
 /**

@@ -3,15 +3,15 @@ import * as testUtils from '../../../utils/test-utils';
 
 describe("alias command handler", () => {
 
-  it('command alias produces the same output as regular command', () => {
+  it('command alias produces the same output as regular command v1', () => {
     const command = [
-      'nca', 'mainAlias', 'subAlias', 'a', 'b', '"c \"d"'
+      'nca', 'mainAlias', 'subAlias', 'a', 'b', 'c'
     ];
 
-    //testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
+    testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
   });
 
-  it('command subAlias logs expected values', () => {
+  it('command alias produces the same output as regular command v2', () => {
     const command = [
       'mainAlias',
       '-a', 'true',
@@ -21,10 +21,10 @@ describe("alias command handler", () => {
       'barValue2'
     ];
 
-    //testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
+    testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
   });
 
-  it('command subAlias logs expected values', () => {
+  it('command alias produces the same output as regular command v3', () => {
     const command = [
       'mainAlias',
       'subAlias',
@@ -37,10 +37,10 @@ describe("alias command handler", () => {
       'barValue2'
     ];
 
-    //testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
+    testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
   });
 
-  it('command anotherSubAlias logs expected values', () => {
+  it('command alias produces the same output as regular command v4', () => {
     const command = ['mainAlias',
       'anotherSubAlias',
       '-a', 'true',
@@ -52,7 +52,7 @@ describe("alias command handler", () => {
       'barValue2'
     ];
 
-    //testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
+    testUtils.createAliasAndVerifyOutput('mainAlias', ...command);
   });
 
 });

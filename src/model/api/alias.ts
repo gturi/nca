@@ -6,7 +6,7 @@ import { PositionalArgument } from "./positional-argument";
 export interface Alias {
   /** The name that will be used to recall the alias. */
   name: string;
-  /** The alias description. It is showed when using the help command or 
+  /** The alias description. It is showed when using the help command or
    * when providing wrong/urecognized input. */
   description?: string;
   /** The command to run when the alias is called. It is evaluated as a shell command
@@ -16,7 +16,7 @@ export interface Alias {
   /** Determines how the command will be executed.
    * When left empty defaults to {@link CommandType.Simple}. */
   commandType?: CommandType;
-  /** Options passed down to this alias and its subaliases when commandType=Function*/
+  /** Options passed down to this alias and its subaliases when commandType=Function */
   options?: OptionParam[];
   /** Positional arguments passed down to this alias and its subaliases when commandType=Function */
   positionalArguments?: PositionalArgument[];

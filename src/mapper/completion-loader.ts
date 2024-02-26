@@ -82,7 +82,7 @@ export class CompletionLoader {
       alias: undefined,
       subAliases: this.aliases
     };
-    
+
     iter(commands)
       .map(command => `${command}`)
       .filter(command => !NcaConfig.getForbiddenNames().includes(command))

@@ -1,8 +1,12 @@
 import { Alias } from "./alias";
 
 export interface Config {
-  /** Absolute paths to external configs. */
+  /**
+   * Absolute paths to external configs.
+   */
   includePaths?: string[];
-  /** List of aliases. */
+  /**
+   * List of aliases.
+   */
   aliases?: Alias[];
 }

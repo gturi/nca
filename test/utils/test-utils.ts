@@ -61,6 +61,31 @@ export function createAliasAndVerifyOutput(aliasName: string, args: string[]) {
   }
 }
 
+export function renameAliasAndVerifyOutput(aliasName: string, aliasNewName: string, args: string[]) {
+  try {
+    setup();
+
+    const createAliasResult = createAlias(args);
+    if (createAliasResult.status !== 0) {
+      throw new Error(createAliasResult.stderr);
+    }
+
+    const aliasCommandResult = runCommandSync(aliasName);
+
+    runCommandSync('nca', 'alias', 'rename', aliasName, aliasNewName);
+
+    const postRenameCommandResult = runCommandSync(aliasNewName);
+
+    expect(aliasCommandResult.stderr).to.equal(postRenameCommandResult.stderr);
+    expect(aliasCommandResult.stdout).to.equal(postRenameCommandResult.stdout);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  } finally {
+    cleanup(aliasNewName);
+  }
+}
+
 function setup() {
   const ncaFolder = path.resolve(__dirname, '../', '../');
   NodeUtils.link(ncaFolder);

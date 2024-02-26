@@ -30,8 +30,8 @@ export interface Alias {
    */
   options?: OptionParam[];
   /**
-   * Positional arguments passed down to this alias and its subaliases when {@link Alias.commandType}
-   * is {@link CommandType.Function} or {@link CommandType.Module}.
+   * Positional arguments passed down to this alias and its subaliases when
+   * {@link Alias.commandType} is {@link CommandType.Function} or {@link CommandType.Module}.
    */
   positionalArguments?: PositionalArgument[];
   /**

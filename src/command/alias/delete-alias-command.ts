@@ -1,14 +1,13 @@
-import path from 'path';
 import yargs from "yargs";
 import { PositionalArgument } from '../../model/api/positional-argument';
 import { PositionalArgumentType } from '../../model/api/positional-argument-type'
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from "../../util/yargs-utils";
 import { Command } from "../command";
-import { FileSystemUtils } from "../../util/file-system-utils";
 import { NcaConfig } from "../../config/nca-config";
 import { StringUtils } from "../../util/string-utils";
 import { NodeUtils } from '../../util/node-utils';
+import { PackageJsonLoader } from '../../loader/package-json-loader';
 
 export class DeleteAliasCommand extends Command {
 
@@ -33,26 +32,21 @@ export class DeleteAliasCommand extends Command {
   override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
     const aliasNames = args.aliasNames as string[];
 
-    const aliasPackageJsonPath = NcaConfig.getAliasPackageJsonPath();
-    const packageJson = FileSystemUtils.readJsonFile(aliasPackageJsonPath);
-    const bin = packageJson.bin as Record<string, string | null>;
+    const packageJsonLoader = new PackageJsonLoader(NcaConfig.getAliasPackageJsonPath());
 
-    const initialBinEntriesCount = Object.entries(bin).length;
+    const initialBinEntriesCount = packageJsonLoader.aliasCount;
 
     aliasNames.forEach(aliasName => {
-      const aliasCommand = bin[aliasName];
+      const aliasCommand = packageJsonLoader.getAliasCommand(aliasName);
 
       if (StringUtils.isNotEmpty(aliasCommand)) {
-        delete bin[aliasName];
-
-        const aliasCodePath = path.join(NcaConfig.getAliasSourceFolderPath(), aliasName);
-        FileSystemUtils.deleteFile(aliasCodePath);
+        packageJsonLoader.deleteAlias(aliasName);
       } else {
         console.log(`Alias '${aliasName}' does not exist`);
       }
     });
 
-    const binEntriesCount = Object.entries(bin).length;
+    const binEntriesCount = packageJsonLoader.aliasCount;
     if (initialBinEntriesCount === binEntriesCount) {
       console.warn('Alias package json has been left unchanged');
     } else {
@@ -60,7 +54,7 @@ export class DeleteAliasCommand extends Command {
 
       // Package json update needs to be done after unlinking the local aliases,
       // otherwise the local alias start script will not be removed node folder
-      FileSystemUtils.writePrettyJsonFile(aliasPackageJsonPath, packageJson);
+      packageJsonLoader.writeOnDisk();
 
       NodeUtils.linkLocalAliases();
     }

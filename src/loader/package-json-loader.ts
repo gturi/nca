@@ -39,8 +39,23 @@ export class PackageJsonLoader {
       : 'unknown';
   }
 
+  get aliasCount(): number {
+    return Object.entries(this.bin).length
+  }
+
   addAlias(aliasName: string): void {
     this.bin[aliasName] = `./bin/${aliasName}`;
+  }
+
+  deleteAlias(aliasName: string): void {
+    delete this.bin[aliasName];
+
+    const aliasCodePath = path.join(NcaConfig.getAliasSourceFolderPath(), aliasName);
+    FileSystemUtils.deleteFile(aliasCodePath);
+  }
+
+  getAliasCommand(aliasName: string): string | null {
+    return this.bin[aliasName];
   }
 
   writeOnDisk(): void {

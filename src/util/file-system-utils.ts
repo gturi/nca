@@ -55,4 +55,10 @@ export class FileSystemUtils {
       fs.rmSync(filePath);
     }
   }
+
+  static renameFile(filePath: string, newFilePath: string) {
+    if (fs.existsSync(filePath)) {
+      fs.renameSync(filePath, newFilePath);
+    }
+  }
 }

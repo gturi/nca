@@ -2,6 +2,7 @@ import { Command } from "./command";
 import { AddAliasCommand } from "./alias/add-alias-command";
 import { DeleteAliasCommand } from "./alias/delete-alias-command";
 import { ListAliasCommand } from "./alias/list-alias-command";
+import { RenameAliasCommand } from "./alias/rename-alias-command";
 
 export class AliasCommand extends Command {
 
@@ -14,6 +15,11 @@ export class AliasCommand extends Command {
   }
 
   override getSubCommands(): Command[] {
-    return [new AddAliasCommand(), new DeleteAliasCommand(), new ListAliasCommand()];
+    return [
+      new AddAliasCommand(),
+      new DeleteAliasCommand(),
+      new ListAliasCommand(),
+      new RenameAliasCommand()
+    ];
   }
 }

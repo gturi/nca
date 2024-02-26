@@ -54,6 +54,16 @@ export class PackageJsonLoader {
     FileSystemUtils.deleteFile(aliasCodePath);
   }
 
+  renameAlias(aliasName: string, aliasNewName: string): void {
+    const aliasCodePath = this.getAliasCodePath(aliasName);
+    delete this.bin[aliasName];
+
+    this.addAlias(aliasNewName);
+    const aliasCodeNewPath = this.getAliasCodePath(aliasNewName);
+
+    FileSystemUtils.renameFile(aliasCodePath, aliasCodeNewPath);
+  }
+
   getAliasCommand(aliasName: string): string | null {
     return this.bin[aliasName];
   }

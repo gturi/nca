@@ -66,7 +66,8 @@ export class ListAliasCommand extends Command {
 
   private prettyPrintAliases(packageJsonLoader: PackageJsonLoader, aliasNames: string[]): void {
     aliasNames.forEach(aliasName => {
-      console.log(`${aliasName} --> '${packageJsonLoader.getAliasCodePath(aliasName) ?? 'unknown'}'`);
+      const aliasCodePath = packageJsonLoader.getAliasCodePath(aliasName) ?? 'unknown';
+      console.log(`${aliasName} --> '${aliasCodePath}'`);
     });
   }
 }

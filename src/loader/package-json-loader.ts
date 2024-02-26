@@ -26,17 +26,17 @@ export class PackageJsonLoader {
     const bin = this.bin;
     return iter(Object.keys(bin))
       .filter(aliasName => {
-        const aliasCodeRelativePath = bin[aliasName];
-        return aliasCodeRelativePath !== null && !fs.existsSync(this.getAliasCodePath(aliasName));
+        const aliasCodeRelativePath = this.getAliasCodePath(aliasName);
+        return aliasCodeRelativePath !== null && !fs.existsSync(aliasCodeRelativePath);
       })
       .toArray();
   }
 
-  getAliasCodePath(aliasName: string): string {
+  getAliasCodePath(aliasName: string): string | null {
     const aliasCodeRelativePath = this.bin[aliasName];
     return aliasCodeRelativePath
       ? path.join(NcaConfig.getAliasFolderPath(), aliasCodeRelativePath)
-      : 'unknown';
+      : null;
   }
 
   get aliasCount(): number {
@@ -56,10 +56,16 @@ export class PackageJsonLoader {
 
   renameAlias(aliasName: string, aliasNewName: string): void {
     const aliasCodePath = this.getAliasCodePath(aliasName);
+    if (aliasCodePath == null) {
+      throw new Error(`Alias '${aliasName}' not found`);
+    }
     delete this.bin[aliasName];
 
     this.addAlias(aliasNewName);
     const aliasCodeNewPath = this.getAliasCodePath(aliasNewName);
+    if (aliasCodeNewPath == null) {
+      throw new Error(`Alias '${aliasNewName}' not found`);
+    }
 
     FileSystemUtils.renameFile(aliasCodePath, aliasCodeNewPath);
   }

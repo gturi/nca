@@ -36,6 +36,7 @@ export class AddAliasCommand extends Command {
   override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
     const commandArray = this.getCommandArray();
 
+    // TODO: it would be nice to allow to specify the alias name using the -n option
     const aliasName = this.getAliasName(args.n as string | undefined, commandArray);
 
     this.updateAliasPackageJsonWithNewAlias(aliasName);

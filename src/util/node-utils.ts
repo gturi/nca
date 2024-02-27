@@ -22,6 +22,8 @@ export class NodeUtils {
   }
 
   static link(path: string): void {
+    // TODO: understand why this error is logged but the command is successfully executed
+    // npm ERR! Cannot set properties of null (setting 'dev')
     shelljs.exec(`npm link "${path}"`);
   }
 }

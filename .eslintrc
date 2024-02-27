@@ -19,6 +19,7 @@
     "eslint-plugin-import"
   ],
   "rules": {
+    "linebreak-style": ["error", "unix"],
     "no-trailing-spaces": "error",
     "eol-last": [
       "error",

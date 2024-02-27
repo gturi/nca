@@ -37,6 +37,7 @@ export class CompletionAliasCommand extends Command {
       throw new Error(`Alias '${aliasName}' not found`);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { commandArray } = require(aliasCodePath);
 
     const completion = this.getCompletion(aliasName, commandArray);

@@ -3,6 +3,7 @@ import { AddAliasCommand } from "./alias/add-alias-command";
 import { DeleteAliasCommand } from "./alias/delete-alias-command";
 import { ListAliasCommand } from "./alias/list-alias-command";
 import { RenameAliasCommand } from "./alias/rename-alias-command";
+import { CompletionAliasCommand } from "./alias/completion-alias-command";
 
 export class AliasCommand extends Command {
 
@@ -19,7 +20,8 @@ export class AliasCommand extends Command {
       new AddAliasCommand(),
       new DeleteAliasCommand(),
       new ListAliasCommand(),
-      new RenameAliasCommand()
+      new RenameAliasCommand(),
+      new CompletionAliasCommand()
     ];
   }
 }

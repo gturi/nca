@@ -1,0 +1,60 @@
+import yargs from "yargs";
+import { PositionalArgument } from '../../model/api/positional-argument';
+import { PositionalArgumentType } from '../../model/api/positional-argument-type';
+import { AnyObj } from "../../util/custom-types";
+import { YargsUtils } from '../../util/yargs-utils';
+import { Command } from "../command";
+import { PackageJsonLoader } from '../../loader/package-json-loader';
+import { ProcessArgumentUtils } from "../../util/process-arguments-utils";
+
+export class CompletionAliasCommand extends Command {
+
+  override getCommandName(): string {
+    return YargsUtils.getCommand('completion', this.getPositionalArguments());
+  }
+
+  override getCommandDescription(): string {
+    return 'get completion for a global alias for a nca command';
+  }
+
+  override getPositionalArguments(): PositionalArgument[] {
+    const aliasArgument: PositionalArgument = {
+      name: 'aliasName',
+      description: 'alias to get completion for',
+      type: PositionalArgumentType.String,
+      required: true
+    }
+    return [aliasArgument];
+  }
+
+  override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
+    const aliasName = args.aliasName as string;
+
+    const packageJsonLoader = new PackageJsonLoader();
+    const aliasCodePath = packageJsonLoader.getAliasCodePath(aliasName);
+
+    if (aliasCodePath === null) {
+      throw new Error(`Alias '${aliasName}' not found`);
+    }
+
+    const { commandArray } = require(aliasCodePath);
+
+    const completion = this.getCompletion(aliasName, commandArray);
+    console.log(completion);
+  }
+
+  private getCompletion(aliasName: string, commandArray: string[]): string {
+    const completionFunction = `_nca_${aliasName}_yargs_completions`;
+    const inputArgs = ProcessArgumentUtils.sanitizeCommandArray(commandArray).join(' ');
+    return [
+      `# ${aliasName} completion`,
+      `${completionFunction}()`,
+      `{`,
+      `    _nca_yargs_completions ${inputArgs}`,
+      ``,
+      `    return 0`,
+      `}`,
+      `complete -o bashdefault -o default -F ${completionFunction} ${aliasName}`
+    ].join('\n') + '\n';
+  }
+}

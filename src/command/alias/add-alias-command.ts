@@ -12,6 +12,7 @@ import { FileSystemUtils } from '../../util/file-system-utils';
 import { PackageJsonLoader } from '../../loader/package-json-loader';
 import { NodeUtils } from '../../util/node-utils';
 import { hideBin } from 'yargs/helpers';
+import { ProcessArgumentUtils } from '../../util/process-arguments-utils';
 
 export class AddAliasCommand extends Command {
 
@@ -56,11 +57,7 @@ export class AddAliasCommand extends Command {
 
     this.removeNcaPrefix(commandArray);
 
-    return commandArray.map(command => {
-      return StringUtils.hasWhitespace(command)
-        ? StringUtils.wrap(command, '"')
-        : command
-    });
+    return ProcessArgumentUtils.sanitizeCommandArray(commandArray);
   }
 
   private removeNcaPrefix(commandArray: string[]): void {

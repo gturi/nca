@@ -58,7 +58,7 @@ export class ListAliasCommand extends Command {
     this.prettyPrintAliases(packageJsonLoader, aliases);
 
     if (removeBroken === true && aliases.length > 0) {
-      aliases.forEach(aliasName => delete packageJsonLoader.bin[aliasName]);
+      aliases.forEach(aliasName => packageJsonLoader.deleteAlias(aliasName));
 
       NodeUtils.refreshLocalAliases();
     }

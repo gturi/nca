@@ -4,7 +4,6 @@ import { PositionalArgumentType } from '../../model/api/positional-argument-type
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from "../../util/yargs-utils";
 import { Command } from "../command";
-import { NcaConfig } from "../../config/nca-config";
 import { StringUtils } from "../../util/string-utils";
 import { NodeUtils } from '../../util/node-utils';
 import { PackageJsonLoader } from '../../loader/package-json-loader';
@@ -32,7 +31,7 @@ export class DeleteAliasCommand extends Command {
   override getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>): void {
     const aliasNames = args.aliasNames as string[];
 
-    const packageJsonLoader = new PackageJsonLoader(NcaConfig.getAliasPackageJsonPath());
+    const packageJsonLoader = new PackageJsonLoader();
 
     const initialBinEntriesCount = packageJsonLoader.aliasCount;
 

@@ -3,7 +3,6 @@ import { OptionParam } from '../../model/api/option-param';
 import { OptionParamType } from '../../model/api/option-param-type';
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from '../../util/yargs-utils';
-import { NcaConfig } from "../../config/nca-config";
 import { Command } from "../command";
 import { NodeUtils } from '../../util/node-utils';
 import { PackageJsonLoader } from '../../loader/package-json-loader';
@@ -40,8 +39,7 @@ export class ListAliasCommand extends Command {
     const showBroken = args.b as boolean;
     const removeBroken = args.r as boolean;
 
-    const aliasPackageJsonPath = NcaConfig.getAliasPackageJsonPath();
-    const packageJsonLoader = new PackageJsonLoader(aliasPackageJsonPath);
+    const packageJsonLoader = new PackageJsonLoader();
 
     let aliases: string[];
     if (showBroken === true || removeBroken === true) {

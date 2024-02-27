@@ -9,7 +9,7 @@ export class PackageJsonLoader {
   private readonly packageJsonPath: string;
   private readonly _packageJson: Record<string, unknown>;
 
-  constructor(packageJsonPath: string) {
+  constructor(packageJsonPath: string = NcaConfig.getAliasPackageJsonPath()) {
     this.packageJsonPath = packageJsonPath;
     if (fs.existsSync(packageJsonPath)) {
       this._packageJson = FileSystemUtils.readJsonFile(packageJsonPath);

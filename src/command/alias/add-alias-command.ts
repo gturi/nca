@@ -97,7 +97,7 @@ export class AddAliasCommand extends Command {
   }
 
   private updateAliasPackageJsonWithNewAlias(aliasName: string): void {
-    const packageJsonLoader = new PackageJsonLoader(NcaConfig.getAliasPackageJsonPath());
+    const packageJsonLoader = new PackageJsonLoader();
 
     packageJsonLoader.addAlias(aliasName);
 

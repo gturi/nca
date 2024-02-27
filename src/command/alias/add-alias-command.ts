@@ -80,11 +80,19 @@ export class AddAliasCommand extends Command {
     const command = JSON.stringify(commandArray);
     return [
       `#!/usr/bin/env node`,
+      '',
       `'use strict';`,
-      `const spawnSync = require('child_process').spawnSync;`,
+      '',
+      '',
       `const commandArray = ${command};`,
-      `spawnSync('nca', commandArray, { stdio: 'inherit', shell: true });`,
-    ].join('\n\n') + '\n';
+      '',
+      `if (require.main === module) {`,
+      `  const spawnSync = require('child_process').spawnSync;`,
+      `  spawnSync('nca', commandArray, { stdio: 'inherit', shell: true });`,
+      `} else {`,
+      `  exports.commandArray = commandArray;`,
+      `}`
+    ].join('\n') + '\n';
   }
 
   private updateAliasPackageJsonWithNewAlias(aliasName: string): void {

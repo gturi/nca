@@ -38,10 +38,10 @@ export class FileSystemUtils {
     this.writeFile(filePath, prettyJson);
   }
 
-  static writeFile(filePath: string, data: string): void {
+  static writeFile(filePath: string, data: string, flag: string = 'w'): void {
     const fileDirectory = path.dirname(filePath);
     this.createFolderIfNotExists(fileDirectory);
-    fs.writeFileSync(filePath, data, {encoding:'utf8'});
+    fs.writeFileSync(filePath, data, { encoding: 'utf8', flag: flag });
   }
 
   static createFolderIfNotExists(folderPath: string): void {

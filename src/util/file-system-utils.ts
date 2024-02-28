@@ -38,7 +38,7 @@ export class FileSystemUtils {
     this.writeFile(filePath, prettyJson);
   }
 
-  static writeFile(filePath: string, data: string, flag: string = 'w'): void {
+  static writeFile(filePath: string, data: string, flag = 'w'): void {
     const fileDirectory = path.dirname(filePath);
     this.createFolderIfNotExists(fileDirectory);
     fs.writeFileSync(filePath, data, { encoding: 'utf8', flag: flag });

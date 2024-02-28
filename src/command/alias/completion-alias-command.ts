@@ -45,17 +45,17 @@ export class CompletionAliasCommand extends Command {
   }
 
   private getCompletion(aliasName: string, commandArray: string[]): string {
-    const completionFunction = `_nca_${aliasName}_yargs_completions`;
+    const aliasCompletionFunction = `_nca_${aliasName}_yargs_completions`;
     const inputArgs = ProcessArgumentUtils.sanitizeCommandArray(commandArray).join(' ');
     return [
       `# ${aliasName} completion`,
-      `${completionFunction}()`,
+      `${aliasCompletionFunction}()`,
       `{`,
       `    _nca_yargs_completions ${inputArgs}`,
       ``,
       `    return 0`,
       `}`,
-      `complete -o bashdefault -o default -F ${completionFunction} ${aliasName}`
+      `complete -o bashdefault -o default -F ${aliasCompletionFunction} ${aliasName}`
     ].join('\n') + '\n';
   }
 }

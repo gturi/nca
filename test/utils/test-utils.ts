@@ -97,7 +97,8 @@ export function verifyNcaAliasCompletion(aliasName: string, args: string[]) {
 
     appendToCompletionFile(aliasCompletionResult.stdout);
 
-    const invokeAliasCompletionResult = runCommandSync(`_nca_${aliasName}_yargs_completions`);
+    const completionTesterScript = path.resolve(__dirname, '../', 'test-alias-completion.sh');
+    const invokeAliasCompletionResult = runCommandSync(`"${completionTesterScript}"`);
 
     const invokeNcaCompletionResult = runCommandSync('nca', '--get-yargs-completions', ...args);
 
@@ -170,7 +171,6 @@ function appendToCompletionFile(completion: string) {
   FileSystemUtils.writeFile(completionFile, completion, 'a');
 
   shelljs.chmod('+x', completionFile);
-  shelljs.exec('source ' + completionFile);
 }
 
 function getCompletionFile(): string {

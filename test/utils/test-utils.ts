@@ -7,6 +7,7 @@ import { NodeUtils } from '../../src/util/node-utils';
 import { FileSystemUtils } from '../../src/util/file-system-utils';
 import { Platform } from './platform-values/platform';
 import { NcaConfig } from '../../src/config/nca-config';
+import { TestCompletion } from './test-completion';
 
 export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: string[]) {
   setup();
@@ -83,11 +84,11 @@ export function renameAliasAndVerifyOutput(aliasName: string, aliasNewName: stri
   }
 }
 
-export function verifyNcaAliasCompletion(aliasName: string, args: string[]) {
+export function verifyNcaAliasCompletion(aliasName: string, testCompletion: TestCompletion) {
   try {
     setup();
 
-    throwErrorIfExitCodeNotZero(createAlias(args));
+    throwErrorIfExitCodeNotZero(createAlias(testCompletion.args));
 
     const completionResult = runCommandSync('nca', 'completion');
 
@@ -97,13 +98,12 @@ export function verifyNcaAliasCompletion(aliasName: string, args: string[]) {
 
     appendToCompletionFile(aliasCompletionResult.stdout);
 
-    const completionTesterScript = path.resolve(__dirname, '../', 'test-alias-completion.sh');
-    const invokeAliasCompletionResult = runCommandSync(`"${completionTesterScript}"`);
+    const aliasCompletionTesterScript = path.resolve(__dirname, '../', 'test-alias-completion.sh');
+    const invokeAliasCompletionResult = runCommandSync(`"${aliasCompletionTesterScript}"`, ...testCompletion.args);
 
-    const invokeNcaCompletionResult = runCommandSync('nca', '--get-yargs-completions', ...args);
-
-    expect(invokeNcaCompletionResult.stderr).to.equal(invokeAliasCompletionResult.stderr);
-    expect(invokeNcaCompletionResult.stdout).to.equal(invokeAliasCompletionResult.stdout);
+    expect('').to.equal(invokeAliasCompletionResult.stderr);
+    const expected = testCompletion.expected.join('\n') + '\n';
+    expect(expected).to.equal(invokeAliasCompletionResult.stdout);
   } catch (error) {
     console.error(error);
     throw error;

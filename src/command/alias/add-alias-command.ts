@@ -86,7 +86,10 @@ export class AddAliasCommand extends Command {
       '',
       `if (require.main === module) {`,
       `  const spawnSync = require('child_process').spawnSync;`,
-      `  spawnSync('nca', commandArray, { stdio: 'inherit', shell: true });`,
+      '',
+      `  const args = process.argv.slice(2);`,
+      '',
+      `  spawnSync('nca', [...commandArray, ...args], { stdio: 'inherit', shell: true });`,
       `} else {`,
       `  exports.commandArray = commandArray;`,
       `}`

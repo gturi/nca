@@ -91,7 +91,7 @@ export class AddAliasCommand extends Command {
       // wrap the args between double quotes if they contain a space
       '    .map(arg => /\\s/.test(arg) ? `"${arg}"` : arg);',
       '',
-      `  spawnSync('nca', [...commandArray, ...args], { stdio: 'inherit', shell: true });`,
+      `  spawnSync('nca', commandArray.concat(args), { stdio: 'inherit', shell: true });`,
       `} else {`,
       `  exports.commandArray = commandArray;`,
       `}`

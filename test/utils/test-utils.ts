@@ -39,16 +39,20 @@ export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: strin
   });
 }
 
-export function createAliasAndVerifyOutput(aliasName: string, args: string[]) {
+export function createAliasAndVerifyOutput(testCompletion: TestCompletion) {
   try {
     setup();
 
-    throwErrorIfExitCodeNotZero(createAlias(args));
+    throwErrorIfExitCodeNotZero(createAlias(testCompletion.aliasCommand));
 
-    const aliasCommandResult = runCommandSync(aliasName);
+    const aliasCommandResult = runCommandSync(
+      testCompletion.aliasName, ...testCompletion.args ?? []
+    );
 
 
-    const commandArgs = removeNcaPrefixIfPresent(...args);
+    const commandArgs = removeNcaPrefixIfPresent(
+      ...testCompletion.aliasCommand, ...testCompletion.args ?? []
+    );
 
     const commandResult = runCommandSync('nca', ...commandArgs);
 
@@ -58,7 +62,7 @@ export function createAliasAndVerifyOutput(aliasName: string, args: string[]) {
     console.error(error);
     throw error;
   } finally {
-    cleanup(aliasName);
+    cleanup(testCompletion.aliasName);
   }
 }
 

@@ -1,4 +1,6 @@
 export interface TestCompletion {
-  args: string[]
-  expected: string[]
+  aliasName: string
+  aliasCommand: string[]
+  args?: string[]
+  expectedOutput: string[]
 }

@@ -84,31 +84,33 @@ export function renameAliasAndVerifyOutput(aliasName: string, aliasNewName: stri
   }
 }
 
-export function verifyNcaAliasCompletion(aliasName: string, testCompletion: TestCompletion) {
+export function verifyNcaAliasCompletion(testCompletion: TestCompletion) {
   try {
     setup();
 
-    throwErrorIfExitCodeNotZero(createAlias(testCompletion.args));
+    throwErrorIfExitCodeNotZero(createAlias(testCompletion.aliasCommand));
 
     const completionResult = runCommandSync('nca', 'completion');
 
     appendToCompletionFile(completionResult.stdout);
 
-    const aliasCompletionResult = runCommandSync('nca', 'alias', 'completion', aliasName);
+    const aliasCompletionResult = runCommandSync('nca', 'alias', 'completion', testCompletion.aliasName);
 
     appendToCompletionFile(aliasCompletionResult.stdout);
 
     const aliasCompletionTesterScript = path.resolve(__dirname, '../', 'test-alias-completion.sh');
-    const invokeAliasCompletionResult = runCommandSync(`"${aliasCompletionTesterScript}"`, ...testCompletion.args);
+    const invokeAliasCompletionResult = runCommandSync(
+      `"${aliasCompletionTesterScript}"`, ...testCompletion.aliasCommand
+    );
 
     expect('').to.equal(invokeAliasCompletionResult.stderr);
-    const expected = testCompletion.expected.join('\n') + '\n';
+    const expected = testCompletion.expectedOutput.join('\n') + '\n';
     expect(expected).to.equal(invokeAliasCompletionResult.stdout);
   } catch (error) {
     console.error(error);
     throw error;
   } finally {
-    cleanup(aliasName);
+    cleanup(testCompletion.aliasName);
   }
 }
 

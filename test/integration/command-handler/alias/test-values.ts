@@ -91,6 +91,42 @@ export class TestValues {
           'barValue2'
         ],
         expectedOutput: []
+      },
+      {
+        aliasName: 'mainAlias',
+        aliasCommand: ['nca', 'mainAlias'],
+        args: ['subAlias', 'a', 'b', 'c'],
+        expectedOutput: []
+      },
+      {
+        aliasName: 'mainAlias',
+        aliasCommand: ['nca', 'mainAlias', 'subAlias'],
+        args: ['a', 'b', 'c'],
+        expectedOutput: []
+      },
+      {
+        aliasName: 'mainAlias',
+        aliasCommand: ['nca', 'mainAlias', 'subAlias'],
+        args: ['a', 'b', `"c 'd"`],
+        expectedOutput: []
+      },
+      {
+        aliasName: 'mainAlias',
+        aliasCommand: [
+          'mainAlias',
+          'subAlias',
+          '-a'
+        ],
+        args: [
+          'true',
+          '-n', '100',
+          '-c', 'cValue',
+          'fooValue',
+          'bazValue',
+          'barValue1',
+          'barValue2'
+        ],
+        expectedOutput: []
       }
     ];
   }

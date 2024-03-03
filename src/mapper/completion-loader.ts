@@ -100,14 +100,10 @@ export class CompletionLoader {
   }
 
   private getModulePath(alias: Alias | null): string | null {
-    if (alias) {
-      const completionPath = alias.completion?.completionPath
-      return completionPath
-        ? PathUtils.resolvePath(completionPath, alias.aliasDirectory)
-        : null;
-    } else {
-      return null;
-    }
+    const completionPath = alias?.completion?.completionPath
+    return completionPath
+      ? PathUtils.resolvePath(completionPath, alias.aliasDirectory)
+      : null;
   }
 
   private getCompletionArray(
@@ -139,14 +135,14 @@ export class CompletionLoader {
   }
 
   private loadCompletionFromPath(completionInput: CompletionInput): string[] | null {
-    /* eslint-disable @typescript-eslint/no-var-requires */
     const modulePath = completionInput.modulePath;
-    if (modulePath) {
-      const module = require(modulePath);
-      return module(completionInput) as string[];
-    } else {
+    if (!modulePath) {
       return null;
     }
+
+    /* eslint-disable @typescript-eslint/no-var-requires */
+    const module = require(modulePath);
+    return module(completionInput) as string[];
     /* eslint-enable @typescript-eslint/no-var-requires */
   }
 }

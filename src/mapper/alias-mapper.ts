@@ -49,10 +49,8 @@ export class AliasMapper {
   private static buildSubAliases<T = AnyObj>(
     yargs: yargs.Argv<T>, parentPositionalArguments: PositionalArgument[], subAliases?: Alias[]
   ) {
-    if (subAliases) {
-      subAliases.forEach(subAlias => {
-        yargs.command(this.buildAlias<T>(subAlias, parentPositionalArguments));
-      });
-    }
+    subAliases?.forEach(subAlias => {
+      yargs.command(this.buildAlias<T>(subAlias, parentPositionalArguments));
+    });
   }
 }

@@ -7,11 +7,9 @@ import { AnyObj } from "../util/custom-types";
 export class PositionalArgumentBuilder {
 
   static build<T = AnyObj>(yargs: yargs.Argv<T>, positionalArguments?: PositionalArgument[]) {
-    if (positionalArguments) {
-      positionalArguments.forEach(positionalArgument => {
-        this.buildPositional<T>(yargs, positionalArgument);
-      });
-    }
+    positionalArguments?.forEach(positionalArgument => {
+      this.buildPositional<T>(yargs, positionalArgument);
+    });
   }
 
   private static buildPositional<T = AnyObj>(

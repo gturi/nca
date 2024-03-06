@@ -1,4 +1,3 @@
-import { NcaCommandModule } from "../../model/internal/nca-command-module";
 import { AddPathCommand } from "./add-path-command";
 import { DeletePathCommand } from "./delete-path-command";
 import { NcaCommandTemplate } from "../../model/internal/nca-command-template";

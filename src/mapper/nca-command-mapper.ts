@@ -47,7 +47,8 @@ export class NcaCommandMapper {
   }
 
   private static buildSubCommands<T = AnyObj>(
-    yargs: yargs.Argv<T>, parentPositionalArguments: PositionalArgument[], subCommands?: NcaCommand[]
+    yargs: yargs.Argv<T>, parentPositionalArguments: PositionalArgument[],
+    subCommands?: NcaCommand[]
   ) {
     subCommands?.forEach(subNcaCommand => {
       yargs.command(this.buildCommandModule<T>(subNcaCommand, parentPositionalArguments));

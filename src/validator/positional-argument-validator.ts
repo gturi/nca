@@ -15,7 +15,9 @@ export class PositionalArgumentValidator {
     }
   }
 
-  private static checkNamesFormat(ncaCommandName: string, positionalArguments: PositionalArgument[]) {
+  private static checkNamesFormat(
+    ncaCommandName: string, positionalArguments: PositionalArgument[]
+  ) {
     const positionalArgumentNames = this.getPositionalArgumentNames(positionalArguments);
     WhiteSpaceValidator.validate(positionalArgumentNames, elementsWithWhitespaces => {
       return `${ncaCommandName}: positional argument names cannot contain whitespaces ` +
@@ -23,7 +25,9 @@ export class PositionalArgumentValidator {
     });
   }
 
-  private static checkDuplicateNames(ncaCommandName: string, positionalArguments: PositionalArgument[]) {
+  private static checkDuplicateNames(
+    ncaCommandName: string, positionalArguments: PositionalArgument[]
+  ) {
     const positionalArgumentNames = this.getPositionalArgumentNames(positionalArguments);
     const getErrorMessage = (duplicates: string[]) => {
       return `${ncaCommandName}: multiple positional arguments has been defined ` +

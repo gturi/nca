@@ -17,22 +17,26 @@ export class OptionParamValidator {
 
   private static checkNamesFormat(ncaCommandName: string, options: OptionParam[]) {
     const optionNames = options.map(option => option.name)
-    WhiteSpaceValidator.validate(optionNames, elementsWithWhitespaces => {
-      return `${ncaCommandName}: option names cannot contain whitespaces [${elementsWithWhitespaces}]`;
-    });
+    this.checkForWhiteSpaces(ncaCommandName, optionNames);
   }
 
   private static checkAlternativeNamesFormat(ncaCommandName: string, options: OptionParam[]) {
     const optionAlternativeNames = options.map(option => option.alternativeName ?? '');
-    WhiteSpaceValidator.validate(optionAlternativeNames, elementsWithWhitespaces => {
-      return `${ncaCommandName}: option names cannot contain whitespaces [${elementsWithWhitespaces}]`;
+    this.checkForWhiteSpaces(ncaCommandName, optionAlternativeNames);
+  }
+
+  private static checkForWhiteSpaces(ncaCommandName: string, elements: string[]) {
+    WhiteSpaceValidator.validate(elements, elementsWithWhitespaces => {
+      return `${ncaCommandName}: option names cannot contain ` +
+        `whitespaces [${elementsWithWhitespaces}]`;
     });
   }
 
   private static checkDuplicateNames(ncaCommandName: string, options: OptionParam[]) {
     const optionNames = options.map(option => option.name);
     const getErrorMessage = (duplicates: string[]) => {
-      return `${ncaCommandName}: multiple option has been defined with the same name: [${duplicates}]`;
+      return `${ncaCommandName}: multiple option has been defined ` +
+        `with the same name: [${duplicates}]`;
     };
     DuplicatesValidator.validate(optionNames, getErrorMessage);
   }
@@ -44,7 +48,7 @@ export class OptionParamValidator {
         `supported values are ${Object.keys(OptionParamType)}`;
     }
     options.forEach(option => {
-      EnumValidator.validate(OptionParamType, option.optionType, () => getErrorMessage(option))
+      EnumValidator.validate(OptionParamType, option.optionType, () => getErrorMessage(option));
     });
   }
 }

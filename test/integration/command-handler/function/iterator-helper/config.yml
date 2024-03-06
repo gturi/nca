@@ -1,4 +1,4 @@
-aliases:
+commands:
   - name: function-iterator-helper
     description: iterator-helper usage
     command: |

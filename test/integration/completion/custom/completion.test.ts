@@ -99,8 +99,8 @@ describe("custom completion", () => {
     const expected = [
       'firstValue',
       'secondValue',
-      'subAlias',
-      'anotherSubAlias'
+      'subCommand',
+      'anotherSubCommand'
     ];
     const verifyOutput = new VerifyOutputBuilder(done)
       .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToArray(stdout, expected))

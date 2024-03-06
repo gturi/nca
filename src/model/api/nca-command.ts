@@ -3,20 +3,20 @@ import { Completion } from "./completion";
 import { OptionParam } from "./option-param";
 import { PositionalArgument } from "./positional-argument";
 
-export interface Alias {
+export interface NcaCommand {
   /**
-   * The name that will be used to recall the alias.
+   * The name that will be used to recall the command.
    */
   name: string;
   /**
-   * The alias description. It is showed when using the help command or
+   * The nca command description. It is showed when using the help command or
    * when providing wrong/urecognized input.
    */
   description?: string;
   /**
-   * The command to run when the alias is called. It is evaluated as a shell command
-   * or a javascript function based on {@link Alias.commandType} value.
-   * It can be left empty when {@link Alias.subAliases} are defined.
+   * The command to run when the nca command is called. Its execution mode will
+   * depend on a shell command on {@link NcaCommand.commandType} value.
+   * It can be left empty when {@link NcaCommand.subCommands} are defined.
    */
   command?: string;
   /**
@@ -25,21 +25,21 @@ export interface Alias {
    */
   commandType?: CommandType;
   /**
-   * Options passed down to this alias and its subaliases when {@link Alias.commandType}
+   * Options passed down to this nca command and its subCommands when {@link NcaCommand.commandType}
    * is {@link CommandType.Function} or {@link CommandType.Module}.
    */
   options?: OptionParam[];
   /**
-   * Positional arguments passed down to this alias and its subaliases when
-   * {@link Alias.commandType} is {@link CommandType.Function} or {@link CommandType.Module}.
+   * Positional arguments passed down to this nca command and its sub commands when
+   * {@link NcaCommand.commandType} is {@link CommandType.Function} or {@link CommandType.Module}.
    */
   positionalArguments?: PositionalArgument[];
   /**
-   * Subaliases, to have more complex alias structures.
+   * Sub commands, used to define a more complex command structure.
    */
-  subAliases?: Alias[];
+  subCommands?: NcaCommand[];
   /**
-   * Defines a command custom completion
+   * Defines a custom completion for this nca command.
    */
   completion?: Completion;
   // TODO: move it to a new file, to avoid exposing an useless field
@@ -47,5 +47,5 @@ export interface Alias {
    * Set internally to allow usage of relative paths with
    * {@link CommandType.Module} command and completionPath.
    */
-  aliasDirectory: string;
+  directory: string;
 }

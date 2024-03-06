@@ -6,15 +6,15 @@ import { PositionalArgumentType } from '../../model/api/positional-argument-type
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from '../../util/yargs-utils';
 import { NcaConfig } from "../../config/nca-config";
-import { Command } from "../command";
 import { StringUtils } from "../../util/string-utils";
 import { FileSystemUtils } from '../../util/file-system-utils';
 import { PackageJsonLoader } from '../../loader/package-json-loader';
 import { NodeUtils } from '../../util/node-utils';
 import { hideBin } from 'yargs/helpers';
 import { ProcessArgumentUtils } from '../../util/process-arguments-utils';
+import { NcaCommandTemplate } from '../../model/internal/nca-command-template';
 
-export class AddAliasCommand extends Command {
+export class AddAliasCommand extends NcaCommandTemplate {
 
   override getCommandName(): string {
     return YargsUtils.getCommand('add', this.getPositionalArguments());

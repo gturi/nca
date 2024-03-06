@@ -3,14 +3,16 @@ import { Config } from "../model/api/config";
 export class ConfigValidator {
 
   static validate(configPath: string, config: Config) {
-    this.throwErrorIfAliasIsDefined(configPath, config, 'completion');
-    this.throwErrorIfAliasIsDefined(configPath, config, 'config');
+    this.throwErrorIfCommandIsDefined(configPath, config, 'completion');
+    this.throwErrorIfCommandIsDefined(configPath, config, 'config');
   }
 
-  private static throwErrorIfAliasIsDefined(configPath: string, config: Config, aliasName: string) {
-    if (config.aliases?.some(alias => alias.name === aliasName)) {
+  private static throwErrorIfCommandIsDefined(
+    configPath: string, config: Config, commandName: string
+  ) {
+    if (config.commands?.some(ncaCommand => ncaCommand.name === commandName)) {
       throw new Error(
-        `${configPath}: you cannot define an alias called '${aliasName}'` +
+        `${configPath}: you cannot define an nca command called '${commandName}'` +
         'since it is a special keyword'
       );
     }

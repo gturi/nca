@@ -2,10 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import walkdir from 'walkdir';
 import yaml from 'js-yaml';
-import { Alias } from '../model/api/alias';
+import { NcaCommand } from '../model/api/nca-command';
 import { Config } from '../model/api/config';
 import { ConfigValidator } from '../validator/config-validator';
-import { AliasValidator } from '../validator/alias-validator';
+import { NcaCommandValidator } from '../validator/nca-command-validator';
 import { PathUtils } from '../util/path-utils';
 import { NcaConfig } from '../config/nca-config';
 import { iter } from 'iterator-helper';
@@ -15,15 +15,15 @@ import { ConfigIterator } from '../util/custom-types';
 
 export class ConfigLoader {
 
-  loadAliases(): Alias[] {
+  loadNcaCommands(): NcaCommand[] {
     const configPath = NcaConfig.getMainConfigFilePath();
 
     const configs = this.loadConfigsFromPath(configPath, new Set(configPath));
-    const aliases = configs.flatMap(config => iter(config.aliases ?? [])).toArray();
+    const ncaCommands = configs.flatMap(config => iter(config.commands ?? [])).toArray();
 
-    AliasValidator.validate(aliases);
+    NcaCommandValidator.validate(ncaCommands);
 
-    return aliases;
+    return ncaCommands;
   }
 
   private loadConfigsFromPath(path: string, loadedConfigs: Set<string>): ConfigIterator {
@@ -55,7 +55,7 @@ export class ConfigLoader {
     ConfigValidator.validate(configPath, mainConfig);
 
     const configDirectoryPath = path.dirname(configPath);
-    mainConfig.aliases?.forEach(alias => alias.aliasDirectory = configDirectoryPath);
+    mainConfig.commands?.forEach(ncaCommand => ncaCommand.directory = configDirectoryPath);
 
     if (!mainConfig.includePaths) {
       return iter([mainConfig]);

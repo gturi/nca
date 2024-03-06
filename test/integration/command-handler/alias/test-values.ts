@@ -5,40 +5,40 @@ export class TestValues {
   static commands(): TestCompletion[] {
     return [
       {
-        aliasName: 'mainAlias',
-        aliasCommand: ['mainAlias'],
+        aliasName: 'mainCommand',
+        aliasCommand: ['mainCommand'],
         expectedOutput: []
       },
       {
-        aliasName: 'mainAlias',
-        aliasCommand: ['mainAlias', 'subAlias'],
+        aliasName: 'mainCommand',
+        aliasCommand: ['mainCommand', 'subCommand'],
         expectedOutput: []
       },
       {
-        aliasName: 'mainAlias',
-        aliasCommand: ['mainAlias', 'anotherSubAlias'],
+        aliasName: 'mainCommand',
+        aliasCommand: ['mainCommand', 'anotherSubCommand'],
         expectedOutput: []
       },
       {
-        aliasName: 'mainAlias',
-        aliasCommand: ['nca', 'mainAlias', 'subAlias', 'a', 'b', 'c'],
+        aliasName: 'mainCommand',
+        aliasCommand: ['nca', 'mainCommand', 'subCommand', 'a', 'b', 'c'],
         expectedOutput: []
       },
       {
-        aliasName: 'mainAlias',
-        aliasCommand: ['nca', 'mainAlias', 'subAlias', 'a', 'b', `"c 'd"`],
+        aliasName: 'mainCommand',
+        aliasCommand: ['nca', 'mainCommand', 'subCommand', 'a', 'b', `"c 'd"`],
         expectedOutput: []
       },
       // TODO: not working
       /*{
-        aliasName: 'mainAlias',
-        aliasCommand: ['nca', 'mainAlias', 'subAlias', 'a', 'b', `"c \"d"`],
+        aliasName: 'mainCommand',
+        aliasCommand: ['nca', 'mainCommand', 'subCommand', 'a', 'b', `"c \"d"`],
         expectedOutput: []
       },*/
       {
-        aliasName: 'mainAlias',
+        aliasName: 'mainCommand',
         aliasCommand: [
-          'mainAlias',
+          'mainCommand',
           '-a', 'true',
           '-n', '100',
           'fooValue',
@@ -48,10 +48,10 @@ export class TestValues {
         expectedOutput: []
       },
       {
-        aliasName: 'mainAlias',
+        aliasName: 'mainCommand',
         aliasCommand: [
-          'mainAlias',
-          'subAlias',
+          'mainCommand',
+          'subCommand',
           '-a', 'true',
           '-n', '100',
           '-c', 'cValue',
@@ -63,10 +63,10 @@ export class TestValues {
         expectedOutput: []
       },
       {
-        aliasName: 'mainAlias',
+        aliasName: 'mainCommand',
         aliasCommand: [
-          'mainAlias',
-          'anotherSubAlias',
+          'mainCommand',
+          'anotherSubCommand',
           '-a', 'true',
           '-n', '100',
           '-d', 'dValue',
@@ -78,10 +78,10 @@ export class TestValues {
         expectedOutput: []
       },
       {
-        aliasName: 'mainAlias',
+        aliasName: 'mainCommand',
         aliasCommand: [
-          'mainAlias',
-          'anotherSubAlias',
+          'mainCommand',
+          'anotherSubCommand',
           '-a', 'true',
           '-n', '100',
           '-d', 'dValue',
@@ -93,28 +93,28 @@ export class TestValues {
         expectedOutput: []
       },
       {
-        aliasName: 'mainAlias',
-        aliasCommand: ['nca', 'mainAlias'],
-        args: ['subAlias', 'a', 'b', 'c'],
+        aliasName: 'mainCommand',
+        aliasCommand: ['nca', 'mainCommand'],
+        args: ['subCommand', 'a', 'b', 'c'],
         expectedOutput: []
       },
       {
-        aliasName: 'mainAlias',
-        aliasCommand: ['nca', 'mainAlias', 'subAlias'],
+        aliasName: 'mainCommand',
+        aliasCommand: ['nca', 'mainCommand', 'subCommand'],
         args: ['a', 'b', 'c'],
         expectedOutput: []
       },
       {
-        aliasName: 'mainAlias',
-        aliasCommand: ['nca', 'mainAlias', 'subAlias'],
+        aliasName: 'mainCommand',
+        aliasCommand: ['nca', 'mainCommand', 'subCommand'],
         args: ['a', 'b', `"c 'd"`],
         expectedOutput: []
       },
       {
-        aliasName: 'mainAlias',
+        aliasName: 'mainCommand',
         aliasCommand: [
-          'mainAlias',
-          'subAlias',
+          'mainCommand',
+          'subCommand',
           '-a'
         ],
         args: [

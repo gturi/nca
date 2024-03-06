@@ -5,9 +5,9 @@ import { VerifyOutputHandleUtils } from '../../../../utils/verify-output-handle-
 
 describe("function command handler", () => {
 
-  it('command mainAlias logs expected values', done => {
+  it('command mainCommand logs expected values', done => {
     const command = [
-      'mainAlias',
+      'mainCommand',
       '-a', 'true',
       '-n', '100',
       'fooValue',
@@ -15,12 +15,12 @@ describe("function command handler", () => {
       'barValue2'
     ];
     const expected = [
-      '--- main alias started ---',
+      '--- main command started ---',
       'a: true',
       'n: 100',
       'foo: fooValue',
       'bar: barValue1,barValue2',
-      '--- main alias ended ---'
+      '--- main command ended ---'
     ];
     const verifyOutput = new VerifyOutputBuilder(done)
       .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))
@@ -29,10 +29,10 @@ describe("function command handler", () => {
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
   });
 
-  it('command subAlias logs expected values', done => {
+  it('command subCommand logs expected values', done => {
     const command = [
-      'mainAlias',
-      'subAlias',
+      'mainCommand',
+      'subCommand',
       '-a', 'true',
       '-n', '100',
       '-c', 'cValue',
@@ -42,14 +42,14 @@ describe("function command handler", () => {
       'barValue2'
     ];
     const expected = [
-      '--- sub alias started ---',
+      '--- sub command started ---',
       'a: true',
       'n: 100',
       'foo: fooValue',
       'bar: barValue1,barValue2',
       'c: cValue',
       'baz: bazValue',
-      '--- sub alias ended ---'
+      '--- sub command ended ---'
     ];
     const verifyOutput = new VerifyOutputBuilder(done)
       .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))
@@ -57,9 +57,9 @@ describe("function command handler", () => {
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
   });
 
-  it('command anotherSubAlias logs expected values', done => {
-    const command = ['mainAlias',
-      'anotherSubAlias',
+  it('command anotherSubCommand logs expected values', done => {
+    const command = ['mainCommand',
+      'anotherSubCommand',
       '-a', 'true',
       '-n', '100',
       '-d', 'dValue',
@@ -69,14 +69,14 @@ describe("function command handler", () => {
       'barValue2'
     ];
     const expected = [
-      '--- another sub alias started ---',
+      '--- another sub command started ---',
       'a: true',
       'n: 100',
       'foo: fooValue',
       'bar: barValue1,barValue2',
       'd: dValue',
       'qux: quxValue',
-      '--- another sub alias ended ---'
+      '--- another sub command ended ---'
     ];
     const verifyOutput = new VerifyOutputBuilder(done)
       .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))

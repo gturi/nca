@@ -1,4 +1,4 @@
-aliases:
+commands:
   - name: function-shell-js
     description: shell-js hello world
     command: input.cliUtils.shelljs.exec('echo hello world');

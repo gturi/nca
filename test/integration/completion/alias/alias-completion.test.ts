@@ -12,18 +12,18 @@ describe("alias command completion", () => {
 
   const commands: TestCompletion[] = [
     {
-      aliasName: 'mainAlias',
-      aliasCommand: ['mainAlias'],
-      expectedOutput: ['subAlias', 'anotherSubAlias']
+      aliasName: 'mainCommand',
+      aliasCommand: ['mainCommand'],
+      expectedOutput: ['subCommand', 'anotherSubCommand']
     },
     {
-      aliasName: 'mainAlias',
-      aliasCommand: ['mainAlias', 'subAlias'],
+      aliasName: 'mainCommand',
+      aliasCommand: ['mainCommand', 'subCommand'],
       expectedOutput: ['--help', '--version', '-a', '-n', '-c']
     },
     {
-      aliasName: 'mainAlias',
-      aliasCommand: ['mainAlias', 'anotherSubAlias'],
+      aliasName: 'mainCommand',
+      aliasCommand: ['mainCommand', 'anotherSubCommand'],
       expectedOutput: ['--help', '--version', '-a', '-n', '-d']
     }
   ]

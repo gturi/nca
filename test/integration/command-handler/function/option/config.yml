@@ -1,4 +1,4 @@
-aliases:
+commands:
   - name: log-options
     description: options logger
     command: console.log(`${input.args.b} ${input.args.n} ${input.args.s}`);

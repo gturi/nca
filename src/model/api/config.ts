@@ -1,4 +1,4 @@
-import { Alias } from "./alias";
+import { NcaCommand } from "./nca-command";
 
 export interface Config {
   /**
@@ -6,7 +6,7 @@ export interface Config {
    */
   includePaths?: string[];
   /**
-   * List of aliases.
+   * List of nca commands.
    */
-  aliases?: Alias[];
+  commands?: NcaCommand[];
 }

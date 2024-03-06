@@ -11,8 +11,8 @@ describe("default completion", () => {
       'hierarchy-default-completion'
     ];
     const expected = [
-      'subAlias',
-      'anotherSubAlias'
+      'subCommand',
+      'anotherSubCommand'
     ];
     const verifyOutput = new VerifyOutputBuilder(done)
       .handleStdout(stdout => VerifyOutputHandleUtils.isEqualToString(stdout, expected))
@@ -40,11 +40,11 @@ describe("default completion", () => {
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
   });
 
-  it('hierarchy default completion subalias logs expected option values', done => {
+  it('hierarchy default completion subCommand logs expected option values', done => {
     const command = [
       '--get-yargs-completions',
       'hierarchy-default-completion',
-      'subAlias',
+      'subCommand',
       '-'
     ];
     const expected = [
@@ -61,11 +61,11 @@ describe("default completion", () => {
     testUtils.runNcaAndVerifyOutput(verifyOutput, ...command);
   });
 
-  it('hierarchy default completion anotherSubalias logs expected option values', done => {
+  it('hierarchy default completion anotherSubCommand logs expected option values', done => {
     const command = [
       '--get-yargs-completions',
       'hierarchy-default-completion',
-      'anotherSubAlias',
+      'anotherSubCommand',
       '-'
     ];
     const expected = [

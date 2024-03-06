@@ -1,4 +1,4 @@
-aliases:
+commands:
   - name: module-external
     description: execute script which uses external npm dependencies
     command: ./external-dependency.js

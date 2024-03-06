@@ -3,11 +3,11 @@ import { PositionalArgument } from '../../model/api/positional-argument';
 import { PositionalArgumentType } from '../../model/api/positional-argument-type';
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from '../../util/yargs-utils';
-import { Command } from "../command";
 import { PackageJsonLoader } from '../../loader/package-json-loader';
 import { NodeUtils } from '../../util/node-utils';
+import { NcaCommandTemplate } from "../../model/internal/nca-command-template";
 
-export class RenameAliasCommand extends Command {
+export class RenameAliasCommand extends NcaCommandTemplate {
 
   override getCommandName(): string {
     return YargsUtils.getCommand('rename', this.getPositionalArguments());

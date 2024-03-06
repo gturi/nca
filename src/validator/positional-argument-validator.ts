@@ -6,27 +6,27 @@ import { WhiteSpaceValidator } from "./white-space-validator";
 
 export class PositionalArgumentValidator {
 
-  static validate(aliasName: string, positionalArguments?: PositionalArgument[]) {
+  static validate(ncaCommandName: string, positionalArguments?: PositionalArgument[]) {
     if (positionalArguments) {
-      this.checkNamesFormat(aliasName, positionalArguments);
-      this.checkDuplicateNames(aliasName, positionalArguments);
-      this.checkMultipleListPositionalArguments(aliasName, positionalArguments);
-      this.checkPositionalArgumentType(aliasName, positionalArguments);
+      this.checkNamesFormat(ncaCommandName, positionalArguments);
+      this.checkDuplicateNames(ncaCommandName, positionalArguments);
+      this.checkMultipleListPositionalArguments(ncaCommandName, positionalArguments);
+      this.checkPositionalArgumentType(ncaCommandName, positionalArguments);
     }
   }
 
-  private static checkNamesFormat(aliasName: string, positionalArguments: PositionalArgument[]) {
+  private static checkNamesFormat(ncaCommandName: string, positionalArguments: PositionalArgument[]) {
     const positionalArgumentNames = this.getPositionalArgumentNames(positionalArguments);
     WhiteSpaceValidator.validate(positionalArgumentNames, elementsWithWhitespaces => {
-      return `${aliasName}: positional argument names cannot contain whitespaces ` +
+      return `${ncaCommandName}: positional argument names cannot contain whitespaces ` +
         `[${elementsWithWhitespaces}]`;
     });
   }
 
-  private static checkDuplicateNames(aliasName: string, positionalArguments: PositionalArgument[]) {
+  private static checkDuplicateNames(ncaCommandName: string, positionalArguments: PositionalArgument[]) {
     const positionalArgumentNames = this.getPositionalArgumentNames(positionalArguments);
     const getErrorMessage = (duplicates: string[]) => {
-      return `${aliasName}: multiple positional arguments has been defined ` +
+      return `${ncaCommandName}: multiple positional arguments has been defined ` +
         `with the same name: [${duplicates}]`;
     };
 
@@ -34,7 +34,7 @@ export class PositionalArgumentValidator {
   }
 
   private static checkMultipleListPositionalArguments(
-    aliasName: string, positionalArguments: PositionalArgument[]
+    ncaCommandName: string, positionalArguments: PositionalArgument[]
   ) {
     const listPositionalArgumentNames = positionalArguments
       .filter(positionalArgument => PositionalArgumentType.isListType(positionalArgument.type))
@@ -42,7 +42,7 @@ export class PositionalArgumentValidator {
 
     if (listPositionalArgumentNames.length > 1) {
       throw new Error(
-        `${aliasName}: only one list type positional argument is allowed, ` +
+        `${ncaCommandName}: only one list type positional argument is allowed, ` +
         `found: [${listPositionalArgumentNames}]`
       );
     }
@@ -53,10 +53,10 @@ export class PositionalArgumentValidator {
   }
 
   private static checkPositionalArgumentType(
-    aliasName: string, positionalArguments: PositionalArgument[]
+    ncaCommandName: string, positionalArguments: PositionalArgument[]
   ) {
     const getErrorMessage = (positionalArgument: PositionalArgument) => {
-      return `Alias '${aliasName}' positionalArgument '${positionalArgument.name}' ` +
+      return `Nca command '${ncaCommandName}' positionalArgument '${positionalArgument.name}' ` +
         `type '${positionalArgument.type}' is not valid: ` +
         `supported values are ${Object.keys(PositionalArgumentType)}`;
     }

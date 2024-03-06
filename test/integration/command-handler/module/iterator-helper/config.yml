@@ -1,4 +1,4 @@
-aliases:
+commands:
   - name: module-iterator-helper
     description: execute iterator helper commands
     command: ./module-iterator-helper.js

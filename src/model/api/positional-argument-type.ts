@@ -15,17 +15,17 @@ export enum PositionalArgumentType {
   String = 'String',
   /**
    * Boolean list positional argument.
-   * Only one list type positional argument can be defined for each alias.
+   * Only one list type positional argument can be defined for each nca command.
    */
   BooleanList = 'BooleanList',
   /**
    * Numeric list positional argument.
-   * Only one list type positional argument can be defined for each alias.
+   * Only one list type positional argument can be defined for each nca command.
    */
   NumberList = 'NumberList',
   /**
    * String list positional argument.
-   * Only one list type positional argument can be defined for each alias.
+   * Only one list type positional argument can be defined for each nca command.
    */
   StringList = 'StringList'
 }
@@ -57,7 +57,7 @@ export namespace PositionalArgumentType {
   }
 
   /**
-   * Sort last list type AliasPositionalArgumentType
+   * Sort last list type {@link PositionalArgumentType}
    */
   export function compare(a: PositionalArgumentType, b: PositionalArgumentType) {
     if (a === b) {

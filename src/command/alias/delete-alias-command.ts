@@ -3,12 +3,12 @@ import { PositionalArgument } from '../../model/api/positional-argument';
 import { PositionalArgumentType } from '../../model/api/positional-argument-type'
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from "../../util/yargs-utils";
-import { Command } from "../command";
 import { StringUtils } from "../../util/string-utils";
 import { NodeUtils } from '../../util/node-utils';
 import { PackageJsonLoader } from '../../loader/package-json-loader';
+import { NcaCommandTemplate } from "../../model/internal/nca-command-template";
 
-export class DeleteAliasCommand extends Command {
+export class DeleteAliasCommand extends NcaCommandTemplate {
 
   override getCommandName(): string {
     return YargsUtils.getCommand('delete', this.getPositionalArguments());

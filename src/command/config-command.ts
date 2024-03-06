@@ -1,7 +1,7 @@
-import { Command } from "./command";
+import { NcaCommandTemplate } from "../model/internal/nca-command-template";
 import { PathCommand } from "./path/path-command";
 
-export class ConfigCommand extends Command {
+export class ConfigCommand extends NcaCommandTemplate {
 
   override getCommandName(): string {
     return 'config <command>';
@@ -11,7 +11,7 @@ export class ConfigCommand extends Command {
     return 'nca configuration commands';
   }
 
-  override getSubCommands(): Command[] {
+  override getSubCommands(): NcaCommandTemplate[] {
     return [new PathCommand()];
   }
 }

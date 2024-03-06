@@ -1,4 +1,4 @@
-aliases:
+commands:
   - name: log-positional
     description: positional arguments logger
     command: |

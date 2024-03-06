@@ -1,4 +1,4 @@
-aliases:
+commands:
   - name: module-self-call
     description: execute commands from inside an nca module
     command: ./module-self-call.js

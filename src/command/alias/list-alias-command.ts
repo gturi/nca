@@ -3,11 +3,11 @@ import { OptionParam } from '../../model/api/option-param';
 import { OptionParamType } from '../../model/api/option-param-type';
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from '../../util/yargs-utils';
-import { Command } from "../command";
 import { NodeUtils } from '../../util/node-utils';
 import { PackageJsonLoader } from '../../loader/package-json-loader';
+import { NcaCommandTemplate } from "../../model/internal/nca-command-template";
 
-export class ListAliasCommand extends Command {
+export class ListAliasCommand extends NcaCommandTemplate {
 
   override getCommandName(): string {
     return YargsUtils.getCommand('list', this.getPositionalArguments());

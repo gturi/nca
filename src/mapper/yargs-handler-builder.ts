@@ -1,5 +1,5 @@
 import yargs from "yargs";
-import { Alias } from "../model/api/alias";
+import { NcaCommand } from "../model/api/nca-command";
 import { CommandType } from "../model/api/command-type";
 import { StringUtils } from "../util/string-utils";
 import { AnyObj } from "../util/custom-types";
@@ -12,24 +12,25 @@ import { CommandHandlerInput } from "../model/input/command-handler-input";
 
 export class YargsHandlerBuilder {
 
-  static getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>, alias: Alias) {
-    if (!StringUtils.isEmpty(alias.command)) {
-      const commandHandler = this.getCommandHandler(args, alias);
+  static getHandler<T = AnyObj>(args: yargs.ArgumentsCamelCase<T>, ncaCommand: NcaCommand) {
+    if (StringUtils.isEmpty(ncaCommand.command)) {
+      return;
+    }
 
-      if (commandHandler) {
-        commandHandler.run()
-      } else {
-        console.error(`Command type not supported ${alias.commandType}`);
-      }
+    const commandHandler = this.getCommandHandler(args, ncaCommand);
+    if (commandHandler) {
+      commandHandler.run()
+    } else {
+      console.error(`Command type not supported ${ncaCommand.commandType}`);
     }
   }
 
   private static getCommandHandler<T = AnyObj>(
     args: yargs.ArgumentsCamelCase<T>,
-    alias: Alias
+    ncaCommand: NcaCommand
   ): CommandHandler | null {
-    const commandType = alias.commandType ?? CommandType.Simple
-    const command = alias.command ?? '';
+    const commandType = ncaCommand.commandType ?? CommandType.Simple
+    const command = ncaCommand.command ?? '';
 
     switch (commandType) {
       case CommandType.Simple:
@@ -40,7 +41,7 @@ export class YargsHandlerBuilder {
       }
       case CommandType.Module: {
         const input = new CommandHandlerInput<T>(args);
-        const jsModulePath = PathUtils.resolvePath(command, alias.aliasDirectory);
+        const jsModulePath = PathUtils.resolvePath(command, ncaCommand.directory);
         return new ModuleCommandHandler<T>(input, jsModulePath);
       }
       default:

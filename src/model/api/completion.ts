@@ -8,7 +8,7 @@ export interface Completion {
    */
   completionArray?: string[];
   /**
-   * Path to javascript module that will provide the list of possible completion values.
+   * Path to javascript module that will return the list of possible completion values.
    */
   completionPath?: string;
 }

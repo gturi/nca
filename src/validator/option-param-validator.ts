@@ -6,41 +6,41 @@ import { WhiteSpaceValidator } from "./white-space-validator";
 
 export class OptionParamValidator {
 
-  static validate(aliasName: string, options?: OptionParam[]) {
+  static validate(ncaCommandName: string, options?: OptionParam[]) {
     if (options) {
-      this.checkNamesFormat(aliasName, options);
-      this.checkAlternativeNamesFormat(aliasName, options);
-      this.checkDuplicateNames(aliasName, options);
-      this.checkOptionParamType(aliasName, options);
+      this.checkNamesFormat(ncaCommandName, options);
+      this.checkAlternativeNamesFormat(ncaCommandName, options);
+      this.checkDuplicateNames(ncaCommandName, options);
+      this.checkOptionParamType(ncaCommandName, options);
     }
   }
 
-  private static checkNamesFormat(aliasName: string, options: OptionParam[]) {
+  private static checkNamesFormat(ncaCommandName: string, options: OptionParam[]) {
     const optionNames = options.map(option => option.name)
     WhiteSpaceValidator.validate(optionNames, elementsWithWhitespaces => {
-      return `${aliasName}: option names cannot contain whitespaces [${elementsWithWhitespaces}]`;
+      return `${ncaCommandName}: option names cannot contain whitespaces [${elementsWithWhitespaces}]`;
     });
   }
 
-  private static checkAlternativeNamesFormat(aliasName: string, options: OptionParam[]) {
+  private static checkAlternativeNamesFormat(ncaCommandName: string, options: OptionParam[]) {
     const optionAlternativeNames = options.map(option => option.alternativeName ?? '');
     WhiteSpaceValidator.validate(optionAlternativeNames, elementsWithWhitespaces => {
-      return `${aliasName}: option names cannot contain whitespaces [${elementsWithWhitespaces}]`;
+      return `${ncaCommandName}: option names cannot contain whitespaces [${elementsWithWhitespaces}]`;
     });
   }
 
-  private static checkDuplicateNames(aliasName: string, options: OptionParam[]) {
+  private static checkDuplicateNames(ncaCommandName: string, options: OptionParam[]) {
     const optionNames = options.map(option => option.name);
     const getErrorMessage = (duplicates: string[]) => {
-      return `${aliasName}: multiple option has been defined with the same name: [${duplicates}]`;
+      return `${ncaCommandName}: multiple option has been defined with the same name: [${duplicates}]`;
     };
     DuplicatesValidator.validate(optionNames, getErrorMessage);
   }
 
-  private static checkOptionParamType(aliasName: string, options: OptionParam[]) {
+  private static checkOptionParamType(ncaCommandName: string, options: OptionParam[]) {
     const getErrorMessage = (option: OptionParam) => {
-      return `Alias '${aliasName}' optionParam '${option.name}' ` +
-        `optionType '${option.optionType}' is not valid: ` +
+      return `Nca command '${ncaCommandName}' with optionParam '${option.name}' ` +
+        `and optionType '${option.optionType}' is not valid: ` +
         `supported values are ${Object.keys(OptionParamType)}`;
     }
     options.forEach(option => {

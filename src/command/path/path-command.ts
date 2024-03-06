@@ -1,8 +1,9 @@
-import { Command } from "../command";
+import { NcaCommandModule } from "../../model/internal/nca-command-module";
 import { AddPathCommand } from "./add-path-command";
 import { DeletePathCommand } from "./delete-path-command";
+import { NcaCommandTemplate } from "../../model/internal/nca-command-template";
 
-export class PathCommand extends Command {
+export class PathCommand extends NcaCommandTemplate {
 
   override getCommandName(): string {
     return 'path <command>';
@@ -12,7 +13,7 @@ export class PathCommand extends Command {
     return 'nca configuration commands';
   }
 
-  override getSubCommands(): Command[] {
+  override getSubCommands(): NcaCommandTemplate[] {
     return [new AddPathCommand(), new DeletePathCommand()];
   }
 }

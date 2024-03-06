@@ -7,10 +7,10 @@ import { ConfigLoader } from '../../loader/config-loader';
 import { ConfigSaver } from '../../util/config-saver';
 import { AnyObj } from "../../util/custom-types";
 import { YargsUtils } from '../../util/yargs-utils';
-import { Command } from "../command";
 import { NcaConfig } from "../../config/nca-config";
+import { NcaCommandTemplate } from "../../model/internal/nca-command-template";
 
-export class AddPathCommand extends Command {
+export class AddPathCommand extends NcaCommandTemplate {
 
   override getCommandName(): string {
     return YargsUtils.getCommand('add', this.getPositionalArguments());

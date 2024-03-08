@@ -1,7 +1,7 @@
 # Example: function
 
 ```yml
-aliases:
+commands:
   - name: log-options
     description: options logger
     command: |

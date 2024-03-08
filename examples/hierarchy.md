@@ -1,16 +1,16 @@
-# Example: alias hierarchy
+# Example: hierarchy
 
 ```yml
-aliases:
-  - name: mainAlias
-    description: description main alias 
+commands:
+  - name: mainCommand
+    description: description main command
     command: |
-      console.log('--- main alias started ---\n');
+      console.log('--- main command started ---\n');
       console.log(`a: ${input.args.a}`);
       console.log(`n: ${input.args.n}`);
       console.log(`foo: ${input.args.foo}`);
       console.log(`bar: ${input.args.bar}`);
-      console.log('\n--- main alias ended ---');
+      console.log('\n--- main command ended ---');
     commandType: Function
     options:
       - name: a
@@ -27,18 +27,18 @@ aliases:
         description: string
         type: StringList
         required: true
-    subAliases:
-      - name: subAlias
-        description: description subAlias
+    subCommands:
+      - name: subCommand
+        description: description subCommand
         command: |
-          console.log('--- sub alias started ---\n');
+          console.log('--- sub command started ---\n');
           console.log(`a: ${input.args.a}`);
           console.log(`n: ${input.args.n}`);
           console.log(`foo: ${input.args.foo}`);
           console.log(`bar: ${input.args.bar}`);
           console.log(`c: ${input.args.c}`);
           console.log(`baz: ${input.args.baz}`);
-          console.log('\n--- sub alias ended ---');
+          console.log('\n--- sub command ended ---');
         commandType: Function
         options:
           - name: c
@@ -48,17 +48,17 @@ aliases:
             description: baz
             type: String
             required: true
-      - name: anotherSubAlias
-        description: description anotherSubAlias
+      - name: anotherSubCommand
+        description: description anotherSubCommand
         command: |
-          console.log('--- another sub alias started ---\n');
+          console.log('--- another sub command started ---\n');
           console.log(`a: ${input.args.a}`);
           console.log(`n: ${input.args.n}`);
           console.log(`foo: ${input.args.foo}`);
           console.log(`bar: ${input.args.bar}`);
           console.log(`d: ${input.args.d}`);
           console.log(`qux: ${input.args.qux}`);
-          console.log('\n--- another sub alias ended ---');
+          console.log('\n--- another sub command ended ---');
         commandType: Function
         options:
           - name: d
@@ -73,35 +73,35 @@ aliases:
 
 ## Usage
 
-- Main alias:
+- main command:
 
   ```bash
-  nca mainAlias -a true -n 100 fooValue barValue1 barValue2
+  nca mainCommand -a true -n 100 fooValue barValue1 barValue2
   ```
 
   Output:
 
   ```js
-  --- main alias started ---
+  --- main command started ---
 
   a: true
   n: 100
   foo: fooValue
   bar: barValue1,barValue2
 
-  --- main alias ended ---
+  --- main command ended ---
   ```
 
-- Sub alias:
+- sub command:
 
   ```bash
-  nca mainAlias subAlias -a true -n 100 -c cValue fooValue bazValue barValue1 barValue2
+  nca mainCommand subCommand -a true -n 100 -c cValue fooValue bazValue barValue1 barValue2
   ```
 
   Output:
 
   ```js
-  --- sub alias started ---
+  --- sub command started ---
 
   a: true
   n: 100
@@ -110,19 +110,19 @@ aliases:
   c: cValue
   baz: bazValue
 
-  --- sub alias ended ---
+  --- sub command ended ---
   ```
 
-- Another sub alias:
+- Another sub command:
 
   ```bash
-  nca mainAlias anotherSubAlias -a true -n 100 -d dValue fooValue quxValue barValue1 barValue2
+  nca mainCommand anotherSubCommand -a true -n 100 -d dValue fooValue quxValue barValue1 barValue2
   ```
 
   Output:
 
   ```js
-  --- another sub alias started ---
+  --- another sub command started ---
 
   a: true
   n: 100
@@ -131,12 +131,12 @@ aliases:
   d: dValue
   qux: quxValue
 
-  --- another sub alias ended ---
+  --- another sub command ended ---
   ```
 
 ## Notes:
 
-Main alias options and positional arguments are inherited by its subAliases.
+main command options and positional arguments are inherited by its subCommandes.
 
 Hierarchies are useful when you want to create more complex command line interfaces.
 

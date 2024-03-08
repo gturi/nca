@@ -7,7 +7,7 @@
 
 <br/>
 
-A command line utility to manage cross platform command aliases.
+A command line utility to define cross platform commands and aliases.
 
 
 ## Table of Contents
@@ -59,7 +59,7 @@ type_list=$("/c/Program Files/nodejs/node_modules/node-command-alias/bin/nca" --
 
 The heart of nca resides in `$HOME/.nca/config.yml`.
 
-This file is where your cross platform aliases will be declared.
+This file is where your cross platform commands will be declared.
 
 ```yaml
 includePaths:
@@ -69,7 +69,7 @@ includePaths:
   - /absolute/path/to/directory
   - ./relative/path/to/another-directory
 
-aliases:
+commands:
   - name: hello-bash
     description: prints hello
     command: echo hello
@@ -86,7 +86,7 @@ aliases:
       completionArray: [foo, bar]
 ```
 
-If you do not like to store all the aliases into this file you can declare alternative yaml configurations under includePath variable. If you declare a directory as a path to include, all the yaml files defined inside it will be loaded.
+If you do not like to store all the nca commands into this file you can declare alternative yaml configurations under includePath variable. If you declare a directory as a path to include, all the yaml files defined inside it will be loaded.
 
 You can also change the default main config file by defining `ncaMainConfigFilePath` environment variable. I.E.
 
@@ -100,9 +100,9 @@ export ncaMainConfigFilePath=/path/to/your/main/config.yml
 ## Config API
 
 Yaml configuration model is deployed to github pages. Refer to:
-- [Config](https://gturi.github.io/nca/main/docs/interfaces/api_config.Config.html) for the config file entrypoint, where you will define your cross platform node aliases.
-- [CommandHandlerInput](https://gturi.github.io/nca/main/docs/classes/input_command_handler_input.CommandHandlerInput.html) when using function and module aliases. It contains option, arguments and utility functions that can be used inside javascript functions/modules.
-- [CompletionInput](https://gturi.github.io/nca/main/docs/classes/input_completion_input.CompletionInput.html) when defining an alias custom completion. Similarly to `CommandHandlerInput`, it exposes current cli arguments and utility functions, allowing to create complex custom completion.
+- [Config](https://gturi.github.io/nca/main/docs/interfaces/api_config.Config.html) for the config file entrypoint, where you will define your cross platform node commands.
+- [CommandHandlerInput](https://gturi.github.io/nca/main/docs/classes/input_command_handler_input.CommandHandlerInput.html) when defining function and module type nca commands. It contains options, arguments and utility functions that will be passed as an argument of the function/module.
+- [CompletionInput](https://gturi.github.io/nca/main/docs/classes/input_completion_input.CompletionInput.html) when defining a nca command custom completion. Similarly to `CommandHandlerInput`, it exposes current cli arguments and utility functions, allowing to create complex custom completion.
 
 
 For more information please refer to the following [README](https://github.com/gturi/nca/blob/gh-pages/README.md).
@@ -113,9 +113,9 @@ For more information please refer to the following [README](https://github.com/g
 
 ## Examples
 
-Refer to this [README](./examples/README.md) to know how to define your scripts custom aliases. They should cover every situation from the entry level to the most advanced ones.
+Refer to this [README](./examples/README.md) for the documentation. The examples should cover every situation, from the entry level to the most advanced ones.
 
-Alternatively refer to this [git repository](https://github.com/gturi/nca-aliases) where I save my aliases.
+Otherwise, refer to this [git repository](https://github.com/gturi/nca-commands) where I track the ones I have defined.
 
 
 [Back to top](#nca---Node-Command-Alias)
@@ -152,6 +152,8 @@ npm run build # compile
 npm link # create link to project folder
 
 npm unlink --global node-command-alias # remove global link after finishing testing
+
+npm install ./.github/script/setup-test.mjs # install dependencies required by tests
 ```
 
 ## Contributing

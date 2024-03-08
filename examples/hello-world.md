@@ -1,7 +1,7 @@
 # Example: hello world
 
 ```yml
-aliases:
+commands:
   - name: hello
     description: prints hello world
     command: echo "hello world"

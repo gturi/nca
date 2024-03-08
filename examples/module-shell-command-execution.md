@@ -2,7 +2,7 @@
 
 module-shell-config.yml
 ```yml
-aliases:
+commands:
   - name: module-shell
     description: execute shelljs commands
     command: ./module-shell.js

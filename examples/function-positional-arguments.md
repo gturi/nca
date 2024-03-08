@@ -1,7 +1,7 @@
 # Example: function
 
 ```yml
-aliases:
+commands:
   - name: log-positional
     description: positional arguments logger
     command: |
@@ -22,7 +22,7 @@ aliases:
         type: StringList
 ```
 
-     
+
 ## Usage
 
 - ```

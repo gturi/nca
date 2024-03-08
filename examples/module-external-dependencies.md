@@ -2,7 +2,7 @@
 
 module-external-dependencies.yml
 ```yml
-aliases:
+commands:
   - name: module-external
     description: execute script which uses external npm dependencies
     command: ./module-external.js

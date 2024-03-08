@@ -2,7 +2,7 @@
 
 js-completion-input.yml
 ```yml
-aliases:
+commands:
   - name: js-completion-input
     description: prints hello world
     command: echo "hello world"

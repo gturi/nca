@@ -2,7 +2,7 @@
 
 module-complex-config.yml
 ```yml
-aliases:
+commands:
   - name: module-complex
     description: execute a js script which concats options and positional arguments and then prints them
     command: ./module-complex.js

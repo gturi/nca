@@ -4,31 +4,15 @@ on:
     branches:
       - main
       - develop
+    paths:
+      - .github/**
+      - src/**
+      - package-lock.json
+      - package.json
 
 jobs:
-  check-for-changes:
-    runs-on: ubuntu-latest
-    outputs:
-      output: ${{ steps.status.outputs.value }}
-    steps:
-      - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ env.BRANCH }}
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 'lts/*'
-      - run: npm ci
-      - id: status
-        # using a run statement for each command does not work
-        run: |
-          OUT=`node .github/script/check-for-changes-within-24h.mjs "src"`
-          echo "$OUT check-for-changes step"
-          echo "::set-output name=value::$OUT"
   setup-gh-pages-files:
-    needs: check-for-changes
     runs-on: ubuntu-latest
-    if: ${{ needs.check-for-changes.outputs.output == 'run' }}
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - uses: actions/checkout@v4

@@ -3,6 +3,11 @@ on:
   push:
     branches:
       - develop
+    paths:
+      - bin/**
+      - src/**
+      - package-lock.json
+      - package.json
 
 jobs:
   wait-lint-to-succeed:
@@ -23,31 +28,11 @@ jobs:
           check-regexp: 'test \(.*\)'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
-  check-for-changes:
+  create-dev-version:
     needs: [wait-lint-to-succeed, wait-test-to-succeed]
     runs-on: ubuntu-latest
     outputs:
-      output: ${{ steps.status.outputs.value }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: develop
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 'lts/*'
-      - run: npm ci
-      - id: status
-        # using a run statement for each command does not work
-        run: |
-          OUT=`node .github/script/check-for-changes-within-24h.mjs "src package.json package-lock.json"`
-          echo "$OUT check-for-changes step"
-          echo "::set-output name=value::$OUT"
-  create-dev-version:
-    needs: check-for-changes
-    runs-on: ubuntu-latest
-    outputs:
       version: ${{ steps.version.outputs.value }}
-    if: ${{ needs.check-for-changes.outputs.output == 'run' }}
     steps:
       - uses: actions/checkout@v4
         with:

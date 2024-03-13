@@ -48,6 +48,11 @@ export class AddPathCommand extends NcaCommandTemplate {
     const configLoader = new ConfigLoader();
     const config = configLoader.loadConfig(configPath);
 
+    if (config.includePaths?.includes(configPathToAdd)) {
+      console.log('The path is already included');
+      return;
+    }
+
     if (config.includePaths) {
       config.includePaths.push(configPathToAdd);
     } else {

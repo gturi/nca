@@ -13,5 +13,6 @@
 - [custom static completion](./custom-static-array-completion.md) - override yargs shell completion with a custom one statically defined
 - [custom js completion](./custom-js-completion.md) - override yargs shell completion with a custom one returned by invoking a custom js module
 - [custom js input completion](./custom-js-input-completion.md) - override yargs shell completion with a custom one returned by invoking a custom js module. It uses current command line status to determine what to return
+- [alias](./alias.md) - create an alias for a long nca command or to use a nca command without typing `nca` prefix
 - [my nca commands](https://github.com/gturi/nca-commands) - git repo where I track the nca commands I use
 - [tests](../test/integration) - nca commands used for integration tests

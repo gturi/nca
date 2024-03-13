@@ -1,5 +1,7 @@
 import { Arguments } from "yargs";
 import { CliUtils } from "./cli-utils";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Completion } from "../../model/api/completion";
 
 /**
  * Input object passed to the completion script loaded

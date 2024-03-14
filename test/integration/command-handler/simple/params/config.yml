@@ -1,0 +1,16 @@
+commands:
+  - name: params
+    description: prints the input params
+    command: echo "$@"
+    options:
+      - name: s
+        optionType: String
+        defaultValue: 'sValue'
+      - name: a
+        optionType: String
+        defaultValue: 'aValue'
+    positionalArguments:
+      - name: foo
+        description: foo argument
+        type: String
+        defaultValue: 'fooValue'

@@ -12,7 +12,6 @@ export class SimpleCommandHandler<T = AnyObj> implements CommandHandler {
   private command: string;
 
   constructor(args: yargs.ArgumentsCamelCase<T>, command: string) {
-    console.log(Object.keys(args))
     this.args = args;
     this.command = command;
   }
@@ -22,7 +21,7 @@ export class SimpleCommandHandler<T = AnyObj> implements CommandHandler {
   }
 
   run(): void {
-    const parameters = this.getParameters()
+    const parameters = this.getParameters();
 
     if (parameters.length > 0) {
       shelljs.exec(`${this.command} ${parameters}`);

@@ -1,7 +1,7 @@
 commands:
   - name: params
     description: prints the input params
-    command: echo "$@"
+    command: "./script.sh"
     options:
       - name: s
         optionType: String
@@ -14,3 +14,4 @@ commands:
         description: foo argument
         type: String
         defaultValue: 'fooValue'
+    runInConfigDirectory: true

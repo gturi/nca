@@ -12,6 +12,6 @@ commands:
     positionalArguments:
       - name: foo
         description: foo argument
-        type: String
+        type: StringList
         defaultValue: 'fooValue'
     runInConfigDirectory: true

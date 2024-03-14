@@ -11,14 +11,34 @@ describe("simple command handler", () => {
     return;
   }
 
-  it('command params logs the input params', done => {
-    const verifyOutput = new VerifyOutputBuilder(done)
-      .handleStdout((stdout: string[]) => {
-        const expected = '-a hello -s world --foo fooValue';
-        expect(stdout.join('\n')).to.equal(Platform.addNewLine(expected));
-      })
-      .build();
-    testUtils.runNcaAndVerifyOutput(verifyOutput, 'params', '-a', 'hello', '-s', 'world');
+  const testCases: { params: string[], expectedOutput: string }[] = [
+    {
+      params: ['-a', 'hello', '-s', 'world'],
+      expectedOutput: '-a hello -s world --foo fooValue'
+    },
+    {
+      params: ['-a', 'hello', '-s', 'world', 'someValue'],
+      expectedOutput: '-a hello -s world --foo someValue'
+    },
+    {
+      params: ['-a', 'hello', '-s', 'world', 'someValue', 'anotherValue'],
+      expectedOutput: '-a hello -s world --foo someValue,anotherValue'
+    },
+    {
+      params: ['-a', '"hel lo"', '-s', 'world', '"someValue anotherValue"'],
+      expectedOutput: '-a hel lo -s world --foo someValue anotherValue'
+    }
+  ];
+
+  testCases.forEach((testCase, index) => {
+    it(`command params logs the input params (idx: ${index})`, done => {
+      const verifyOutput = new VerifyOutputBuilder(done)
+        .handleStdout((stdout: string[]) => {
+          expect(stdout.join('\n')).to.equal(Platform.addNewLine(testCase.expectedOutput));
+        })
+        .build();
+      testUtils.runNcaAndVerifyOutput(verifyOutput, 'params', ...testCase.params);
+    });
   });
 
 });

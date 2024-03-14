@@ -1,5 +1,0 @@
-aliases:
-  - name: module-hello
-    description: execute a js script which prints hello world
-    command: ./module-hello.js
-    commandType: Module

@@ -1,0 +1,16 @@
+commands:
+  - name: log-options
+    description: options logger
+    command: console.log(`${input.args.b} ${input.args.n} ${input.args.s}`);
+    commandType: Function
+    options:
+      - name: b
+        optionType: Boolean
+        defaultValue: 'false'
+      - name: n
+        alternativeName: num
+        optionType: Number
+        defaultValue: 1
+      - name: s
+        optionType: String
+        defaultValue: 'foo'

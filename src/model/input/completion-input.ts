@@ -31,7 +31,7 @@ export class CompletionInput {
   }
 
   /**
-   * The last inserted argument of nca command 
+   * The last inserted argument of nca command
    */
   get current(): string {
     return this._current;

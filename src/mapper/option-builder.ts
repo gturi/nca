@@ -4,20 +4,16 @@ import { AnyObj } from "../util/custom-types";
 
 export class OptionBuilder {
 
-  static build<T = AnyObj>(yargs: yargs.Argv<T>, aliasOptions?: OptionParam[]) {
-    if (aliasOptions) {
-      aliasOptions.forEach(aliasOption => {
-        this.mapOption<T>(yargs, aliasOption);
-      });
-    }
+  static build<T = AnyObj>(yargs: yargs.Argv<T>, options?: OptionParam[]) {
+    options?.forEach(option => this.mapOption<T>(yargs, option));
   }
 
-  private static mapOption<T = AnyObj>(yargs: yargs.Argv<T>, aliasOption: OptionParam) {
-    yargs.option(aliasOption.name, {
-      alias: aliasOption.alternativeName,
-      description: aliasOption.description,
-      type: aliasOption.optionType,
-      default: aliasOption.defaultValue
+  private static mapOption<T = AnyObj>(yargs: yargs.Argv<T>, option: OptionParam) {
+    yargs.option(option.name, {
+      alias: option.alternativeName,
+      description: option.description,
+      type: option.optionType,
+      default: option.defaultValue
     });
   }
 }

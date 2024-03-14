@@ -8,7 +8,15 @@ export class StringUtils {
     return str === undefined || str === null || str === '';
   }
 
+  static isNotEmpty(str: (string | undefined | null)): str is string {
+    return !this.isEmpty(str);
+  }
+
   static ifNotEmptyOrDefault(str: (string | undefined | null), getDefault: () => string): string {
     return str === undefined || str === null || str === '' ? getDefault() : str;
+  }
+
+  static wrap(str: string, character: string): string {
+    return `${character}${str}${character}`
   }
 }

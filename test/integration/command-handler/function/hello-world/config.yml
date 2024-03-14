@@ -1,0 +1,5 @@
+commands:
+  - name: function-hello
+    description: prints hello world
+    command: console.log('hello world');
+    commandType: Function

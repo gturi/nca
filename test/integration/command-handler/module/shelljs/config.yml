@@ -1,0 +1,5 @@
+commands:
+  - name: module-shell
+    description: execute shelljs commands
+    command: ./module-shelljs.js
+    commandType: Module

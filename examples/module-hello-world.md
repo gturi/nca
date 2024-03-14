@@ -2,7 +2,7 @@
 
 module-hello-config.yml
 ```yml
-aliases:
+commands:
   - name: module-hello
     description: execute a js script which prints hello world
     command: ./module-hello.js

@@ -1,7 +1,7 @@
 # Example: function shell command execution
 
 ```yml
-aliases:
+commands:
   - name: update-branch
     description:  pulls the latest changes of develop and merges them into current branch
     command: |

@@ -18,7 +18,10 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "npx --verbose tsc",
-    "test": "mocha --recursive -r ts-node/register \"test/**/*.test.ts\"",
+    "test": "npm run build && npm run test:unit && npm run test:integration",
+    "test:mocha:config": "mocha -t 60000 --recursive --require ts-node/register",
+    "test:unit": "npm run test:mocha:config -- \"test/unit/**/*.test.ts\"",
+    "test:integration": "npm run test:mocha:config -- \"test/integration/**/*.test.ts\"",
     "coverage": "node .github/script/generate-coverage.mjs",
     "doc": "node .github/script/generate-typedoc.mjs",
     "lint": "eslint \"src/**\"",

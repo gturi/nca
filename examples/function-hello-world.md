@@ -1,7 +1,7 @@
 # Example: function
 
 ```yml
-aliases:
+commands:
   - name: function-hello
     description: prints hello world
     command: console.log('hello world');

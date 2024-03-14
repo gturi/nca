@@ -26,4 +26,32 @@ export class NcaConfig {
   static getForbiddenNames(): string[] {
     return ['nca', ''];
   }
+
+  static getAliasSourceFolderPath(): string {
+    return path.join(this.getAliasFolderPath(), 'bin');
+  }
+
+  static getAliasPackageJsonPath(): string {
+    return path.join(this.getAliasFolderPath(), 'package.json');
+  }
+
+  static getAliasFolderPath(): string {
+    return path.join(this.getMainConfigFolderPath(), 'alias');
+  }
+
+  static getAliasPackageJson(): Record<string, unknown> {
+    return {
+      "name": "node-command-alias-local",
+      "bin": {
+      },
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gturi/nca.git"
+      },
+      "bugs": {
+        "url": "https://github.com/gturi/nca/issues"
+      },
+      "homepage": "https://github.com/gturi/nca#readme"
+    };
+  }
 }

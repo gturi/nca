@@ -1,22 +1,31 @@
 import yargs from "yargs";
 
 export enum PositionalArgumentType {
-  /** Boolean positional argument. */
+  /**
+   * Boolean positional argument.
+   */
   Boolean = 'Boolean',
-  /** Numeric positional argument. */
+  /**
+   * Numeric positional argument.
+   */
   Number = 'Number',
-  /** String positional argument. */
+  /**
+   * String positional argument.
+   */
   String = 'String',
-  /** Boolean list positional argument.
-   *  Only one list type positional argument can be defined for each alias.
+  /**
+   * Boolean list positional argument.
+   * Only one list type positional argument can be defined for each nca command.
    */
   BooleanList = 'BooleanList',
-  /** Numeric list positional argument.
-   *  Only one list type positional argument can be defined for each alias.
+  /**
+   * Numeric list positional argument.
+   * Only one list type positional argument can be defined for each nca command.
    */
   NumberList = 'NumberList',
-  /** String list positional argument.
-   *  Only one list type positional argument can be defined for each alias.
+  /**
+   * String list positional argument.
+   * Only one list type positional argument can be defined for each nca command.
    */
   StringList = 'StringList'
 }
@@ -48,7 +57,7 @@ export namespace PositionalArgumentType {
   }
 
   /**
-   * Sort last list type AliasPositionalArgumentType
+   * Sort last list type {@link PositionalArgumentType}
    */
   export function compare(a: PositionalArgumentType, b: PositionalArgumentType) {
     if (a === b) {

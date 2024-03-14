@@ -1,14 +1,24 @@
 import { OptionParamType } from "./option-param-type";
 
 export interface OptionParam {
-  /** Option name. */
+  /**
+   * Option name.
+   */
   name: string;
-  /** Option alternative name. */
+  /**
+   * Option alternative name.
+   */
   alternativeName?: string;
-  /** Option description. */
+  /**
+   * Option description.
+   */
   description?: string;
-  /** Option type. */
+  /**
+   * Option type.
+   */
   optionType: OptionParamType;
-  /** Default option value. */
+  /**
+   * Default option value.
+   */
   defaultValue: string;
 }

@@ -1,0 +1,11 @@
+commands:
+  - name: module-self-call
+    description: execute commands from inside an nca module
+    command: ./module-self-call.js
+    commandType: Module
+    positionalArguments:
+      - name: command
+        description: command to execute
+        # StringList type allows to pass multiple arguments without needing to wrap them between quotes
+        type: StringList
+        required: true

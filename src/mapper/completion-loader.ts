@@ -1,5 +1,5 @@
 import yargs, { Arguments, CompletionCallback } from "yargs";
-import { Alias } from "../model/api/alias";
+import { NcaCommand } from "../model/api/nca-command";
 import { Completion } from "../model/api/completion";
 import { LoggingUtil } from "../util/logging-utils";
 import { ArrayUtils } from "../util/array-utils";
@@ -12,39 +12,39 @@ import { iter } from 'iterator-helper';
 type CompletionFilter = (onCompleted?: CompletionCallback) => any;
 type Done = (completions: string[]) => any;
 /* eslint-enable @typescript-eslint/no-explicit-any */
-type CurrentAlias = {
-  alias: Alias | undefined;
-  subAliases: Alias[] | undefined;
+type CurrentNcaCommand = {
+  ncaCommand: NcaCommand | undefined;
+  subCommands: NcaCommand[] | undefined;
 };
 
 export class CompletionLoader {
 
-  private readonly aliases: Alias[];
+  private readonly ncaCommands: NcaCommand[];
   private readonly current: string;
   private readonly argv: Arguments;
   private readonly completionFilter: CompletionFilter;
   private readonly done: Done;
 
   protected constructor(
-    aliases: Alias[],
+    ncaCommands: NcaCommand[],
     current: string,
     argv: Arguments,
     completionFilter: CompletionFilter,
     done: Done
   ) {
-    this.aliases = aliases;
+    this.ncaCommands = ncaCommands;
     this.current = current;
     this.argv = argv;
     this.completionFilter = completionFilter;
     this.done = done;
   }
 
-  static initCompletion<T>(argvBuilder: yargs.Argv<T>, aliases: Alias[]) {
+  static initCompletion<T>(argvBuilder: yargs.Argv<T>, ncaCommands: NcaCommand[]) {
     argvBuilder.completion(
       'completion',
       (current: string, argv: Arguments,
         completionFilter: CompletionFilter, done: Done) => {
-        return new CompletionLoader(aliases, current, argv, completionFilter, done).load();
+        return new CompletionLoader(ncaCommands, current, argv, completionFilter, done).load();
       }
     );
   }
@@ -64,70 +64,66 @@ export class CompletionLoader {
         ].join('\n')
       );
 
-      const alias = this.getCurrentAlias(this.argv._);
+      const ncaCommand = this.getCurrentNcaCommand(this.argv._);
 
-      const modulePath = this.getModulePath(alias);
+      const modulePath = this.getModulePath(ncaCommand);
 
       const completionInput = new CompletionInput(
         this.current, this.argv, err, defaultCompletions, modulePath
       );
 
-      const completionArray = this.getCompletionArray(alias?.completion, completionInput)
+      const completionArray = this.getCompletionArray(ncaCommand?.completion, completionInput)
       this.done(completionArray);
     });
   }
 
-  private getCurrentAlias(commands: (string | number)[]): Alias | null {
-    const currentAlias: CurrentAlias = {
-      alias: undefined,
-      subAliases: this.aliases
+  private getCurrentNcaCommand(commands: (string | number)[]): NcaCommand | null {
+    const currentNcaCommand: CurrentNcaCommand = {
+      ncaCommand: undefined,
+      subCommands: this.ncaCommands
     };
-    
+
     iter(commands)
       .map(command => `${command}`)
       .filter(command => !NcaConfig.getForbiddenNames().includes(command))
       // find last + break operation:
       // the first command that is not found will terminate the iteration
-      .every(command => this.existsAliasForCommand(currentAlias, command));
+      .every(command => this.existsNcaCommandForName(currentNcaCommand, command));
 
-    return currentAlias.alias ?? null;
+    return currentNcaCommand.ncaCommand ?? null;
   }
 
-  private existsAliasForCommand(currentAlias: CurrentAlias, command: string): boolean {
-    currentAlias.alias = currentAlias.subAliases?.find(alias => alias.name === command);
-    currentAlias.subAliases = currentAlias.alias?.subAliases;
-    return currentAlias.alias !== undefined;
+  private existsNcaCommandForName(currentNcaCommand: CurrentNcaCommand, command: string): boolean {
+    currentNcaCommand.ncaCommand = currentNcaCommand.subCommands?.find(
+      ncaCommand => ncaCommand.name === command
+    );
+    currentNcaCommand.subCommands = currentNcaCommand.ncaCommand?.subCommands;
+    return currentNcaCommand.ncaCommand !== undefined;
   }
 
-  private getModulePath(alias: Alias | null): string | null {
-    if (alias) {
-      const completionPath = alias.completion?.completionPath
-      return completionPath
-        ? PathUtils.resolvePath(completionPath, alias.aliasDirectory)
-        : null;
-    } else {
-      return null;
-    }
+  private getModulePath(ncaCommand: NcaCommand | null): string | null {
+    const completionPath = ncaCommand?.completion?.completionPath
+    return completionPath
+      ? PathUtils.resolvePath(completionPath, ncaCommand.directory)
+      : null;
   }
 
   private getCompletionArray(
     completion: Completion | undefined, completionInput: CompletionInput
   ): string[] {
-    let result: string[] | undefined;
+    const defaultCompletions = completionInput.defaultCompletions;
 
-    const defaultCompletions = completionInput.defaultCompletions
-    if (completion) {
-      const customCompletionArray = this.getCustomCompletionArray(
-        completion, completionInput
-      );
-      result = completion.merge
-        ? customCompletionArray.concat(defaultCompletions)
-        : customCompletionArray;
-    } else {
-      result = defaultCompletions;
+    if (!completion) {
+      return defaultCompletions;
     }
 
-    return result ?? [];
+    const customCompletionArray = this.getCustomCompletionArray(
+      completion, completionInput
+    );
+
+    return completion.merge
+      ? customCompletionArray.concat(defaultCompletions)
+      : customCompletionArray;
   }
 
   private getCustomCompletionArray(
@@ -139,14 +135,14 @@ export class CompletionLoader {
   }
 
   private loadCompletionFromPath(completionInput: CompletionInput): string[] | null {
-    /* eslint-disable @typescript-eslint/no-var-requires */
     const modulePath = completionInput.modulePath;
-    if (modulePath) {
-      const module = require(modulePath);
-      return module(completionInput) as string[];
-    } else {
+    if (!modulePath) {
       return null;
     }
+
+    /* eslint-disable @typescript-eslint/no-var-requires */
+    const module = require(modulePath);
+    return module(completionInput) as string[];
     /* eslint-enable @typescript-eslint/no-var-requires */
   }
 }

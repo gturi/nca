@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.3% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>21/23</span>
+                <span class='fraction'>21/24</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.3% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>21/23</span>
+                <span class='fraction'>21/24</span>
             </div>
         
             
@@ -113,26 +113,29 @@
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
 <a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">161x</span>
+<span class="cline-any cline-yes">161x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">161x</span>
+<span class="cline-any cline-yes">161x</span>
+<span class="cline-any cline-yes">161x</span>
+<span class="cline-any cline-yes">161x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">161x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">161x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">51x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51x</span>
+<span class="cline-any cline-yes">51x</span>
+<span class="cline-any cline-yes">51x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -142,21 +145,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51x</span>
+<span class="cline-any cline-yes">51x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">51x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-yes">43x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -164,7 +166,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import yargs from "yargs";
-import { Alias } from "../model/api/alias";
+import { NcaCommand } from "../model/api/nca-command";
 import { CommandType } from "../model/api/command-type";
 import { StringUtils } from "../util/string-utils";
 import { AnyObj } from "../util/custom-types";
@@ -177,24 +179,25 @@ import { CommandHandlerInput } from "../model/input/command-handler-input";
 &nbsp;
 export class YargsHandlerBuilder {
 &nbsp;
-  static getHandler&lt;T = AnyObj&gt;(args: yargs.ArgumentsCamelCase&lt;T&gt;, alias: Alias) {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (!StringUtils.isEmpty(alias.command)) {
-      const commandHandler = this.getCommandHandler(args, alias);
+  static getHandler&lt;T = AnyObj&gt;(args: yargs.ArgumentsCamelCase&lt;T&gt;, ncaCommand: NcaCommand) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (StringUtils.isEmpty(ncaCommand.command)) {
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
 &nbsp;
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (commandHandler) {
-        commandHandler.run()
-      } else {
-<span class="cstat-no" title="statement not covered" >        console.error(`Command type not supported ${alias.commandType}`);</span>
-      }
+    const commandHandler = this.getCommandHandler(args, ncaCommand);
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (commandHandler) {
+      commandHandler.run()
+    } else {
+<span class="cstat-no" title="statement not covered" >      console.error(`Command type not supported ${ncaCommand.commandType}`);</span>
     }
   }
 &nbsp;
   private static getCommandHandler&lt;T = AnyObj&gt;(
     args: yargs.ArgumentsCamelCase&lt;T&gt;,
-    alias: Alias
+    ncaCommand: NcaCommand
   ): CommandHandler | null {
-    const commandType = alias.commandType ?? CommandType.Simple
-    const command = alias.command ?? <span class="branch-1 cbranch-no" title="branch not covered" >'';</span>
+    const commandType = ncaCommand.commandType ?? CommandType.Simple
+    const command = ncaCommand.command ?? <span class="branch-1 cbranch-no" title="branch not covered" >'';</span>
 &nbsp;
     switch (commandType) {
       case CommandType.Simple:
@@ -205,7 +208,7 @@ export class YargsHandlerBuilder {
       }
       case CommandType.Module: {
         const input = new CommandHandlerInput&lt;T&gt;(args);
-        const jsModulePath = PathUtils.resolvePath(command, alias.aliasDirectory);
+        const jsModulePath = PathUtils.resolvePath(command, ncaCommand.directory);
         return new ModuleCommandHandler&lt;T&gt;(input, jsModulePath);
       }
 <span class="branch-3 cbranch-no" title="branch not covered" >      default:</span>
@@ -220,7 +223,7 @@ export class YargsHandlerBuilder {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-12T16:54:50.001Z
+                at 2024-03-14T08:36:13.718Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

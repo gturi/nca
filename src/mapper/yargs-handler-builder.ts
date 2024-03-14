@@ -29,6 +29,10 @@ export class YargsHandlerBuilder {
     args: yargs.ArgumentsCamelCase<T>,
     ncaCommand: NcaCommand
   ): CommandHandler | null {
+    if (ncaCommand.runInConfigDirectory) {
+      process.chdir(ncaCommand.directory);
+    }
+
     const commandType = ncaCommand.commandType ?? CommandType.Simple
     const command = ncaCommand.command ?? '';
 

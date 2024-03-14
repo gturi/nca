@@ -42,10 +42,15 @@ export interface NcaCommand {
    * Defines a custom completion for this nca command.
    */
   completion?: Completion;
+  /**
+   * When set to true changes the command execution directory to
+   * the one where its yaml configuration is located.
+   */
+  runInConfigDirectory: boolean;
   // TODO: move it to a new file, to avoid exposing an useless field
   /**
-   * Set internally to allow usage of relative paths with
-   * {@link CommandType.Module} command and completionPath.
+   * Set internally. Allows commands and completionPaths to be used
+   * with relative paths.
    */
   directory: string;
 }

@@ -1,3 +1,5 @@
+import yaml from 'js-yaml';
+import * as iteratorHelper from "iterator-helper";
 import { Arguments } from "yargs";
 import { CliUtils } from "./cli-utils";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -7,68 +9,39 @@ import { Completion } from "../../model/api/completion";
  * Input object passed to the completion script loaded
  * when specifying {@link Completion.completionPath}.
  */
-export class CompletionInput {
-  private readonly _current: string;
-  private readonly _argv: Arguments;
-  private readonly _error: Error | null;
-  private readonly _defaultCompletions: string[];
-  private readonly _modulePath: string | null;
-  private readonly _cliUtils: CliUtils;
-
-  constructor(
-    current: string,
-    argv: Arguments,
-    error: Error | null,
-    defaultCompletions: string[] | undefined,
-    modulePath: string | null
-  ) {
-    this._current = current;
-    this._argv = argv;
-    this._error = error;
-    this._defaultCompletions = defaultCompletions ?? [];
-    this._modulePath = modulePath;
-    this._cliUtils = new CliUtils();
-  }
-
+export interface CompletionInput {
   /**
    * The last inserted argument of nca command
    */
-  get current(): string {
-    return this._current;
-  }
-
+  current: string;
   /**
    * All the arguments parsed by yargs
    */
-  get argv(): Arguments {
-    return this._argv;
-  }
-
+  argv: Arguments;
   /**
    * Completion errors
    */
-  get error(): Error | null {
-    return this._error;
-  }
-
+  error: Error | null;
   /**
    * Default yargs completions
    */
-  get defaultCompletions(): string[] {
-    return this._defaultCompletions;
-  }
-
+  defaultCompletions: string[];
   /**
    * Module path
    */
-  get modulePath(): string | null {
-    return this._modulePath;
-  }
-
+  modulePath: string | null;
   /**
    * CLI utilities, useful to run commands.
    */
-  get cliUtils(): CliUtils {
-    return this._cliUtils;
-  }
+  cliUtils: CliUtils;
+  /**
+   * Polyfill for iterator helper proposal.
+   * For more information refer to iterator-helper npm package.
+   */
+  iteratorHelper: typeof iteratorHelper;
+  /**
+   * Function for reading yaml files.
+   * For more information refer to js-yaml npm package.
+   */
+  yaml: typeof yaml;
 }

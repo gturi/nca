@@ -7,6 +7,7 @@ import { PathUtils } from "../util/path-utils";
 import { CompletionInput } from "../model/input/completion-input";
 import { NcaConfig } from "../config/nca-config";
 import { iter } from 'iterator-helper';
+import { InputBuilder } from "./input-builder";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type CompletionFilter = (onCompleted?: CompletionCallback) => any;
@@ -68,7 +69,7 @@ export class CompletionLoader {
 
       const modulePath = this.getModulePath(ncaCommand);
 
-      const completionInput = new CompletionInput(
+      const completionInput = InputBuilder.getCompletionInput(
         this.current, this.argv, err, defaultCompletions, modulePath
       );
 

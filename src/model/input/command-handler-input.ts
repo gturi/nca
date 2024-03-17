@@ -1,6 +1,7 @@
 import yargs from 'yargs';
-import { CliUtils } from './cli-utils';
+import yaml from 'js-yaml';
 import * as iteratorHelper from "iterator-helper";
+import { CliUtils } from './cli-utils';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { CommandType } from '../api/command-type';
 
@@ -9,32 +10,23 @@ import { CommandType } from '../api/command-type';
  * Input object for {@link CommandType.Function} and {@link CommandType.Module} command types.
  * Stores arguments information and other javascript utilites.
  */
-export class CommandHandlerInput<T> {
-  private readonly _args: yargs.ArgumentsCamelCase<T>;
-  private readonly _cliUtils: CliUtils;
-  private readonly _iteratorHelper: typeof iteratorHelper;
-
-  constructor(args: yargs.ArgumentsCamelCase<T>) {
-    this._args = args;
-    this._cliUtils = new CliUtils();
-    this._iteratorHelper = iteratorHelper;
-  }
-
+export interface CommandHandlerInput<T> {
   /**
    * Script's input arguments.
    */
-  get args() {
-    return this._args;
-  }
-
+  args: yargs.ArgumentsCamelCase<T>;
   /**
    * CLI utilities, useful to run commands.
    */
-  get cliUtils(): CliUtils {
-    return this._cliUtils;
-  }
-
-  get iteratorHelper(): typeof iteratorHelper {
-    return this._iteratorHelper;
-  }
+  cliUtils: CliUtils;
+  /**
+   * Polyfill for iterator helper proposal.
+   * For more information refer to iterator-helper npm package.
+   */
+  iteratorHelper: typeof iteratorHelper;
+  /**
+   * Function for reading yaml files.
+   * For more information refer to js-yaml npm package.
+   */
+  yaml: typeof yaml;
 }

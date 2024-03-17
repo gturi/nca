@@ -8,7 +8,7 @@ import { FunctionCommandHandler } from "../command/handler/function-command-hand
 import { ModuleCommandHandler } from "../command/handler/module-command-handler";
 import { PathUtils } from "../util/path-utils";
 import { CommandHandler } from "../command/handler/command-handler";
-import { CommandHandlerInput } from "../model/input/command-handler-input";
+import { InputBuilder } from "./input-builder";
 
 export class YargsHandlerBuilder {
 
@@ -40,11 +40,11 @@ export class YargsHandlerBuilder {
       case CommandType.Native:
         return new NativeCommandHandler(args, command, ncaCommand.positionalArgumentsAsOptions);
       case CommandType.Function: {
-        const input = new CommandHandlerInput<T>(args);
+        const input = InputBuilder.getCommandHandlerInput<T>(args);
         return new FunctionCommandHandler<T>(input, command);
       }
       case CommandType.Module: {
-        const input = new CommandHandlerInput<T>(args);
+        const input = InputBuilder.getCommandHandlerInput<T>(args);
         const jsModulePath = PathUtils.resolvePath(command, ncaCommand.directory);
         return new ModuleCommandHandler<T>(input, jsModulePath);
       }

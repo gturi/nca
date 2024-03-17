@@ -1,0 +1,6 @@
+commands:
+  - name: module-yaml
+    description: read yaml file through js yaml
+    command: ./module-yaml.js
+    commandType: Module
+    runInConfigDirectory: true

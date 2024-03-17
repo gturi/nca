@@ -6,7 +6,7 @@ import { VerifyOutputBuilder } from '../../../../utils/verify-output-builder';
 describe("module command handler", () => {
 
 
-  it('command module-iterator-helper command even values using a lazy iterator', done => {
+  it('command module-iterator-helper logs even values using a lazy iterator', done => {
     const command = 'module-iterator-helper';
     const expected = [2, 4, 6].join('\n') + '\n';
     const verifyOutput = new VerifyOutputBuilder(done)

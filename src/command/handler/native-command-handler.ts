@@ -6,7 +6,7 @@ import shelljs from 'shelljs';
 import { iter } from "iterator-helper";
 import { ProcessArgumentUtils } from "../../util/process-arguments-utils";
 
-export class SimpleCommandHandler<T = AnyObj> implements CommandHandler {
+export class NativeCommandHandler<T = AnyObj> implements CommandHandler {
 
   private args: yargs.ArgumentsCamelCase<T>;
   private command: string;
@@ -23,7 +23,7 @@ export class SimpleCommandHandler<T = AnyObj> implements CommandHandler {
   }
 
   get commandType(): CommandType {
-    return CommandType.Simple;
+    return CommandType.Native;
   }
 
   run(): void {

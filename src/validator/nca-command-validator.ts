@@ -110,7 +110,7 @@ export class NcaCommandValidator {
     const getErrorMessage = () =>
       `Nca command '${ncaCommand.name}' commandType '${ncaCommand.commandType}' is not valid: ` +
       `supported values are ${Object.keys(CommandType)}`;
-    const commandType = ncaCommand.commandType ?? CommandType.Simple;
+    const commandType = ncaCommand.commandType ?? CommandType.Native;
     EnumValidator.validate(CommandType, commandType, getErrorMessage)
   }
 }

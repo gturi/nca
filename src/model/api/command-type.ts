@@ -2,7 +2,7 @@ export enum CommandType {
   /**
    * The command will be run as a shell command.
    */
-  Simple = 'Simple',
+  Native = 'Native',
   /**
    * The command will be run as a javascript function.
    */

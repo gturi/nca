@@ -10,7 +10,7 @@ export interface NcaCommand {
   name: string;
   /**
    * The nca command description. It is showed when using the help command or
-   * when providing wrong/urecognized input.
+   * when providing wrong/unrecognized input.
    */
   description?: string;
   /**

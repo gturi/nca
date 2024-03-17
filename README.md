@@ -73,6 +73,7 @@ commands:
   - name: hello-bash
     description: prints hello
     command: echo hello
+    commandType: Native # (default option)
   - name: invoke-bash
     description: runs ./hello.sh
     command: ./hello.sh

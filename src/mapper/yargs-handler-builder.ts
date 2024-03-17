@@ -3,7 +3,7 @@ import { NcaCommand } from "../model/api/nca-command";
 import { CommandType } from "../model/api/command-type";
 import { StringUtils } from "../util/string-utils";
 import { AnyObj } from "../util/custom-types";
-import { SimpleCommandHandler } from "../command/handler/simple-command-handler";
+import { NativeCommandHandler } from "../command/handler/native-command-handler";
 import { FunctionCommandHandler } from "../command/handler/function-command-handler";
 import { ModuleCommandHandler } from "../command/handler/module-command-handler";
 import { PathUtils } from "../util/path-utils";
@@ -33,12 +33,12 @@ export class YargsHandlerBuilder {
       process.chdir(ncaCommand.directory);
     }
 
-    const commandType = ncaCommand.commandType ?? CommandType.Simple
+    const commandType = ncaCommand.commandType ?? CommandType.Native
     const command = ncaCommand.command ?? '';
 
     switch (commandType) {
-      case CommandType.Simple:
-        return new SimpleCommandHandler(args, command, ncaCommand.positionalArgumentsAsOptions);
+      case CommandType.Native:
+        return new NativeCommandHandler(args, command, ncaCommand.positionalArgumentsAsOptions);
       case CommandType.Function: {
         const input = new CommandHandlerInput<T>(args);
         return new FunctionCommandHandler<T>(input, command);

@@ -21,7 +21,7 @@ export interface NcaCommand {
   command?: string;
   /**
    * Determines how the command will be executed.
-   * When left empty defaults to {@link CommandType.Simple}.
+   * When left empty defaults to {@link CommandType.Native}.
    */
   commandType?: CommandType;
   /**
@@ -46,7 +46,7 @@ export interface NcaCommand {
    */
   runInConfigDirectory: boolean;
   /**
-   * Considered only when {@link NcaCommand.commandType} value is {@link CommandType.Simple}.
+   * Considered only when {@link NcaCommand.commandType} value is {@link CommandType.Native}.
    * When set to true, the program will receive the positional arguments like options
    * (i.e. --myParam myParamValue).
    */

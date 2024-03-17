@@ -3,6 +3,7 @@
 
 ## Simple
 - [hello world](./hello-world.md) - simple hello world
+- [invoke external program](./invoke-external-program.md) - invoke external program and pass it input arguments
 
 
 ## Function

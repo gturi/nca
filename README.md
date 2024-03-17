@@ -73,6 +73,12 @@ commands:
   - name: hello-bash
     description: prints hello
     command: echo hello
+  - name: invoke-bash
+    description: runs ./hello.sh
+    command: ./hello.sh
+    # before invoking the command, sets the current working directory
+    # to be the same as the one where this config is stored
+    runInConfigDirectory: true
   - name: hello-js
     description: prints hello using javascript
     command: console.log(hello)

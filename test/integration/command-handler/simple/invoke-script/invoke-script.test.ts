@@ -14,19 +14,23 @@ describe("simple command handler", () => {
   const testCases: { params: string[], expectedOutput: string }[] = [
     {
       params: ['-a', 'hello', '-s', 'world'],
-      expectedOutput: '-a hello -s world --foo fooValue'
+      expectedOutput: '-a hello -s world fooValue'
     },
     {
       params: ['-a', 'hello', '-s', 'world', 'someValue'],
-      expectedOutput: '-a hello -s world --foo someValue'
+      expectedOutput: '-a hello -s world someValue'
     },
     {
       params: ['-a', 'hello', '-s', 'world', 'someValue', 'anotherValue'],
-      expectedOutput: '-a hello -s world --foo someValue,anotherValue'
+      expectedOutput: '-a hello -s world someValue,anotherValue'
+    },
+    {
+      params: ['-a', 'hello', '-s', 'world', 'someValue,anotherValue'],
+      expectedOutput: '-a hello -s world someValue,anotherValue'
     },
     {
       params: ['-a', '"hel lo"', '-s', 'world', '"someValue anotherValue"'],
-      expectedOutput: '-a hel lo -s world --foo someValue anotherValue'
+      expectedOutput: '-a hel lo -s world someValue anotherValue'
     }
   ];
 
@@ -37,7 +41,7 @@ describe("simple command handler", () => {
           expect(stdout.join('\n')).to.equal(Platform.addNewLine(testCase.expectedOutput));
         })
         .build();
-      testUtils.runNcaAndVerifyOutput(verifyOutput, 'params', ...testCase.params);
+      testUtils.runNcaAndVerifyOutput(verifyOutput, 'invoke-script', ...testCase.params);
     });
   });
 

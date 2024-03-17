@@ -10,10 +10,16 @@ export class SimpleCommandHandler<T = AnyObj> implements CommandHandler {
 
   private args: yargs.ArgumentsCamelCase<T>;
   private command: string;
+  private positionalArgumentsAsOptions: boolean;
 
-  constructor(args: yargs.ArgumentsCamelCase<T>, command: string) {
+  constructor(
+    args: yargs.ArgumentsCamelCase<T>,
+    command: string,
+    positionalArgumentsAsOptions: boolean
+  ) {
     this.args = args;
     this.command = command;
+    this.positionalArgumentsAsOptions = positionalArgumentsAsOptions;
   }
 
   get commandType(): CommandType {
@@ -34,15 +40,25 @@ export class SimpleCommandHandler<T = AnyObj> implements CommandHandler {
     return iter(Object.keys(this.args))
       .filter(param => param !== '_' && param !== '$0')
       .map(param => {
+        const paramValue = `${this.args[param]}`;
         const sanitizedParamValue = ProcessArgumentUtils.wrapInQuotesIfItHasWhitespace(
-          `${this.args[param]}`
+          paramValue
         );
-        return `${this.getParamForCli(param)} ${sanitizedParamValue}`;
+
+        if (this.isOptionParam(param) || this.positionalArgumentsAsOptions) {
+          return `${this.getParamForCli(param)} ${sanitizedParamValue}`;
+        } else {
+          return sanitizedParamValue;
+        }
       }).join(' ');
   }
 
   private getParamForCli(param: string): string {
-    return param.length === 1 ? `-${param}` : `--${param}`;
+    return this.isOptionParam(param) ? `-${param}` : `--${param}`;
+  }
+
+  private isOptionParam(param: string): boolean {
+    return param.length === 1;
   }
 
 }

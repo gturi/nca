@@ -38,7 +38,7 @@ export class YargsHandlerBuilder {
 
     switch (commandType) {
       case CommandType.Simple:
-        return new SimpleCommandHandler(args, command);
+        return new SimpleCommandHandler(args, command, ncaCommand.positionalArgumentsAsOptions);
       case CommandType.Function: {
         const input = new CommandHandlerInput<T>(args);
         return new FunctionCommandHandler<T>(input, command);

@@ -25,13 +25,11 @@ export interface NcaCommand {
    */
   commandType?: CommandType;
   /**
-   * Options passed down to this nca command and its subCommands when {@link NcaCommand.commandType}
-   * is {@link CommandType.Function} or {@link CommandType.Module}.
+   * Options passed down to this nca command and its subCommands.
    */
   options?: OptionParam[];
   /**
-   * Positional arguments passed down to this nca command and its sub commands when
-   * {@link NcaCommand.commandType} is {@link CommandType.Function} or {@link CommandType.Module}.
+   * Positional arguments passed down to this nca command and its sub commands.
    */
   positionalArguments?: PositionalArgument[];
   /**
@@ -43,10 +41,16 @@ export interface NcaCommand {
    */
   completion?: Completion;
   /**
-   * When set to true changes the command execution directory to
+   * When set to true, the command execution directory will be changed to
    * the one where its yaml configuration is located.
    */
   runInConfigDirectory: boolean;
+  /**
+   * Considered only when {@link NcaCommand.commandType} value is {@link CommandType.Simple}.
+   * When set to true, the program will receive the positional arguments like options
+   * (i.e. --myParam myParamValue).
+   */
+  positionalArgumentsAsOptions: boolean;
   // TODO: move it to a new file, to avoid exposing an useless field
   /**
    * Set internally. Allows commands and completionPaths to be used

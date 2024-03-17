@@ -35,7 +35,7 @@ describe("simple command handler", () => {
   ];
 
   testCases.forEach((testCase, index) => {
-    it(`command params logs the input params (idx: ${index})`, done => {
+    it(`command invoke-script-v2 logs the input params treating positional arguments as options (idx: ${index})`, done => {
       const verifyOutput = new VerifyOutputBuilder(done)
         .handleStdout((stdout: string[]) => {
           expect(stdout.join('\n')).to.equal(Platform.addNewLine(testCase.expectedOutput));

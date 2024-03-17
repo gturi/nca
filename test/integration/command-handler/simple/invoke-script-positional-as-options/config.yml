@@ -1,0 +1,18 @@
+commands:
+  - name: invoke-script-v2
+    description: prints the input params
+    command: "./script.sh"
+    options:
+      - name: s
+        optionType: String
+        defaultValue: 'sValue'
+      - name: a
+        optionType: String
+        defaultValue: 'aValue'
+    positionalArguments:
+      - name: foo
+        description: foo argument
+        type: StringList
+        defaultValue: 'fooValue'
+    runInConfigDirectory: true
+    positionalArgumentsAsOptions: true

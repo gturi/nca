@@ -1,5 +1,5 @@
 commands:
-  - name: params
+  - name: invoke-script
     description: prints the input params
     command: "./script.sh"
     options:

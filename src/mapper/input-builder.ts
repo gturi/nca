@@ -32,7 +32,9 @@ export class InputBuilder {
       error: error,
       defaultCompletions: defaultCompletions ?? [],
       modulePath: modulePath,
-      cliUtils: this.getCliUtils()
+      cliUtils: this.getCliUtils(),
+      iteratorHelper: iteratorHelper,
+      yaml: yaml
     };
   }
 

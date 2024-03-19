@@ -17,6 +17,7 @@ A command line utility to define cross platform commands and aliases.
 - [Usage](#Usage)
 - [Config API](#Config-API)
 - [Examples](#Examples)
+- [Development](#Development)
 - [Contributing](#Contributing)
 - [License](#License)
 
@@ -162,6 +163,9 @@ npm unlink --global node-command-alias # remove global link after finishing test
 
 npm install ./.github/script/setup-test.mjs # install dependencies required by tests
 ```
+
+[Back to top](#nca---Node-Command-Alias)
+
 
 ## Contributing
 

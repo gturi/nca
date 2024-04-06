@@ -45,7 +45,7 @@ export class CompletionAliasCommand extends NcaCommandTemplate {
   }
 
   private getCompletion(aliasName: string, commandArray: string[]): string {
-    const aliasCompletionFunction = `_nca_${aliasName}_yargs_completions`;
+    const aliasCompletionFunction = this.getAliasCompletionFunctionName(aliasName);
     const inputArgs = ProcessArgumentUtils.sanitizeCommandArray(commandArray).join(' ');
     return [
       `# ${aliasName} completion`,
@@ -57,5 +57,13 @@ export class CompletionAliasCommand extends NcaCommandTemplate {
       `}`,
       `complete -o bashdefault -o default -F ${aliasCompletionFunction} ${aliasName}`
     ].join('\n') + '\n';
+  }
+
+  private getAliasCompletionFunctionName(aliasName: string) {
+    return `_nca_${this.replaceNonAlphanumeric(aliasName)}_yargs_completions`;
+  }
+
+  private replaceNonAlphanumeric(s: string) {
+    return s.replace(/[^a-zA-Z0-9_]/g, '_');
   }
 }

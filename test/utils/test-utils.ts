@@ -40,9 +40,7 @@ export function runNcaAndVerifyOutput(verifyOutput: VerifyOutput, ...args: strin
 }
 
 export function createAliasAndVerifyOutput(testCompletion: TestCompletion) {
-  try {
-    setup();
-
+  installNcaAndTest(() => {
     throwErrorIfExitCodeNotZero(createAlias(testCompletion.aliasCommand));
 
     const aliasCommandResult = runCommandSync(
@@ -58,18 +56,11 @@ export function createAliasAndVerifyOutput(testCompletion: TestCompletion) {
 
     expect(aliasCommandResult.stderr).to.equal(commandResult.stderr);
     expect(aliasCommandResult.stdout).to.equal(commandResult.stdout);
-  } catch (error) {
-    console.error(error);
-    throw error;
-  } finally {
-    cleanup(testCompletion.aliasName);
-  }
+  }, testCompletion.aliasName);
 }
 
 export function renameAliasAndVerifyOutput(aliasName: string, aliasNewName: string, args: string[]) {
-  try {
-    setup();
-
+  installNcaAndTest(() => {
     throwErrorIfExitCodeNotZero(createAlias(args));
 
     const aliasCommandResult = runCommandSync(aliasName);
@@ -80,18 +71,11 @@ export function renameAliasAndVerifyOutput(aliasName: string, aliasNewName: stri
 
     expect(aliasCommandResult.stderr).to.equal(postRenameCommandResult.stderr);
     expect(aliasCommandResult.stdout).to.equal(postRenameCommandResult.stdout);
-  } catch (error) {
-    console.error(error);
-    throw error;
-  } finally {
-    cleanup(aliasNewName);
-  }
+  }, aliasNewName);
 }
 
 export function verifyNcaAliasCompletion(testCompletion: TestCompletion) {
-  try {
-    setup();
-
+  installNcaAndTest(() => {
     throwErrorIfExitCodeNotZero(createAlias(testCompletion.aliasCommand));
 
     const completionResult = runCommandSync('nca', 'completion');
@@ -110,11 +94,19 @@ export function verifyNcaAliasCompletion(testCompletion: TestCompletion) {
     expect('').to.equal(invokeAliasCompletionResult.stderr);
     const expected = testCompletion.expectedOutput.join('\n') + '\n';
     expect(expected).to.equal(invokeAliasCompletionResult.stdout);
+  }, testCompletion.aliasName);
+}
+
+export function installNcaAndTest(testFunction: () => void, aliasName: string | null = null) {
+  try {
+    setup();
+
+    testFunction();
   } catch (error) {
     console.error(error);
     throw error;
   } finally {
-    cleanup(testCompletion.aliasName);
+    cleanup(aliasName);
   }
 }
 
@@ -154,11 +146,11 @@ function runNcaCommand(...args: string[]): ChildProcess {
   return spawn(Platform.values.ncaCommand, args, { shell: true });
 }
 
-function createAlias(args: string[]): SpawnSyncReturns<string> {
+export function createAlias(args: string[]): SpawnSyncReturns<string> {
   return spawnSync('nca', ['alias', 'add', ...args], { encoding: 'utf-8', shell: true });
 }
 
-function runCommandSync(command: string, ...args: string[]): SpawnSyncReturns<string> {
+export function runCommandSync(command: string, ...args: string[]): SpawnSyncReturns<string> {
   return spawnSync(command, args, { encoding: 'utf-8', shell: true });
 }
 
@@ -166,7 +158,7 @@ function bufferToString(buffer: ArrayBuffer | SharedArrayBuffer | { valueOf(): A
   return Buffer.from(buffer).toString();
 }
 
-function throwErrorIfExitCodeNotZero(result: SpawnSyncReturns<string>) {
+export function throwErrorIfExitCodeNotZero(result: SpawnSyncReturns<string>) {
   if (result.status !== 0) {
     throw new Error(result.stderr);
   }

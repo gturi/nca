@@ -1,6 +1,6 @@
 {
   "name": "node-command-alias",
-  "version": "4.1.0",
+  "version": "4.2.0-dev",
   "description": "Node cross platform command alias",
   "keywords": [
     "alias",

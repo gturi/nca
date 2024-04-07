@@ -55,7 +55,7 @@ export class ConfigLoader {
     ConfigValidator.validate(configPath, mainConfig);
 
     const configDirectoryPath = path.dirname(configPath);
-    mainConfig.commands?.forEach(ncaCommand => ncaCommand.directory = configDirectoryPath);
+    this.setNcaCommandDirectory(mainConfig.commands, configDirectoryPath);
 
     if (!mainConfig.includePaths) {
       return iter([mainConfig]);
@@ -81,6 +81,18 @@ export class ConfigLoader {
       console.warn(`Config file not found: ${configPath}`);
       return null;
     }
+  }
+
+  private setNcaCommandDirectory(
+    ncaCommands: NcaCommand[] | undefined,
+    configDirectoryPath: string
+  ) {
+    ncaCommands?.forEach(ncaCommand => {
+      ncaCommand.directory = configDirectoryPath;
+      if (ncaCommand.subCommands) {
+        this.setNcaCommandDirectory(ncaCommand.subCommands, configDirectoryPath);
+      }
+    });
   }
 
   loadConfig(configPath: string): Config {

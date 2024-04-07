@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.09% </span>
+                <span class="strong">89.65% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>49/55</span>
+                <span class='fraction'>52/58</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>18/22</span>
+                <span class='fraction'>20/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>19/19</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.67% </span>
+                <span class="strong">89.47% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>47/53</span>
+                <span class='fraction'>51/57</span>
             </div>
         
             
@@ -162,7 +162,19 @@
 <a name='L97'></a><a href='#L97'>97</a>
 <a name='L98'></a><a href='#L98'>98</a>
 <a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">172x</span>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-yes">172x</span>
@@ -219,7 +231,7 @@
 <span class="cline-any cline-yes">3268x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3268x</span>
-<span class="cline-any cline-yes">3784x</span>
+<span class="cline-any cline-yes">3268x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3268x</span>
 <span class="cline-any cline-yes">3096x</span>
@@ -244,6 +256,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3956x</span>
+<span class="cline-any cline-yes">5160x</span>
+<span class="cline-any cline-yes">5160x</span>
+<span class="cline-any cline-yes">688x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -318,7 +342,7 @@ export class ConfigLoader {
     ConfigValidator.validate(configPath, mainConfig);
 &nbsp;
     const configDirectoryPath = path.dirname(configPath);
-    mainConfig.commands?.forEach(ncaCommand =&gt; ncaCommand.directory = configDirectoryPath);
+    this.setNcaCommandDirectory(mainConfig.commands, configDirectoryPath);
 &nbsp;
     if (!mainConfig.includePaths) {
       return iter([mainConfig]);
@@ -346,6 +370,18 @@ export class ConfigLoader {
     }
   }
 &nbsp;
+  private setNcaCommandDirectory(
+    ncaCommands: NcaCommand[] | undefined,
+    configDirectoryPath: string
+  ) {
+    ncaCommands?.forEach(ncaCommand =&gt; {
+      ncaCommand.directory = configDirectoryPath;
+      if (ncaCommand.subCommands) {
+        this.setNcaCommandDirectory(ncaCommand.subCommands, configDirectoryPath);
+      }
+    });
+  }
+&nbsp;
   loadConfig(configPath: string): Config {
     <span class="missing-if-branch" title="if path not taken" >I</span>if (!fs.existsSync(configPath)) {
 <span class="cstat-no" title="statement not covered" >      throw new Error(`Config file not found: ${configPath}`);</span>
@@ -367,7 +403,7 @@ export class ConfigLoader {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-06T22:25:05.620Z
+                at 2024-04-07T22:00:56.247Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

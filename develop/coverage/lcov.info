@@ -3122,7 +3122,7 @@ FN:174,getCompletionFile
 FNF:21
 FNH:21
 FNDA:39,runNcaAndVerifyOutput
-FNDA:84,(anonymous_2)
+FNDA:79,(anonymous_2)
 FNDA:2,(anonymous_3)
 FNDA:39,(anonymous_4)
 FNDA:13,createAliasAndVerifyOutput
@@ -3138,7 +3138,7 @@ FNDA:13,removeNcaPrefixIfPresent
 FNDA:39,runNcaCommand
 FNDA:29,createAlias
 FNDA:103,runCommandSync
-FNDA:86,bufferToString
+FNDA:81,bufferToString
 FNDA:29,throwErrorIfExitCodeNotZero
 FNDA:6,appendToCompletionFile
 FNDA:74,getCompletionFile
@@ -3156,7 +3156,7 @@ DA:15,39
 DA:17,39
 DA:18,39
 DA:20,39
-DA:21,84
+DA:21,79
 DA:24,39
 DA:25,2
 DA:28,39
@@ -3220,7 +3220,7 @@ DA:149,1
 DA:150,29
 DA:153,1
 DA:154,103
-DA:158,86
+DA:158,81
 DA:161,1
 DA:162,29
 DA:163,0

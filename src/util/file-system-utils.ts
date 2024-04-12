@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { NcaConfig } from '../config/nca-config';
 
 export class FileSystemUtils {
 
@@ -59,6 +60,17 @@ export class FileSystemUtils {
   static renameFile(filePath: string, newFilePath: string) {
     if (fs.existsSync(filePath)) {
       fs.renameSync(filePath, newFilePath);
+    }
+  }
+
+  static tryGetStatSync(path: string): fs.Stats | null {
+    try {
+      return fs.statSync(path);
+    } catch (e) {
+      if (NcaConfig.isDebugEnabled()) {
+        console.error(e);
+      }
+      return null;
     }
   }
 }

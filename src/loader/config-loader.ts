@@ -11,6 +11,8 @@ import { NcaConfig } from '../config/nca-config';
 import { iter } from 'iterator-helper';
 import { FileUtils } from '../util/file-utils';
 import { ConfigIterator } from '../util/custom-types';
+import { FileSystemUtils } from '../util/file-system-utils';
+import { command } from 'yargs';
 
 
 export class ConfigLoader {
@@ -19,15 +21,26 @@ export class ConfigLoader {
     const configPath = NcaConfig.getMainConfigFilePath();
 
     const configs = this.loadConfigsFromPath(configPath, new Set(configPath));
-    const ncaCommands = configs.flatMap(config => iter(config.commands ?? [])).toArray();
+
+    const ncaCommands = configs
+      ?.map(config => config.commands ?? [])
+      .filter(commands => commands.length > 0)
+      .flatMap(commands => iter(commands))
+      .toArray() ?? [];
 
     NcaCommandValidator.validate(ncaCommands);
 
     return ncaCommands;
   }
 
-  private loadConfigsFromPath(path: string, loadedConfigs: Set<string>): ConfigIterator {
-    return fs.statSync(path).isDirectory()
+  private loadConfigsFromPath(path: string, loadedConfigs: Set<string>): ConfigIterator | null {
+    const pathStats = FileSystemUtils.tryGetStatSync(path);
+
+    if (!pathStats) {
+      return null;
+    }
+
+    return pathStats.isDirectory()
       ? this.loadDirectoryConfigs(path, loadedConfigs)
       : this.loadConfigs(path, loadedConfigs)
   }
@@ -36,11 +49,11 @@ export class ConfigLoader {
     const paths = walkdir.sync(directoryPath);
 
     iter(paths)
-      .filter(path => fs.statSync(path).isDirectory())
-      .forEach(path => loadedConfigs.add(path))
+      .filter(path => FileSystemUtils.tryGetStatSync(path)?.isDirectory() ?? false)
+      .forEach(path => loadedConfigs.add(path));
 
     return iter(paths)
-      .filter(path => !fs.statSync(path).isDirectory())
+      .filter(path => !FileSystemUtils.tryGetStatSync(path)?.isDirectory() ?? false)
       .filter(path => FileUtils.hasYamlExtension(path))
       .filter(path => !loadedConfigs.has(path))
       .flatMap(path => iter(this.loadConfigs(path, loadedConfigs)));
@@ -69,7 +82,8 @@ export class ConfigLoader {
         loadedConfigs.add(path)
         return path;
       })
-      .flatMap(path => iter(this.loadConfigsFromPath(path, loadedConfigs)));
+      .map(path => this.loadConfigsFromPath(path, loadedConfigs))
+      .flatMap(configIterator => iter(configIterator ?? []));
 
     return iter([mainConfig]).chain(includedPaths);
   }

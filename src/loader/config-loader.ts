@@ -12,7 +12,6 @@ import { iter } from 'iterator-helper';
 import { FileUtils } from '../util/file-utils';
 import { ConfigIterator } from '../util/custom-types';
 import { FileSystemUtils } from '../util/file-system-utils';
-import { command } from 'yargs';
 
 
 export class ConfigLoader {

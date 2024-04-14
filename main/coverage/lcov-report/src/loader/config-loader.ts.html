@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.65% </span>
+                <span class="strong">89.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>52/58</span>
+                <span class='fraction'>58/65</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">77.77% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>20/24</span>
+                <span class='fraction'>42/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>23/23</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.47% </span>
+                <span class="strong">89.23% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>51/57</span>
+                <span class='fraction'>58/65</span>
             </div>
         
             
@@ -174,7 +174,20 @@
 <a name='L109'></a><a href='#L109'>109</a>
 <a name='L110'></a><a href='#L110'>110</a>
 <a name='L111'></a><a href='#L111'>111</a>
-<a name='L112'></a><a href='#L112'>112</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">172x</span>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-yes">172x</span>
@@ -187,20 +200,32 @@
 <span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-yes">3268x</span>
+<span class="cline-any cline-yes">3268x</span>
+<span class="cline-any cline-yes">3096x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">172x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">516x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">516x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">516x</span>
@@ -245,6 +270,7 @@
 <span class="cline-any cline-yes">344x</span>
 <span class="cline-any cline-yes">344x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">344x</span>
 <span class="cline-any cline-yes">344x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">172x</span>
@@ -298,6 +324,7 @@ import { NcaConfig } from '../config/nca-config';
 import { iter } from 'iterator-helper';
 import { FileUtils } from '../util/file-utils';
 import { ConfigIterator } from '../util/custom-types';
+import { FileSystemUtils } from '../util/file-system-utils';
 &nbsp;
 &nbsp;
 export class ConfigLoader {
@@ -306,15 +333,26 @@ export class ConfigLoader {
     const configPath = NcaConfig.getMainConfigFilePath();
 &nbsp;
     const configs = this.loadConfigsFromPath(configPath, new Set(configPath));
-    const ncaCommands = configs.flatMap(config =&gt; iter(config.commands ?? [])).toArray();
+&nbsp;
+    const ncaCommands = configs<span class="branch-0 cbranch-no" title="branch not covered" ></span>
+      ?.map(config =&gt; config.commands ?? [])
+      .filter(commands =&gt; commands.length &gt; 0)
+      .flatMap(commands =&gt; iter(commands))
+      .toArray() ?? <span class="branch-1 cbranch-no" title="branch not covered" >[];</span>
 &nbsp;
     NcaCommandValidator.validate(ncaCommands);
 &nbsp;
     return ncaCommands;
   }
 &nbsp;
-  private loadConfigsFromPath(path: string, loadedConfigs: Set&lt;string&gt;): ConfigIterator {
-    return fs.statSync(path).isDirectory()
+  private loadConfigsFromPath(path: string, loadedConfigs: Set&lt;string&gt;): ConfigIterator | null {
+    const pathStats = FileSystemUtils.tryGetStatSync(path);
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!pathStats) {
+<span class="cstat-no" title="statement not covered" >      return null;</span>
+    }
+&nbsp;
+    return pathStats.isDirectory()
       ? this.loadDirectoryConfigs(path, loadedConfigs)
       : this.loadConfigs(path, loadedConfigs)
   }
@@ -323,11 +361,11 @@ export class ConfigLoader {
     const paths = walkdir.sync(directoryPath);
 &nbsp;
     iter(paths)
-      .filter(path =&gt; fs.statSync(path).isDirectory())
-      .forEach(path =&gt; loadedConfigs.add(path))
+      .filter(path =&gt; FileSystemUtils.tryGetStatSync(path)<span class="branch-0 cbranch-no" title="branch not covered" >?.i</span>sDirectory() ?? <span class="branch-1 cbranch-no" title="branch not covered" >false)</span>
+      .forEach(path =&gt; loadedConfigs.add(path));
 &nbsp;
     return iter(paths)
-      .filter(path =&gt; !fs.statSync(path).isDirectory())
+      .filter(path =&gt; !FileSystemUtils.tryGetStatSync(path)<span class="branch-0 cbranch-no" title="branch not covered" >?.i</span>sDirectory() ?? <span class="branch-1 cbranch-no" title="branch not covered" >false)</span>
       .filter(path =&gt; FileUtils.hasYamlExtension(path))
       .filter(path =&gt; !loadedConfigs.has(path))
       .flatMap(path =&gt; iter(this.loadConfigs(path, loadedConfigs)));
@@ -356,7 +394,8 @@ export class ConfigLoader {
         loadedConfigs.add(path)
         return path;
       })
-      .flatMap(path =&gt; iter(this.loadConfigsFromPath(path, loadedConfigs)));
+      .map(path =&gt; this.loadConfigsFromPath(path, loadedConfigs))
+      .flatMap(configIterator =&gt; iter(configIterator ?? <span class="branch-1 cbranch-no" title="branch not covered" >[])</span>);
 &nbsp;
     return iter([mainConfig]).chain(includedPaths);
   }
@@ -403,7 +442,7 @@ export class ConfigLoader {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-08T21:27:55.741Z
+                at 2024-04-14T12:43:12.252Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

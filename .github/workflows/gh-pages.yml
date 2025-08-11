@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ env.BRANCH }}
       - uses: actions/setup-node@v4
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ env.BRANCH }}
       - uses: actions/download-artifact@v4
@@ -55,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ env.BRANCH }}
       - uses: actions/download-artifact@v4
